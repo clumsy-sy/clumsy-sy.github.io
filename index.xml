@@ -70,7 +70,7 @@ $$&lt;/p>
 &lt;p>我们已知两个数 $a$ ，$b$ ；假设 $a &amp;gt; b$，有两种情况：&lt;/p>
 &lt;ol>
 &lt;li>$b \mid a$​ ，即 $\gcd (a, b) = b$。&lt;/li>
-&lt;li>$a = b\times k + a\bmod b$​​​​​​​ ，此时我们要证明 $\gcd(a, b) = \gcd(b, a\bmod b)$​​​​​ 。&lt;/li>
+&lt;li>$a = b\times k + a\bmod b$​​​​​​ ，此时我们要证明 $\gcd(a, b) = \gcd(b, a\bmod b)$​​​​ 。&lt;/li>
 &lt;/ol>
 &lt;p>设
 $$
@@ -99,7 +99,10 @@ $$
 &lt;p>EXGCD（Extended Euclidean algorithm）扩展欧几里得算法。常用于求 $ax + by = \gcd(a, b)$​​​ 的通解。&lt;/p>
 &lt;p>设
 $$
-ax_{1} + by_{1} = \gcd(a, b)\\bx_{2} + (a \bmod b) y_{2} = \gcd(b, a \bmod b)
+\begin{aligned}
+ax_{1} + by_{1} &amp;amp;= \gcd(a, b)\&lt;br>
+bx_{2} + (a \bmod b) y_{2} &amp;amp;= \gcd(b, a \bmod b)\&lt;br>
+\end{aligned}
 $$
 前面已经证明 $\gcd(a, b) = \gcd(b, a\bmod b)$&lt;/p>
 &lt;p>且
@@ -108,12 +111,15 @@ a \bmod b = a - \left \lfloor \dfrac{a}{b} \right \rfloor \times b
 $$
 得
 $$
-ax_{1}+by_{1}=bx_{2}+(a - \left \lfloor \dfrac{a}{b} \right \rfloor \times b)y_{2}\\ax_{1}+by_{1}=ay_{2}+b(x_{2} - \left \lfloor \dfrac{a}{b} \right \rfloor \times y_{2})
+\begin{aligned}
+ax_{1}+by_{1}&amp;amp;=bx_{2}+(a - \left \lfloor \dfrac{a}{b} \right \rfloor \times b)y_{2}\&lt;br>
+ax_{1}+by_{1}&amp;amp;=ay_{2}+b(x_{2} - \left \lfloor \dfrac{a}{b} \right \rfloor \times y_{2})
+\end{aligned}
 $$
 得
 $$
 \begin{aligned}
-x_{1} &amp;amp;= y_{2}\\&lt;br>
+x_{1} &amp;amp;= y_{2}\&lt;br>
 y_{1} &amp;amp;= x_{2} - \left \lfloor \dfrac{a}{b} \right \rfloor \times y_{2}
 \end{aligned}
 $$&lt;/p>
@@ -135,6 +141,111 @@ $$&lt;/p>
 &lt;span class="p">}&lt;/span>
 &lt;span class="n">x&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">x1&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">y&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">x2&lt;/span>&lt;span class="p">;&lt;/span>
 &lt;span class="k">return&lt;/span> &lt;span class="n">a&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;span class="p">}&lt;/span>
+&lt;/code>&lt;/pre>&lt;/div></description></item><item><title>最小表示法</title><link>https://clumsy-sy.github.io/p/%E6%9C%80%E5%B0%8F%E8%A1%A8%E7%A4%BA%E6%B3%95/</link><pubDate>Sun, 18 Jul 2021 00:00:00 +0000</pubDate><guid>https://clumsy-sy.github.io/p/%E6%9C%80%E5%B0%8F%E8%A1%A8%E7%A4%BA%E6%B3%95/</guid><description>&lt;h1 id="最小表示法">最小表示法&lt;/h1>
+&lt;h2 id="概念">概念&lt;/h2>
+&lt;p>循环同构串：我们有字符串 &lt;code>bcad&lt;/code> ，那么它的循环同构串可以是 &lt;code>bcad,cadb,adbc,dbca&lt;/code>。&lt;/p>
+&lt;p>最小表示法可以用来找出字符串 S （或者数组）的循环同构串中字典序最小的一个。&lt;/p>
+&lt;h2 id="实现方法">实现方法&lt;/h2>
+&lt;p>复杂度 $O(N)$。&lt;/p>
+&lt;p>假设有一个字符串 $S$ ,设 $S$ 的长度为 $n=|S|$，思考如下：&lt;/p>
+&lt;ol>
+&lt;li>
+&lt;p>两个指针 $i$ 、$j$ ，初始化时 $i$ 指向 $s_{0}$，j 指向 $s_{1}$ 。我们规定 $i$ 和 $j$ 在任意时刻都不能相等。&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>匹配长度 $k = 0$ 开始，检验 $s_{i + k}$ 和 $s_{j + k}$ 是否相等，相等则 $k \gets k+1$，一直循环下去，直到找到第一个不相同的字符。（若 $k = n$ 则全字符串相等）&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>在遇到第一个不相同字符的过程中，我们发现 $s_{i + k}$ 和 $s_{j + k}$ 的关系有两种：&lt;/p>
+&lt;ul>
+&lt;li>$s_{i + k} &amp;gt; s_{j + k}$ ，显然 此时以 $i$ 为开头必然不使字典序最小，所以 $i \gets i+k+1$。&lt;/li>
+&lt;li>$s_{i + k} &amp;lt; s_{j + k}$ ，同理，$j \gets j+k+1$。&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>
+&lt;p>当 $i,j,k$ 中有一个等于 $n$，循环结束，返回 $\min(i，j)$。&lt;/p>
+&lt;/li>
+&lt;/ol>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-cpp" data-lang="cpp">&lt;span class="kt">int&lt;/span> &lt;span class="n">n&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">S&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="mi">300009&lt;/span>&lt;span class="p">];&lt;/span>
+&lt;span class="kt">int&lt;/span> &lt;span class="nf">Min_show&lt;/span>&lt;span class="p">()&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;span class="kt">int&lt;/span> &lt;span class="n">i&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="mi">0&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">j&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="mi">1&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">k&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="mi">0&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;span class="k">while&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="n">i&lt;/span> &lt;span class="o">&amp;lt;&lt;/span> &lt;span class="n">n&lt;/span> &lt;span class="o">&amp;amp;&amp;amp;&lt;/span> &lt;span class="n">j&lt;/span> &lt;span class="o">&amp;lt;&lt;/span> &lt;span class="n">n&lt;/span> &lt;span class="o">&amp;amp;&amp;amp;&lt;/span> &lt;span class="n">k&lt;/span> &lt;span class="o">&amp;lt;&lt;/span> &lt;span class="n">n&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;span class="k">if&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="n">S&lt;/span>&lt;span class="p">[(&lt;/span>&lt;span class="n">i&lt;/span> &lt;span class="o">+&lt;/span> &lt;span class="n">k&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="o">%&lt;/span> &lt;span class="n">n&lt;/span>&lt;span class="p">]&lt;/span> &lt;span class="o">==&lt;/span> &lt;span class="n">S&lt;/span>&lt;span class="p">[(&lt;/span>&lt;span class="n">j&lt;/span> &lt;span class="o">+&lt;/span> &lt;span class="n">k&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="o">%&lt;/span> &lt;span class="n">n&lt;/span>&lt;span class="p">])&lt;/span>
+&lt;span class="n">k&lt;/span> &lt;span class="o">++&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;span class="k">else&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;span class="k">if&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="n">S&lt;/span>&lt;span class="p">[(&lt;/span>&lt;span class="n">i&lt;/span> &lt;span class="o">+&lt;/span> &lt;span class="n">k&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="o">%&lt;/span> &lt;span class="n">n&lt;/span>&lt;span class="p">]&lt;/span> &lt;span class="o">&amp;gt;&lt;/span> &lt;span class="n">S&lt;/span>&lt;span class="p">[(&lt;/span>&lt;span class="n">j&lt;/span> &lt;span class="o">+&lt;/span> &lt;span class="n">k&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="o">%&lt;/span> &lt;span class="n">n&lt;/span>&lt;span class="p">])&lt;/span>
+&lt;span class="n">i&lt;/span> &lt;span class="o">+=&lt;/span> &lt;span class="n">k&lt;/span> &lt;span class="o">+&lt;/span> &lt;span class="mi">1&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;span class="k">else&lt;/span>
+&lt;span class="n">j&lt;/span> &lt;span class="o">+=&lt;/span> &lt;span class="n">k&lt;/span> &lt;span class="o">+&lt;/span> &lt;span class="mi">1&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;span class="k">if&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="n">i&lt;/span> &lt;span class="o">==&lt;/span> &lt;span class="n">j&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;span class="n">i&lt;/span>&lt;span class="o">++&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;span class="n">k&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="mi">0&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;span class="p">}&lt;/span>
+&lt;span class="p">}&lt;/span>
+&lt;span class="k">return&lt;/span> &lt;span class="n">min&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">i&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">j&lt;/span>&lt;span class="p">);&lt;/span> &lt;span class="c1">//返回最小表示
+&lt;/span>&lt;span class="c1">&lt;/span>&lt;span class="p">}&lt;/span>
+&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="习题">习题&lt;/h2>
+&lt;p>&lt;a class="link" href="https://www.luogu.com.cn/problem/P1368" target="_blank" rel="noopener"
+>P1368 最小表示法&lt;/a>&lt;/p></description></item><item><title>字符串Hash</title><link>https://clumsy-sy.github.io/p/%E5%AD%97%E7%AC%A6%E4%B8%B2hash/</link><pubDate>Fri, 16 Jul 2021 00:00:00 +0000</pubDate><guid>https://clumsy-sy.github.io/p/%E5%AD%97%E7%AC%A6%E4%B8%B2hash/</guid><description>&lt;h1 id="字符串-hash">字符串 Hash&lt;/h1>
+&lt;h2 id="字符串-hash-的思想">字符串 Hash 的思想&lt;/h2>
+&lt;p>Hash 的核心思想在于，将输入映射到一个值域较小、可以方便比较的范围。而在字符串中主要是为了方便比较，而且为了减少 &lt;strong>Hash 冲突&lt;/strong>，一般映射的范围较大。&lt;/p>
+&lt;p>我们定义一个把 &lt;strong>字符串映射到整数&lt;/strong> 的函数 $f$ ，这个 $f$ 称为是 Hash 函数。我们希望这个函数可以方便地帮我们判断两个字符串是否相等， 有两点很重要。&lt;/p>
+&lt;ol>
+&lt;li>在 Hash 函数值不一样的时候，两个字符串一定不一样；&lt;/li>
+&lt;li>在 Hash 函数值一样的时候，两个字符串不一定一样（但有大概率一样，且我们当然希望它们总是一样的）。&lt;/li>
+&lt;/ol>
+&lt;p>&lt;strong>Hash&lt;/strong> 函数值一样时字符串却不一样, 我们称为 &lt;strong>哈希冲突&lt;/strong>。&lt;/p>
+&lt;h2 id="如何-hash">如何 Hash&lt;/h2>
+&lt;p>一般采用多项式的方法，对于一个长度为 $\large{l}$ 的字符串 $s $ ，我们可以定义&lt;/p>
+&lt;p>$$
+f(s) = \sum_{i = 1}^{l} s[i] \times b^{i - 1}\pmod m
+$$&lt;/p>
+&lt;p>例如：对于字符串 $xyz$ ，其多项式为 $xb^{2} + yb^{1} + zb^{0}$ ，所以对字符串 Hash 的另一种理解就是将字符串转化为 $b$ 进制数。&lt;/p>
+&lt;p>有以下几点值得注意：&lt;/p>
+&lt;ul>
+&lt;li>如果要从 $1$ 开始存储字符串，我们可以使用 &lt;code>scanf(&amp;quot;%s&amp;quot;, s + 1)&lt;/code> 来读取输入。&lt;/li>
+&lt;li>对于 $b$ 的取值，我们一般取 $131$ 或者 $13331$（经验值，字符串哈希冲突较少）&lt;/li>
+&lt;li>对于模数 $M$，我们可以取一个大指数，如 &lt;code>1e9 + 7,998244353,212370440130137957ll&lt;/code> 或者使用 &lt;code>unsigned long long&lt;/code> 自动对 $2 ^{64}$ 取模。&lt;/li>
+&lt;li>对于减少哈希冲突，我们还可以通过双 Hash ，也就是分别用两个不同的 $base$ 和 $M$ 来计算。&lt;/li>
+&lt;/ul>
+&lt;p>Hash 复杂度为 $O(N)$，查询某段子串的 Hash 复杂度为 $O(1)$ 。&lt;/p>
+&lt;p>子串查询原理：
+$$
+\begin{aligned}
+hash[1] &amp;amp;= s[1] b^{0} \&lt;br>
+hash[2] &amp;amp;= s[1] b^{1} + s[2]^{0}\&lt;br>
+hash[3] &amp;amp;= s[1] b^{2} + s[2]^{1} + s[3]^{0}\&lt;br>
+hash[4] &amp;amp;= s[1] b^{3} + s[2]^{3} + s[3]^{1} + s[4]^{0}\&lt;br>
+hash[5] &amp;amp;= s[1] b^{4} + s[2]^{3} + s[3]^{2} + s[4]^{1} + s[5]^{0}
+\end{aligned}
+$$&lt;/p>
+&lt;p>假如我们要查询子串 $[3,5]$ ，我们会发现 $hash[5]$ 与 $hash[2]$，如果不看 b 的幂次，正好是答案，所以我们将 $hash[2]$ 的幂次每一位补齐到与 $hash[5]$ 一样。
+$$
+\begin{aligned}
+hash[2] \times b^{3} &amp;amp;= s[1]b^{4} + s[2]b^{3}\&lt;br>
+hash[5] &amp;amp;= s[1] b^{4} + s[2]^{3} + s[3]^{2} + s[4]^{1} + s[5]^{0}
+\end{aligned}
+$$
+此时将两者相减所得的值正好是 子串的 hash 值。&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-cpp" data-lang="cpp">&lt;span class="k">typedef&lt;/span> &lt;span class="kt">unsigned&lt;/span> &lt;span class="kt">long&lt;/span> &lt;span class="kt">long&lt;/span> &lt;span class="n">ull&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;span class="k">const&lt;/span> &lt;span class="n">ull&lt;/span> &lt;span class="n">base&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="mi">131&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">M&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="mf">1e5&lt;/span> &lt;span class="o">+&lt;/span> &lt;span class="mi">7&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">mod&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="mf">1e9&lt;/span> &lt;span class="o">+&lt;/span> &lt;span class="mi">7&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;span class="kt">char&lt;/span> &lt;span class="n">s&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="n">M&lt;/span>&lt;span class="p">];&lt;/span>
+&lt;span class="n">ull&lt;/span> &lt;span class="n">myhash&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="n">M&lt;/span>&lt;span class="p">],&lt;/span> &lt;span class="n">power&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="n">M&lt;/span>&lt;span class="p">];&lt;/span> &lt;span class="c1">//myhash 里面存算到某位时的 Hash 值，power 存 base 的幂次（子串查询才需要）
+&lt;/span>&lt;span class="c1">&lt;/span>
+&lt;span class="n">ull&lt;/span> &lt;span class="nf">get_hash&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="kt">char&lt;/span> &lt;span class="o">*&lt;/span>&lt;span class="n">s&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;span class="n">ull&lt;/span> &lt;span class="n">value&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="mi">0&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;span class="n">power&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="mi">0&lt;/span>&lt;span class="p">]&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="mi">1&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;span class="k">for&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="kt">int&lt;/span> &lt;span class="n">i&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="mi">1&lt;/span>&lt;span class="p">;&lt;/span> &lt;span class="n">s&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="n">i&lt;/span>&lt;span class="p">];&lt;/span> &lt;span class="n">i&lt;/span>&lt;span class="o">++&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;span class="n">value&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="n">value&lt;/span> &lt;span class="o">*&lt;/span> &lt;span class="n">base&lt;/span> &lt;span class="o">+&lt;/span> &lt;span class="n">s&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="n">i&lt;/span>&lt;span class="p">])&lt;/span> &lt;span class="o">%&lt;/span> &lt;span class="n">mod&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;span class="n">myhash&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="n">i&lt;/span>&lt;span class="p">]&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">value&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;span class="n">power&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="n">i&lt;/span>&lt;span class="p">]&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">power&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="n">i&lt;/span> &lt;span class="o">-&lt;/span> &lt;span class="mi">1&lt;/span>&lt;span class="p">]&lt;/span> &lt;span class="o">*&lt;/span> &lt;span class="n">base&lt;/span> &lt;span class="o">%&lt;/span> &lt;span class="n">mod&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;span class="p">}&lt;/span>
+&lt;span class="k">return&lt;/span> &lt;span class="n">value&lt;/span>&lt;span class="p">;&lt;/span>&lt;span class="c1">//返回最终字符串的 Hash 值
+&lt;/span>&lt;span class="c1">&lt;/span>&lt;span class="p">}&lt;/span>
+&lt;span class="c1">//计算某段的 Hash 值
+&lt;/span>&lt;span class="c1">&lt;/span>&lt;span class="n">ull&lt;/span> &lt;span class="nf">get_sub_hash&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="kt">int&lt;/span> &lt;span class="n">l&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="kt">int&lt;/span> &lt;span class="n">r&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;span class="k">return&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="n">myhash&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="n">r&lt;/span>&lt;span class="p">]&lt;/span> &lt;span class="o">-&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="n">myhash&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="n">l&lt;/span> &lt;span class="o">-&lt;/span> &lt;span class="mi">1&lt;/span>&lt;span class="p">]&lt;/span> &lt;span class="o">*&lt;/span> &lt;span class="n">power&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="n">r&lt;/span> &lt;span class="o">-&lt;/span> &lt;span class="n">l&lt;/span> &lt;span class="o">+&lt;/span> &lt;span class="mi">1&lt;/span>&lt;span class="p">])&lt;/span> &lt;span class="o">%&lt;/span> &lt;span class="n">mod&lt;/span> &lt;span class="o">+&lt;/span> &lt;span class="n">mod&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="o">%&lt;/span> &lt;span class="n">mod&lt;/span>&lt;span class="p">;&lt;/span>
 &lt;span class="p">}&lt;/span>
 &lt;/code>&lt;/pre>&lt;/div></description></item><item><title>CF731</title><link>https://clumsy-sy.github.io/p/cf731/</link><pubDate>Mon, 12 Jul 2021 00:00:00 +0000</pubDate><guid>https://clumsy-sy.github.io/p/cf731/</guid><description>&lt;h1 id="codeforces-round-731-div-3httpscodeforcescomcontest1547">&lt;a class="link" href="https://codeforces.com/contest/1547" target="_blank" rel="noopener"
 >Codeforces Round #731 (Div. 3)&lt;/a>&lt;/h1>
