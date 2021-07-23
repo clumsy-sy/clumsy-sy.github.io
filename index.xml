@@ -100,8 +100,8 @@ $$
 &lt;p>设
 $$
 \begin{aligned}
-ax_{1} + by_{1} &amp;amp;= \gcd(a, b)\&lt;br>
-bx_{2} + (a \bmod b) y_{2} &amp;amp;= \gcd(b, a \bmod b)\&lt;br>
+ax_{1} + by_{1} &amp;amp;= \gcd(a, b)\\&lt;br>
+bx_{2} + (a \bmod b) y_{2} &amp;amp;= \gcd(b, a \bmod b)
 \end{aligned}
 $$
 前面已经证明 $\gcd(a, b) = \gcd(b, a\bmod b)$&lt;/p>
@@ -112,14 +112,14 @@ $$
 得
 $$
 \begin{aligned}
-ax_{1}+by_{1}&amp;amp;=bx_{2}+(a - \left \lfloor \dfrac{a}{b} \right \rfloor \times b)y_{2}\&lt;br>
+ax_{1}+by_{1}&amp;amp;=bx_{2}+(a - \left \lfloor \dfrac{a}{b} \right \rfloor \times b)y_{2}\\&lt;br>
 ax_{1}+by_{1}&amp;amp;=ay_{2}+b(x_{2} - \left \lfloor \dfrac{a}{b} \right \rfloor \times y_{2})
 \end{aligned}
 $$
 得
 $$
 \begin{aligned}
-x_{1} &amp;amp;= y_{2}\&lt;br>
+x_{1} &amp;amp;= y_{2}\\&lt;br>
 y_{1} &amp;amp;= x_{2} - \left \lfloor \dfrac{a}{b} \right \rfloor \times y_{2}
 \end{aligned}
 $$&lt;/p>
@@ -213,17 +213,17 @@ $$&lt;/p>
 &lt;p>子串查询原理：
 $$
 \begin{aligned}
-hash[1] &amp;amp;= s[1] b^{0} \&lt;br>
-hash[2] &amp;amp;= s[1] b^{1} + s[2]^{0}\&lt;br>
-hash[3] &amp;amp;= s[1] b^{2} + s[2]^{1} + s[3]^{0}\&lt;br>
-hash[4] &amp;amp;= s[1] b^{3} + s[2]^{3} + s[3]^{1} + s[4]^{0}\&lt;br>
+hash[1] &amp;amp;= s[1] b^{0} \\&lt;br>
+hash[2] &amp;amp;= s[1] b^{1} + s[2]^{0}\\&lt;br>
+hash[3] &amp;amp;= s[1] b^{2} + s[2]^{1} + s[3]^{0}\\&lt;br>
+hash[4] &amp;amp;= s[1] b^{3} + s[2]^{3} + s[3]^{1} + s[4]^{0}\\&lt;br>
 hash[5] &amp;amp;= s[1] b^{4} + s[2]^{3} + s[3]^{2} + s[4]^{1} + s[5]^{0}
 \end{aligned}
 $$&lt;/p>
 &lt;p>假如我们要查询子串 $[3,5]$ ，我们会发现 $hash[5]$ 与 $hash[2]$，如果不看 b 的幂次，正好是答案，所以我们将 $hash[2]$ 的幂次每一位补齐到与 $hash[5]$ 一样。
 $$
 \begin{aligned}
-hash[2] \times b^{3} &amp;amp;= s[1]b^{4} + s[2]b^{3}\&lt;br>
+hash[2] \times b^{3} &amp;amp;= s[1]b^{4} + s[2]b^{3}\\&lt;br>
 hash[5] &amp;amp;= s[1] b^{4} + s[2]^{3} + s[3]^{2} + s[4]^{1} + s[5]^{0}
 \end{aligned}
 $$
