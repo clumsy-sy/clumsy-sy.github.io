@@ -2,10 +2,8 @@
 title: "GCD & EXGCD"
 date: 2021-07-20
 draft: false
-math: true
 mathjax: true
 ---
-
 # GCD & EXGCD
 
 GCD （Greatest Common Divisor）即最大公约数。
@@ -15,7 +13,7 @@ GCD （Greatest Common Divisor）即最大公约数。
 我们已知两个数 $a$ ，$b$ ；假设 $a > b$，有两种情况：
 
 1. $b \mid a$​ ，即 $\gcd (a, b) = b$。
-2. $a = b\times k + a\bmod b$​​​​​​​ ，此时我们要证明 $\gcd(a, b) = \gcd(b, a\bmod b)$​​​​​ 。
+2. $a = b\times k + a\bmod b$​​​​​​ ，此时我们要证明 $\gcd(a, b) = \gcd(b, a\bmod b)$​​​​ 。
 
 设 
 $$
@@ -57,7 +55,10 @@ EXGCD（Extended Euclidean algorithm）扩展欧几里得算法。常用于求 $
 
 设
 $$
-ax_{1} + by_{1} = \gcd(a, b)\\\\bx_{2} + (a \bmod b) y_{2} = \gcd(b, a \bmod b)
+\begin{aligned}
+ax_{1} + by_{1} &= \gcd(a, b)\\
+bx_{2} + (a \bmod b) y_{2} &= \gcd(b, a \bmod b)\\
+\end{aligned}
 $$
 前面已经证明  $\gcd(a, b) = \gcd(b, a\bmod b)$
 
@@ -67,12 +68,15 @@ a \bmod b = a - \left \lfloor \dfrac{a}{b}  \right \rfloor \times b
 $$
 得
 $$
-ax_{1}+by_{1}=bx_{2}+(a - \left \lfloor \dfrac{a}{b} \right \rfloor \times b)y_{2}\\\\ax_{1}+by_{1}=ay_{2}+b(x_{2} - \left \lfloor \dfrac{a}{b} \right \rfloor \times y_{2}) 
+\begin{aligned}
+ax_{1}+by_{1}&=bx_{2}+(a - \left \lfloor \dfrac{a}{b} \right \rfloor \times b)y_{2}\\
+ax_{1}+by_{1}&=ay_{2}+b(x_{2} - \left \lfloor \dfrac{a}{b} \right \rfloor \times y_{2}) 
+\end{aligned}
 $$
 得
 $$
 \begin{aligned}
-x_{1} &= y_{2}\\\\
+x_{1} &= y_{2}\\
 y_{1} &= x_{2} - \left \lfloor \dfrac{a}{b} \right \rfloor \times y_{2}
 \end{aligned}
 $$
