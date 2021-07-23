@@ -213,10 +213,10 @@ $$&lt;/p>
 &lt;p>子串查询原理：
 $$
 \begin{aligned}
-hash[1] &amp;amp;= s[1] b^{0} \\&lt;br>
-hash[2] &amp;amp;= s[1] b^{1} + s[2]^{0}\\&lt;br>
-hash[3] &amp;amp;= s[1] b^{2} + s[2]^{1} + s[3]^{0}\\&lt;br>
-hash[4] &amp;amp;= s[1] b^{3} + s[2]^{3} + s[3]^{1} + s[4]^{0}\\&lt;br>
+hash[1] &amp;amp;= s[1] b^{0} \\\\&lt;br>
+hash[2] &amp;amp;= s[1] b^{1} + s[2]^{0}\\\\&lt;br>
+hash[3] &amp;amp;= s[1] b^{2} + s[2]^{1} + s[3]^{0}\\\\&lt;br>
+hash[4] &amp;amp;= s[1] b^{3} + s[2]^{3} + s[3]^{1} + s[4]^{0}\\\\&lt;br>
 hash[5] &amp;amp;= s[1] b^{4} + s[2]^{3} + s[3]^{2} + s[4]^{1} + s[5]^{0}
 \end{aligned}
 $$&lt;/p>
