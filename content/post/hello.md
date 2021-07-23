@@ -27,7 +27,7 @@ $$
 
 图片测试
 
-![alt](../image/cat.jpg)
+![alt](/image/cat.jpg)
 
 猫猫好大，喜欢！
 
