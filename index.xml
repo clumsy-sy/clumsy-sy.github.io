@@ -14,7 +14,7 @@ $$&lt;/p>
 >nowcoder&lt;/a>&lt;/p>
 &lt;p>没啥问题&lt;/p>
 &lt;p>图片测试&lt;/p>
-&lt;p>&lt;img src="https://clumsy-sy.github.io/../image/cat.jpg" alt="alt" />&lt;/p>
+&lt;p>&lt;img src="https://clumsy-sy.github.io/image/cat.jpg" alt="alt" />&lt;/p>
 &lt;p>猫猫好大，喜欢！&lt;/p>
 &lt;p>随便再测试几个。&lt;/p>
 &lt;p>字体颜色测试&lt;strong>失败&lt;/strong>了，似乎不给我渲染各种&lt;em>彩色&lt;/em>的字体，等我对SCSS有进一步了解再解决这个问题。&lt;/p>
