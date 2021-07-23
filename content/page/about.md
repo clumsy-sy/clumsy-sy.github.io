@@ -15,11 +15,15 @@ menu:
 
 # sy
 
-ZAFU的菜鸡Acmer一枚。
+ZAFU 计算机大三学生
 
-可以通过以下方式联系我：
+喜欢算法，这个blog主要会有一些我的学习笔记，记录一下自己学习过程中的思考，方便自己以后复习，回顾。
 
-[Contact me on Telegram](tg://resolve?domain=@clumsy_sy)
+
+
+如果有什么疑问或者咨询，可以通过以下方式联系我：
+
+[Telegram](tg://resolve?domain=@clumsy_sy)
 
 [QQ](http://wpa.qq.com/msgrd?v=3&uin=1725798537&site=qq&menu=yes)
 

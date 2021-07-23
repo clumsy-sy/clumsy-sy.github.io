@@ -42,6 +42,7 @@ params:
 
     article:
         math: false
+        mathjax: false
         toc: true
         license:
             enabled: true
