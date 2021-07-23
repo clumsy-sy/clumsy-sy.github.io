@@ -1,5 +1,5 @@
 baseurl: https://clumsy-sy.github.io
-languageCode: en-us
+languageCode: zh-cn
 theme: hugo-theme-stack
 paginate: 5
 title: sy-blog
@@ -12,7 +12,7 @@ googleAnalytics:
 
 # Theme i18n support
 # Available values: en, fr, id, ja, ko, pt-br, zh-cn, es, de, nl
-DefaultContentLanguage: en
+DefaultContentLanguage: zh-cn
 
 permalinks:
     post: /p/:slug/
@@ -35,7 +35,7 @@ params:
 
     sidebar:
         emoji: 🍥
-        subtitle: Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+        subtitle: ZAFU 的菜鸡 Acmer
         avatar:
             local: true
             src: img/avatar.png
