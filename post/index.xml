@@ -1,8 +1,10 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Posts on sy-blog</title><link>https://clumsy-sy.github.io/post/</link><description>Recent content in Posts on sy-blog</description><generator>Hugo -- gohugo.io</generator><language>zh-cn</language><lastBuildDate>Wed, 21 Jul 2021 21:31:55 +0800</lastBuildDate><atom:link href="https://clumsy-sy.github.io/post/index.xml" rel="self" type="application/rss+xml"/><item><title>Welcome to sy's blog</title><link>https://clumsy-sy.github.io/p/welcome-to-sys-blog/</link><pubDate>Wed, 21 Jul 2021 21:31:55 +0800</pubDate><guid>https://clumsy-sy.github.io/p/welcome-to-sys-blog/</guid><description>Hello world！ 想搭建一个在Github上的博客很久了，这次总算是实现了，虽然应该没人来看，但也要做的漂亮一点。而且在Github上面搭建博客，可以对 git 的了解更多，也没啥广告，可以玩甚至魔改各种各样的web，主题……
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Posts on sy-blog</title><link>https://clumsy-sy.github.io/post/</link><description>Recent content in Posts on sy-blog</description><generator>Hugo -- gohugo.io</generator><language>zh-cn</language><lastBuildDate>Sun, 25 Jul 2021 15:13:43 +0800</lastBuildDate><atom:link href="https://clumsy-sy.github.io/post/index.xml" rel="self" type="application/rss+xml"/><item><title>ABC211</title><link>https://clumsy-sy.github.io/p/abc211/</link><pubDate>Sun, 25 Jul 2021 15:13:43 +0800</pubDate><guid>https://clumsy-sy.github.io/p/abc211/</guid><description>AtCoder Beginner Contest 211 A - Blood Pressure 水题，按题目给的式子输出即可
+#include &amp;lt;bits/stdc++.h&amp;gt;using namespace std; int main(){ int a, b; cin &amp;gt;&amp;gt; a &amp;gt;&amp;gt; b; double c = ((double)a - b) / 3 + b; printf(&amp;#34;%lf\n&amp;#34;, c); return 0; } B - Cycle Hit 暴力判断
+#include &amp;lt;bits/stdc++.h&amp;gt;using namespace std; bool st[4]; int main() { string s[4]; for (int i = 0; i &amp;lt; 4; i++) cin &amp;gt;&amp;gt; s[i]; for (int i = 0; i &amp;lt; 4; i++) { if (s[i] == &amp;#34;H&amp;#34;) st[0] = true; if (s[i] == &amp;#34;2B&amp;#34;) st[1] = true; if (s[i] == &amp;#34;3B&amp;#34;) st[2] = true; if (s[i] == &amp;#34;HR&amp;#34;) st[3] = true; } bool flag = true; for (int i = 0; i &amp;lt; 4; i++) if (!</description></item><item><title>Welcome to sy's blog</title><link>https://clumsy-sy.github.io/p/welcome-to-sys-blog/</link><pubDate>Sun, 25 Jul 2021 00:00:00 +0000</pubDate><guid>https://clumsy-sy.github.io/p/welcome-to-sys-blog/</guid><description>Hello world！ 想搭建一个在Github上的博客很久了，这次总算是实现了，虽然应该没人来看，但也要做的漂亮一点。在Github上面搭建博客，也是希望可以对 git 的了解更多，多学习，而且也没啥广告，可以玩甚至魔改各种各样的web，主题……
 下面进行一些小测试。
 公式测试
 $$ \int_0^\pi \sin^2 x {\rm d} x = \frac{\pi}{2} $$
-似乎渲染的还挺漂亮
+渲染的还挺漂亮
 链接测试
 Google codeforces atcoder nowcoder
 没啥问题
@@ -10,14 +12,14 @@ Google codeforces atcoder nowcoder
 猫猫好大，喜欢！
 随便再测试几个。
 字体颜色测试失败了，似乎不给我渲染各种彩色的字体，等我对SCSS有进一步了解再解决这个问题。
-表格咋样？
+表格
 星期一 星期二 星期三 星期四 星期五 安排 表格略丑，但也还行。
 1
 2
 似乎只支持一层关系
 无序表
 a b c 有序表
-都可</description></item><item><title>GCD &amp; EXGCD</title><link>https://clumsy-sy.github.io/p/gcd-exgcd/</link><pubDate>Tue, 20 Jul 2021 00:00:00 +0000</pubDate><guid>https://clumsy-sy.github.io/p/gcd-exgcd/</guid><description>GCD &amp;amp; EXGCD GCD （Greatest Common Divisor）即最大公约数。
+测试到此结束</description></item><item><title>GCD &amp; EXGCD</title><link>https://clumsy-sy.github.io/p/gcd-exgcd/</link><pubDate>Tue, 20 Jul 2021 00:00:00 +0000</pubDate><guid>https://clumsy-sy.github.io/p/gcd-exgcd/</guid><description>GCD &amp;amp; EXGCD GCD （Greatest Common Divisor）即最大公约数。
 欧几里得算法 我们已知两个数 $a$ ，$b$ ；假设 $a &amp;gt; b$，有两种情况：
 $b \mid a$​ ，即 $\gcd (a, b) = b$。 $a = b\times k + a\bmod b$​​​​​​ ，此时我们要证明 $\gcd(a, b) = \gcd(b, a\bmod b)$​​​​ 。 设 $$ a = b\times k + c，(c = a \bmod b) $$ 设 $d \mid a,\ d\mid b$​​​ ；则 $$ \dfrac{c}{d} = \dfrac{a}{d} - k\dfrac{b}{d} $$ 因为 $\dfrac{a}{d} $​​ 和 $\dfrac{bk}{d}$​​​ 都为整数，所以 $\dfrac{c}{d}$​​​ 也是整数，即 $d \mid c$​​ 。所以对于所有的 $a, b$​​​ 的公约数，都是 $a\bmod b$​​ 的约数。</description></item><item><title>最小表示法</title><link>https://clumsy-sy.github.io/p/%E6%9C%80%E5%B0%8F%E8%A1%A8%E7%A4%BA%E6%B3%95/</link><pubDate>Sun, 18 Jul 2021 00:00:00 +0000</pubDate><guid>https://clumsy-sy.github.io/p/%E6%9C%80%E5%B0%8F%E8%A1%A8%E7%A4%BA%E6%B3%95/</guid><description>最小表示法 概念 循环同构串：我们有字符串 bcad ，那么它的循环同构串可以是 bcad,cadb,adbc,dbca。
 最小表示法可以用来找出字符串 S （或者数组）的循环同构串中字典序最小的一个。
