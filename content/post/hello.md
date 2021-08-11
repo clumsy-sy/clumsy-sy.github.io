@@ -1,65 +1,16 @@
 ---
-title: "Welcome to sy's blog"
-date: 2021-07-25
+title: "Welcome to sy-blog"
+date: 2021-08-11
 draft: false
-math: true
+mathjax: true
 ---
 
 # Hello world！
 
-想搭建一个在Github上的博客很久了，这次总算是实现了，虽然应该没人来看，但也要做的漂亮一点。在Github上面搭建博客，也是希望可以对 git 的了解更多，多学习，而且也没啥广告，可以玩甚至魔改各种各样的web，主题……
+想搭建一个在 Github 上的博客很久了，这次总算是实现了，虽然应该没人来看，但也要做的漂亮一点。在 Github 上面搭建博客，也是希望可以对 git 的运用熟练起来，而且无广告（非常棒），还可以魔改各种各样的页面，主题……
 
-下面进行一些小测试。
+博客的内容比较零散，题解、算法、项目之类的都会有所涉及，也就随便写写，记录一下自己的学习历程……
 
-公式测试
+放一张可爱猫猫图片
 
-$$
-\int_0^\pi \sin^2 x {\rm d} x = \frac{\pi}{2}
-$$
-
-渲染的还挺漂亮
-
-链接测试
-
-[Google](https://www.google.com.hk/)   	[codeforces](https://codeforces.com/contests)	[atcoder](https://atcoder.jp/)	[nowcoder](https://ac.nowcoder.com/acm/contest/vip-index?&headNav=www)
-
-没啥问题
-
-图片测试
-
-![alt](/image/cat.jpg)
-
-猫猫好大，喜欢！
-
-随便再测试几个。
-
-字体颜色测试**失败**了，似乎不给我渲染各种*彩色*的字体，等我对SCSS有进一步了解再解决这个问题。
-
-表格
-
-|      | 星期一 | 星期二 | 星期三 | 星期四 | 星期五 |
-| ---- | ------ | ------ | ------ | ------ | ------ |
-| 安排 |        |        |        |        |        |
-
-表格略丑，但也还行。
-
-> 1
->
-> >2
-
-似乎只支持一层关系
-
-无序表
-
-* a
-* b
-* c
-
-有序表
-
-1. 
-
-2. 
-3. 
-
-测试到此结束
+![alt](\image\cat.jpg)
