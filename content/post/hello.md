@@ -13,4 +13,7 @@ mathjax: true
 
 放一张可爱猫猫图片
 
-![alt](\image\cat.jpg)
+![alt](..\image\cat.jpg)
+
+Welcome ！
+
