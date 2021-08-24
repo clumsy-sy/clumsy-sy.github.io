@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>sy-blog</title><link>https://clumsy-sy.github.io/</link><description>Recent content on sy-blog</description><generator>Hugo -- gohugo.io</generator><language>zh-cn</language><lastBuildDate>Wed, 11 Aug 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://clumsy-sy.github.io/index.xml" rel="self" type="application/rss+xml"/><item><title>Welcome to sy-blog</title><link>https://clumsy-sy.github.io/p/welcome-to-sy-blog/</link><pubDate>Wed, 11 Aug 2021 00:00:00 +0000</pubDate><guid>https://clumsy-sy.github.io/p/welcome-to-sy-blog/</guid><description>&lt;h1 id="hello-world">Hello world！&lt;/h1>
-&lt;p>想搭建一个在 Github 上的博客很久了，这次总算是实现了，虽然应该没人来看，但也要做的漂亮一点。在 Github 上面搭建博客，也是希望可以对 git 的运用熟练起来，而且无广告（非常棒），还可以魔改各种各样的页面，主题……&lt;/p>
+&lt;p>想搭建一个在 Github 上的博客很久了，这次总算是实现了，虽然应该没人来看，但也要做的漂亮一点。&lt;/p>
+&lt;p>在 Github 上面搭建博客，也是希望可以对 git 的运用熟练起来，而且无广告，还可以魔改各种各样的页面，主题……&lt;/p>
 &lt;p>博客的内容比较零散，题解、算法、项目之类的都会有所涉及，也就随便写写，记录一下自己的学习历程……&lt;/p>
-&lt;p>放一张可爱猫猫图片&lt;/p>
-&lt;p>&lt;img src="https://clumsy-sy.github.io/..%5cimage%5ccat.jpg" alt="alt" />&lt;/p>
 &lt;p>Welcome ！&lt;/p></description></item><item><title>数论分块</title><link>https://clumsy-sy.github.io/p/%E6%95%B0%E8%AE%BA%E5%88%86%E5%9D%97/</link><pubDate>Tue, 10 Aug 2021 00:00:00 +0000</pubDate><guid>https://clumsy-sy.github.io/p/%E6%95%B0%E8%AE%BA%E5%88%86%E5%9D%97/</guid><description>&lt;h1 id="数论分块">数论分块&lt;/h1>
 &lt;h2 id="引入">引入&lt;/h2>
 &lt;p>给定一个正整数 $n$，求解
