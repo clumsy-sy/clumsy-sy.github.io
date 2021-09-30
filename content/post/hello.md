@@ -1,6 +1,6 @@
 ---
 title: "Welcome to sy-blog"
-date: 2021-08-11
+date: 2021-07-10
 draft: false
 mathjax: true
 ---
