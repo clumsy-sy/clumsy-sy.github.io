@@ -274,7 +274,44 @@ extended">
 <span class=p>}</span>
 </code></pre></div><h2 id=e1-rubiks-cube-coloring-easy-version>E1. Rubik&rsquo;s Cube Coloring (easy version)</h2>
 <p>第一个点是 $6$ 种颜色，它的子节点是 $4$ 种选择，而每个结点有两个子节点，所以答案是 $6\times 2^{2^2 + 2^3 + \dots 2^k}$，快速幂求解即可，注意 <code>1 &lt;&lt; k</code> 种的 1 默认为 <code>int</code>，所以左移过多会溢出！</p>
-<div class=highlight><pre tabindex=0 class=chroma><code class=language-cpp data-lang=cpp>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-cpp data-lang=cpp><span class=cp>#include</span> <span class=cpf>&lt;iostream&gt;</span><span class=cp>
+</span><span class=cp>#include</span> <span class=cpf>&lt;algorithm&gt;</span><span class=cp>
+</span><span class=cp></span><span class=k>using</span> <span class=k>namespace</span> <span class=n>std</span><span class=p>;</span>
+<span class=k>typedef</span> <span class=kt>long</span> <span class=kt>long</span> <span class=n>ll</span><span class=p>;</span>
+<span class=n>ll</span> <span class=nf>read</span><span class=p>()</span> <span class=p>{</span>
+    <span class=n>ll</span> <span class=n>x</span> <span class=o>=</span> <span class=mi>0</span><span class=p>,</span> <span class=n>f</span> <span class=o>=</span> <span class=mi>1</span><span class=p>;</span>
+    <span class=kt>char</span> <span class=n>ch</span> <span class=o>=</span> <span class=n>getchar</span><span class=p>();</span>
+    <span class=k>while</span> <span class=p>(</span><span class=n>ch</span> <span class=o>&lt;</span> <span class=sc>&#39;0&#39;</span> <span class=o>||</span> <span class=n>ch</span> <span class=o>&gt;</span> <span class=sc>&#39;9&#39;</span><span class=p>)</span> <span class=p>{</span> <span class=k>if</span> <span class=p>(</span><span class=n>ch</span> <span class=o>==</span> <span class=sc>&#39;-&#39;</span><span class=p>)</span> <span class=n>f</span> <span class=o>=</span> <span class=o>-</span><span class=mi>1</span><span class=p>;</span> <span class=n>ch</span> <span class=o>=</span> <span class=n>getchar</span><span class=p>();}</span>
+    <span class=k>while</span> <span class=p>(</span><span class=n>ch</span> <span class=o>&gt;=</span> <span class=sc>&#39;0&#39;</span> <span class=o>&amp;&amp;</span> <span class=n>ch</span> <span class=o>&lt;=</span> <span class=sc>&#39;9&#39;</span><span class=p>)</span> <span class=p>{</span> <span class=n>x</span> <span class=o>=</span> <span class=n>x</span> <span class=o>*</span> <span class=mi>10</span> <span class=o>+</span> <span class=n>ch</span> <span class=o>-</span> <span class=sc>&#39;0&#39;</span><span class=p>,</span> <span class=n>ch</span> <span class=o>=</span> <span class=n>getchar</span><span class=p>();}</span>
+    <span class=k>return</span> <span class=n>x</span> <span class=o>*</span> <span class=n>f</span><span class=p>;</span>
+<span class=p>}</span>
+<span class=k>const</span> <span class=kt>int</span> <span class=n>M</span> <span class=o>=</span> <span class=mf>2e5</span> <span class=o>+</span> <span class=mi>7</span><span class=p>;</span>
+<span class=k>const</span> <span class=n>ll</span> <span class=n>mod</span> <span class=o>=</span> <span class=mf>1e9</span> <span class=o>+</span> <span class=mi>7</span><span class=p>;</span>
+
+<span class=n>ll</span> <span class=nf>qp</span><span class=p>(</span><span class=n>ll</span> <span class=n>a</span><span class=p>,</span> <span class=n>ll</span> <span class=n>b</span><span class=p>)</span> <span class=p>{</span>
+    <span class=n>ll</span> <span class=n>ans</span> <span class=o>=</span> <span class=mi>1</span><span class=p>;</span>
+    <span class=k>while</span><span class=p>(</span><span class=n>b</span><span class=p>)</span> <span class=p>{</span>
+        <span class=k>if</span><span class=p>(</span><span class=n>b</span> <span class=o>&amp;</span> <span class=mi>1</span><span class=p>)</span> <span class=n>ans</span> <span class=o>=</span> <span class=n>ans</span> <span class=o>*</span> <span class=n>a</span> <span class=o>%</span> <span class=n>mod</span><span class=p>;</span>
+        <span class=n>a</span> <span class=o>=</span> <span class=n>a</span> <span class=o>*</span> <span class=n>a</span> <span class=o>%</span> <span class=n>mod</span><span class=p>;</span>
+        <span class=n>b</span> <span class=o>&gt;&gt;=</span> <span class=mi>1</span><span class=p>;</span>
+    <span class=p>}</span>
+    <span class=k>return</span> <span class=n>ans</span><span class=p>;</span>
+<span class=p>}</span>
+
+<span class=kt>int</span> <span class=nf>main</span><span class=p>()</span> <span class=p>{</span>
+    <span class=n>ll</span> <span class=n>k</span> <span class=o>=</span> <span class=n>read</span><span class=p>();</span>
+    <span class=k>if</span><span class=p>(</span><span class=n>k</span> <span class=o>==</span> <span class=mi>1</span><span class=p>)</span> <span class=p>{</span>
+        <span class=n>cout</span> <span class=o>&lt;&lt;</span> <span class=mi>6</span> <span class=o>&lt;&lt;</span> <span class=n>endl</span><span class=p>;</span>
+    <span class=p>}</span> <span class=k>else</span> <span class=p>{</span>
+        <span class=n>ll</span> <span class=n>all</span> <span class=o>=</span> <span class=mi>0</span><span class=p>;</span>
+        <span class=k>for</span><span class=p>(</span><span class=n>ll</span> <span class=n>i</span> <span class=o>=</span> <span class=mi>2</span><span class=p>;</span> <span class=n>i</span> <span class=o>&lt;=</span> <span class=n>k</span><span class=p>;</span> <span class=n>i</span> <span class=o>++</span><span class=p>)</span>
+            <span class=n>all</span> <span class=o>+=</span> <span class=p>(</span><span class=n>ll</span><span class=p>)</span><span class=mi>1</span> <span class=o>&lt;&lt;</span> <span class=n>i</span><span class=p>;</span>
+        <span class=n>all</span> <span class=o>%=</span> <span class=n>mod</span> <span class=o>-</span> <span class=mi>1</span><span class=p>;</span> <span class=c1>// 对指数取模 mod - 1， 费马小定理，这边不去模也可以
+</span><span class=c1></span>        <span class=n>ll</span> <span class=n>ans</span> <span class=o>=</span> <span class=n>qp</span><span class=p>(</span><span class=mi>2</span><span class=p>,</span> <span class=n>all</span><span class=p>)</span> <span class=o>*</span> <span class=mi>6</span> <span class=o>%</span> <span class=n>mod</span><span class=p>;</span>
+        <span class=n>cout</span> <span class=o>&lt;&lt;</span> <span class=n>ans</span> <span class=o>&lt;&lt;</span> <span class=n>endl</span><span class=p>;</span>
+    <span class=p>}</span>
+    <span class=k>return</span> <span class=mi>0</span><span class=p>;</span>
+<span class=p>}</span>
 </code></pre></div>
 </section>
 <footer class=article-footer>
@@ -282,6 +319,7 @@ extended">
 <span>Licensed under CC BY-NC-SA 4.0</span>
 </section>
 </footer>
+<link rel=stylesheet href=https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css integrity=sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3+Aro6EYUG4+cU+KJWu/X crossorigin=anonymous><script src=https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.js integrity=sha384-g7c+Jr9ZivxKLnZTDUhnkOnsh30B4H0rpLUpJ4jAIKs4fnJI+sEnkvrMWph2EDg4 crossorigin=anonymous defer></script><script src=https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/contrib/auto-render.min.js integrity=sha384-mll67QQFJfxn0IYznZYonOWZ644AWYC+Pt2cHqMaRhXVrursRwvLnLaebdGIlYNa crossorigin=anonymous defer></script><script>window.addEventListener("DOMContentLoaded",()=>{renderMathInElement(document.querySelector(`.article-content`),{delimiters:[{left:"$$",right:"$$",display:!0},{left:"$",right:"$",display:!1},{left:"\\(",right:"\\)",display:!1},{left:"\\[",right:"\\]",display:!0}]})})</script>
 </article>
 <aside class=related-contents--wrapper>
 </aside>
