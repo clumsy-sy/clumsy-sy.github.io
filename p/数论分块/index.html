@@ -2,19 +2,19 @@
 <head><meta charset=utf-8>
 <meta name=viewport content="width=device-width,initial-scale=1"><meta name=description content="数论分块 引入 给定一个正整数 $n$，求解 $$ \sum_{i = n}^{n} \left \lfloor \dfrac{n}{i} \right \rfloor $$ 首先易想到暴力做法，时间复杂度为 $O(n)$，但通过打表 $n = 10$
    i 1 2 3 4 5 6 7 8 9 10     $\left \lfloor \dfrac{n}{i} \right \rfloor$ 10 5 3 2 2 1 1 1 1 1    我们可以发现对于 $i$ 的一段区间 ，$\left \lfloor \dfrac{n}{i} \right \rfloor$ 的值都是相同的。如果我们能一次计算一段的值，那么复杂度将会降低。
-分块 设一段的左端点为 $L_{i}$，右端点为 $R_{i}$，则 $L_{i+1} = R_{i} + 1$。如何找到每一段的 $L$ 和 $R$ ？使得 $$ \left \lfloor \dfrac{n}{L} \right \rfloor = \left \lfloor \dfrac{n}{R} \right \rfloor $$ 设 $\left \lfloor \dfrac{n}{L} \right \rfloor = k$，$R = L + d$，得到 $\left \lfloor \dfrac{n}{L+d} \right \rfloor = k$，即 $$ \begin{aligned} n &amp;amp;= Lk + p, \ 0 \leqslant p &amp;lt; L \\"><title>数论分块</title>
+分块 设一段的左端点为 $L_{i}$，右端点为 $R_{i}$，则 $L_{i+1} = R_{i} + 1$。如何找到每一段的 $L$ 和 $R$ ？使得 $$ \left \lfloor \dfrac{n}{L} \right \rfloor = \left \lfloor \dfrac{n}{R} \right \rfloor $$ 设 $\left \lfloor \dfrac{n}{L} \right \rfloor = k$，$R = L + d$，得到 $\left \lfloor \dfrac{n}{L+d} \right \rfloor = k$，即 $$ \begin{aligned} n &amp;amp;= Lk + p, \ 0 \leqslant p &amp;lt; L \\ n &amp;amp;= (L + d)k + q, \ 0 \leqslant q &amp;lt; L \end{aligned} $$ 此时 $d_{max} = \left \lfloor \dfrac{p}{k} \right \rfloor$ 带入 $R = L + d$ 得到 $$ \begin{aligned} R &amp;amp;= L + \left \lfloor \dfrac{p}{k} \right \rfloor \\ &amp;amp;= L + \left \lfloor \dfrac{n - Lk}{k} \right \rfloor \\ &amp;amp;= \left \lfloor \frac{n}{\left \lfloor \dfrac{n}{L}\right \rfloor}\right \rfloor \end{aligned} $$ 现在我们已经可以求出每一段分块的区间了，那么每一段的贡献为 $(R−L+1)\times \left \lfloor \dfrac{n}{L}\right \rfloor$"><title>数论分块</title>
 <link rel=canonical href=https://clumsy-sy.github.io/p/%E6%95%B0%E8%AE%BA%E5%88%86%E5%9D%97/>
 <link rel=stylesheet href=/scss/style.min.css><meta property="og:title" content="数论分块">
 <meta property="og:description" content="数论分块 引入 给定一个正整数 $n$，求解 $$ \sum_{i = n}^{n} \left \lfloor \dfrac{n}{i} \right \rfloor $$ 首先易想到暴力做法，时间复杂度为 $O(n)$，但通过打表 $n = 10$
    i 1 2 3 4 5 6 7 8 9 10     $\left \lfloor \dfrac{n}{i} \right \rfloor$ 10 5 3 2 2 1 1 1 1 1    我们可以发现对于 $i$ 的一段区间 ，$\left \lfloor \dfrac{n}{i} \right \rfloor$ 的值都是相同的。如果我们能一次计算一段的值，那么复杂度将会降低。
-分块 设一段的左端点为 $L_{i}$，右端点为 $R_{i}$，则 $L_{i+1} = R_{i} + 1$。如何找到每一段的 $L$ 和 $R$ ？使得 $$ \left \lfloor \dfrac{n}{L} \right \rfloor = \left \lfloor \dfrac{n}{R} \right \rfloor $$ 设 $\left \lfloor \dfrac{n}{L} \right \rfloor = k$，$R = L + d$，得到 $\left \lfloor \dfrac{n}{L+d} \right \rfloor = k$，即 $$ \begin{aligned} n &amp;amp;= Lk + p, \ 0 \leqslant p &amp;lt; L \\">
+分块 设一段的左端点为 $L_{i}$，右端点为 $R_{i}$，则 $L_{i+1} = R_{i} + 1$。如何找到每一段的 $L$ 和 $R$ ？使得 $$ \left \lfloor \dfrac{n}{L} \right \rfloor = \left \lfloor \dfrac{n}{R} \right \rfloor $$ 设 $\left \lfloor \dfrac{n}{L} \right \rfloor = k$，$R = L + d$，得到 $\left \lfloor \dfrac{n}{L+d} \right \rfloor = k$，即 $$ \begin{aligned} n &amp;amp;= Lk + p, \ 0 \leqslant p &amp;lt; L \\ n &amp;amp;= (L + d)k + q, \ 0 \leqslant q &amp;lt; L \end{aligned} $$ 此时 $d_{max} = \left \lfloor \dfrac{p}{k} \right \rfloor$ 带入 $R = L + d$ 得到 $$ \begin{aligned} R &amp;amp;= L + \left \lfloor \dfrac{p}{k} \right \rfloor \\ &amp;amp;= L + \left \lfloor \dfrac{n - Lk}{k} \right \rfloor \\ &amp;amp;= \left \lfloor \frac{n}{\left \lfloor \dfrac{n}{L}\right \rfloor}\right \rfloor \end{aligned} $$ 现在我们已经可以求出每一段分块的区间了，那么每一段的贡献为 $(R−L+1)\times \left \lfloor \dfrac{n}{L}\right \rfloor$">
 <meta property="og:url" content="https://clumsy-sy.github.io/p/%E6%95%B0%E8%AE%BA%E5%88%86%E5%9D%97/">
 <meta property="og:site_name" content="sy-blog">
 <meta property="og:type" content="article"><meta property="article:section" content="Post"><meta property="article:published_time" content="2021-08-10T00:00:00+00:00"><meta property="article:modified_time" content="2021-08-10T00:00:00+00:00">
 <meta name=twitter:title content="数论分块">
 <meta name=twitter:description content="数论分块 引入 给定一个正整数 $n$，求解 $$ \sum_{i = n}^{n} \left \lfloor \dfrac{n}{i} \right \rfloor $$ 首先易想到暴力做法，时间复杂度为 $O(n)$，但通过打表 $n = 10$
    i 1 2 3 4 5 6 7 8 9 10     $\left \lfloor \dfrac{n}{i} \right \rfloor$ 10 5 3 2 2 1 1 1 1 1    我们可以发现对于 $i$ 的一段区间 ，$\left \lfloor \dfrac{n}{i} \right \rfloor$ 的值都是相同的。如果我们能一次计算一段的值，那么复杂度将会降低。
-分块 设一段的左端点为 $L_{i}$，右端点为 $R_{i}$，则 $L_{i+1} = R_{i} + 1$。如何找到每一段的 $L$ 和 $R$ ？使得 $$ \left \lfloor \dfrac{n}{L} \right \rfloor = \left \lfloor \dfrac{n}{R} \right \rfloor $$ 设 $\left \lfloor \dfrac{n}{L} \right \rfloor = k$，$R = L + d$，得到 $\left \lfloor \dfrac{n}{L+d} \right \rfloor = k$，即 $$ \begin{aligned} n &amp;amp;= Lk + p, \ 0 \leqslant p &amp;lt; L \\">
+分块 设一段的左端点为 $L_{i}$，右端点为 $R_{i}$，则 $L_{i+1} = R_{i} + 1$。如何找到每一段的 $L$ 和 $R$ ？使得 $$ \left \lfloor \dfrac{n}{L} \right \rfloor = \left \lfloor \dfrac{n}{R} \right \rfloor $$ 设 $\left \lfloor \dfrac{n}{L} \right \rfloor = k$，$R = L + d$，得到 $\left \lfloor \dfrac{n}{L+d} \right \rfloor = k$，即 $$ \begin{aligned} n &amp;amp;= Lk + p, \ 0 \leqslant p &amp;lt; L \\ n &amp;amp;= (L + d)k + q, \ 0 \leqslant q &amp;lt; L \end{aligned} $$ 此时 $d_{max} = \left \lfloor \dfrac{p}{k} \right \rfloor$ 带入 $R = L + d$ 得到 $$ \begin{aligned} R &amp;amp;= L + \left \lfloor \dfrac{p}{k} \right \rfloor \\ &amp;amp;= L + \left \lfloor \dfrac{n - Lk}{k} \right \rfloor \\ &amp;amp;= \left \lfloor \frac{n}{\left \lfloor \dfrac{n}{L}\right \rfloor}\right \rfloor \end{aligned} $$ 现在我们已经可以求出每一段分块的区间了，那么每一段的贡献为 $(R−L+1)\times \left \lfloor \dfrac{n}{L}\right \rfloor$">
 </head>
 <body class="article-page has-toc">
 <script>(function(){const a='StackColorScheme';localStorage.getItem(a)||localStorage.setItem(a,"auto")})()</script><script>(function(){const b='StackColorScheme',a=localStorage.getItem(b),c=window.matchMedia('(prefers-color-scheme: dark)').matches===!0;a=='dark'||a==='auto'&&c?document.documentElement.dataset.scheme='dark':document.documentElement.dataset.scheme='light'})()</script>
@@ -85,15 +85,15 @@ $$
 设 $\left \lfloor \dfrac{n}{L} \right \rfloor = k$，$R = L + d$，得到 $\left \lfloor \dfrac{n}{L+d} \right \rfloor = k$，即
 $$
 \begin{aligned}
-n &= Lk + p, \ 0 \leqslant p &lt; L \\<br>
+n &= Lk + p, \ 0 \leqslant p &lt; L \\
 n &= (L + d)k + q, \ 0 \leqslant q &lt; L
 \end{aligned}
 $$
 此时 $d_{max} = \left \lfloor \dfrac{p}{k} \right \rfloor$ 带入 $R = L + d$ 得到
 $$
 \begin{aligned}
-R &= L + \left \lfloor \dfrac{p}{k} \right \rfloor \\<br>
-&= L + \left \lfloor \dfrac{n - Lk}{k} \right \rfloor \\<br>
+R &= L + \left \lfloor \dfrac{p}{k} \right \rfloor \\
+&= L + \left \lfloor \dfrac{n - Lk}{k} \right \rfloor \\
 &= \left \lfloor \frac{n}{\left \lfloor \dfrac{n}{L}\right \rfloor}\right \rfloor
 \end{aligned}
 $$
