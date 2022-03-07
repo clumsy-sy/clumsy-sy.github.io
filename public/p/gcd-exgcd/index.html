@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='GCD &amp;amp; EXGCD GCD （Greatest Common Divisor）即最大公约数。
+欧几里得算法 我们已知两个数 $a$ ，$b$ ；假设 $a &amp;gt; b$，有两种情况：
+ $b \mid a$​ ，即 $\gcd (a, b) = b$。 $a = b\times k &#43; a\bmod b$​​​​​​ ，此时我们要证明 $\gcd(a, b) = \gcd(b, a\bmod b)$​​​​ 。  设 $$ a = b\times k &#43; c，(c = a \bmod b) $$ 设 $d \mid a,\ d\mid b$​​​ ；则 $$ \dfrac{c}{d} = \dfrac{a}{d} - k\dfrac{b}{d} $$ 因为 $\dfrac{a}{d} $​​ 和 $\dfrac{bk}{d}$​​​ 都为整数，所以 $\dfrac{c}{d}$​​​ 也是整数，即 $d \mid c$​​ 。所以对于所有的 $a, b$​​​ 的公约数，都是 $a\bmod b$​​ 的约数。'><title>GCD &amp; EXGCD</title>
+
+<link rel='canonical' href='https://clumsy-sy.github.io/p/gcd-exgcd/'>
+
+<link rel="stylesheet" href="/scss/style.min.css"><meta property='og:title' content='GCD &amp; EXGCD'>
+<meta property='og:description' content='GCD &amp;amp; EXGCD GCD （Greatest Common Divisor）即最大公约数。
+欧几里得算法 我们已知两个数 $a$ ，$b$ ；假设 $a &amp;gt; b$，有两种情况：
+ $b \mid a$​ ，即 $\gcd (a, b) = b$。 $a = b\times k &#43; a\bmod b$​​​​​​ ，此时我们要证明 $\gcd(a, b) = \gcd(b, a\bmod b)$​​​​ 。  设 $$ a = b\times k &#43; c，(c = a \bmod b) $$ 设 $d \mid a,\ d\mid b$​​​ ；则 $$ \dfrac{c}{d} = \dfrac{a}{d} - k\dfrac{b}{d} $$ 因为 $\dfrac{a}{d} $​​ 和 $\dfrac{bk}{d}$​​​ 都为整数，所以 $\dfrac{c}{d}$​​​ 也是整数，即 $d \mid c$​​ 。所以对于所有的 $a, b$​​​ 的公约数，都是 $a\bmod b$​​ 的约数。'>
+<meta property='og:url' content='https://clumsy-sy.github.io/p/gcd-exgcd/'>
+<meta property='og:site_name' content='sy-blog'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:published_time' content='2021-07-20T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2021-07-20T00:00:00&#43;00:00'/>
+<meta name="twitter:title" content="GCD &amp; EXGCD">
+<meta name="twitter:description" content="GCD &amp;amp; EXGCD GCD （Greatest Common Divisor）即最大公约数。
+欧几里得算法 我们已知两个数 $a$ ，$b$ ；假设 $a &amp;gt; b$，有两种情况：
+ $b \mid a$​ ，即 $\gcd (a, b) = b$。 $a = b\times k &#43; a\bmod b$​​​​​​ ，此时我们要证明 $\gcd(a, b) = \gcd(b, a\bmod b)$​​​​ 。  设 $$ a = b\times k &#43; c，(c = a \bmod b) $$ 设 $d \mid a,\ d\mid b$​​​ ；则 $$ \dfrac{c}{d} = \dfrac{a}{d} - k\dfrac{b}{d} $$ 因为 $\dfrac{a}{d} $​​ 和 $\dfrac{bk}{d}$​​​ 都为整数，所以 $\dfrac{c}{d}$​​​ 也是整数，即 $d \mid c$​​ 。所以对于所有的 $a, b$​​​ 的公约数，都是 $a\bmod b$​​ 的约数。">
+    </head>
+    <body class="
+    article-page has-toc
+">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex 
+    
+        extended
+    
+">
+    
+        <div id="article-toolbar">
+            <a href="https://clumsy-sy.github.io" class="back-home">
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevron-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="15 6 9 12 15 18" />
+</svg>
+
+
+
+                <span>返回</span>
+            </a>
+        </div>
+    
+<main class="main full-width">
+    <article class="main-article">
+    <header class="article-header">
+
+    <div class="article-details">
+    
+
+    <h2 class="article-title">
+        <a href="/p/gcd-exgcd/">GCD &amp; EXGCD</a>
+    </h2>
+
+    <footer class="article-time">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+        <time class="article-time--published">Jul 20, 2021</time>
+    </footer></div>
+</header>
+
+    <section class="article-content">
+    <h1 id="gcd--exgcd">GCD &amp; EXGCD</h1>
+<p>GCD （Greatest Common Divisor）即最大公约数。</p>
+<h2 id="欧几里得算法">欧几里得算法</h2>
+<p>我们已知两个数 $a$ ，$b$ ；假设 $a &gt; b$，有两种情况：</p>
+<ol>
+<li>$b \mid a$​ ，即 $\gcd (a, b) = b$。</li>
+<li>$a = b\times k + a\bmod b$​​​​​​ ，此时我们要证明 $\gcd(a, b) = \gcd(b, a\bmod b)$​​​​ 。</li>
+</ol>
+<p>设
+$$
+a = b\times k + c，(c = a \bmod b)
+$$
+设 $d \mid a,\ d\mid b$​​​ ；则
+$$
+\dfrac{c}{d} = \dfrac{a}{d} - k\dfrac{b}{d}
+$$
+因为 $\dfrac{a}{d} $​​  和 $\dfrac{bk}{d}$​​​ 都为整数，所以 $\dfrac{c}{d}$​​​ 也是整数，即 $d \mid c$​​ 。所以对于所有的  $a, b$​​​ 的公约数，都是 $a\bmod b$​​ 的约数。</p>
+<p>重新设 $d \mid b, d \mid c$
+$$
+\dfrac{a}{d} = k\dfrac{b}{d} + \dfrac{c}{d}
+$$
+因为 $\dfrac{c}{d} $​​​​​​  和 $\dfrac{bk}{d}$​​​​​​ 都为整数，所以 $\dfrac{a}{d}$​​​​​​ 也是整数，即 $d \mid a$​​​​​​ 。所以对于所有的  $b, a \bmod b$​​ 的公约数，都是 $a$​​​​​​​ 的约数。</p>
+<p>两式的公约数是相同的，那么他们的最大公约数也相同。</p>
+<p>得到了 $\gcd(a, b) = \gcd(b, a\bmod b)$ 。</p>
+<div class="highlight"><pre class="chroma"><code class="language-cpp" data-lang="cpp"><span class="kt">int</span> <span class="nf">gcd</span><span class="p">(</span><span class="kt">int</span> <span class="n">a</span><span class="p">,</span> <span class="kt">int</span> <span class="n">b</span><span class="p">){</span>
+    <span class="k">return</span> <span class="n">b</span> <span class="o">?</span> <span class="n">gcd</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="n">a</span> <span class="o">%</span> <span class="n">b</span><span class="p">)</span> <span class="o">:</span> <span class="n">a</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div><p>对应的 LCM 也很简单</p>
+<div class="highlight"><pre class="chroma"><code class="language-cpp" data-lang="cpp"><span class="kt">int</span> <span class="nf">lcm</span><span class="p">(</span><span class="kt">int</span> <span class="n">a</span><span class="p">,</span> <span class="kt">int</span> <span class="n">b</span><span class="p">){</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">ll</span><span class="p">)</span><span class="n">a</span> <span class="o">*</span> <span class="n">b</span> <span class="o">/</span> <span class="n">gcd</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div><h2 id="扩展欧几里得">扩展欧几里得</h2>
+<p>EXGCD（Extended Euclidean algorithm）扩展欧几里得算法。常用于求 $ax + by = \gcd(a, b)$​​​ 的通解。</p>
+<p>设
+$$
+\begin{aligned}
+ax_{1} + by_{1} &amp;= \gcd(a, b)\\<br>
+bx_{2} + (a \bmod b) y_{2} &amp;= \gcd(b, a \bmod b)
+\end{aligned}
+$$
+前面已经证明  $\gcd(a, b) = \gcd(b, a\bmod b)$</p>
+<p>且
+$$
+a \bmod b = a - \left \lfloor \dfrac{a}{b}  \right \rfloor \times b
+$$
+得
+$$
+\begin{aligned}
+ax_{1}+by_{1}&amp;=bx_{2}+(a - \left \lfloor \dfrac{a}{b} \right \rfloor \times b)y_{2}\\<br>
+ax_{1}+by_{1}&amp;=ay_{2}+b(x_{2} - \left \lfloor \dfrac{a}{b} \right \rfloor \times y_{2})
+\end{aligned}
+$$
+得
+$$
+\begin{aligned}
+x_{1} &amp;= y_{2}\\<br>
+y_{1} &amp;= x_{2} - \left \lfloor \dfrac{a}{b} \right \rfloor \times y_{2}
+\end{aligned}
+$$</p>
+<div class="highlight"><pre class="chroma"><code class="language-cpp" data-lang="cpp"><span class="kt">int</span> <span class="nf">exgcd</span><span class="p">(</span><span class="kt">int</span> <span class="n">a</span><span class="p">,</span> <span class="kt">int</span> <span class="n">b</span><span class="p">,</span> <span class="kt">int</span> <span class="o">&amp;</span><span class="n">x</span><span class="p">,</span> <span class="kt">int</span> <span class="o">&amp;</span><span class="n">y</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">b</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+        <span class="k">return</span> <span class="n">a</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="kt">int</span> <span class="n">g</span> <span class="o">=</span> <span class="n">exgcd</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="n">a</span> <span class="o">%</span> <span class="n">b</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">x</span><span class="p">);</span>
+    <span class="n">y</span> <span class="o">-=</span>  <span class="n">a</span> <span class="o">/</span> <span class="n">b</span> <span class="o">*</span> <span class="n">x</span><span class="p">;</span>
+    <span class="k">return</span> <span class="n">g</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">int</span> <span class="nf">exgcd</span><span class="p">(</span><span class="kt">int</span> <span class="n">a</span><span class="p">,</span> <span class="kt">int</span> <span class="n">b</span><span class="p">,</span> <span class="kt">int</span> <span class="o">&amp;</span><span class="n">x</span><span class="p">,</span> <span class="kt">int</span> <span class="o">&amp;</span><span class="n">y</span><span class="p">)</span> <span class="p">{</span>
+  <span class="kt">int</span> <span class="n">x1</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">x2</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">x3</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">x4</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+  <span class="k">while</span> <span class="p">(</span><span class="n">b</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kt">int</span> <span class="n">c</span> <span class="o">=</span> <span class="n">a</span> <span class="o">/</span> <span class="n">b</span><span class="p">;</span>
+    <span class="n">tie</span><span class="p">(</span><span class="n">x1</span><span class="p">,</span> <span class="n">x2</span><span class="p">,</span> <span class="n">x3</span><span class="p">,</span> <span class="n">x4</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span> <span class="o">=</span> 
+    <span class="n">make_tuple</span><span class="p">(</span><span class="n">x3</span><span class="p">,</span> <span class="n">x4</span><span class="p">,</span> <span class="n">x1</span> <span class="o">-</span> <span class="n">x3</span> <span class="o">*</span> <span class="n">c</span><span class="p">,</span> <span class="n">x2</span> <span class="o">-</span> <span class="n">x4</span> <span class="o">*</span> <span class="n">c</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">a</span> <span class="o">-</span> <span class="n">b</span> <span class="o">*</span> <span class="n">c</span><span class="p">);</span>
+  <span class="p">}</span>
+  <span class="n">x</span> <span class="o">=</span> <span class="n">x1</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">x2</span><span class="p">;</span>
+  <span class="k">return</span> <span class="n">a</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+</section>
+
+
+    <footer class="article-footer">
+    
+
+    
+    <section class="article-copyright">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M14.5 9a3.5 4 0 1 0 0 6" />
+</svg>
+
+
+
+        <span>Licensed under CC BY-NC-SA 4.0</span>
+    </section>
+    </footer>
+
+    
+	
+	<script>
+		MathJax = {
+			tex: {
+				inlineMath: [["$", "$"]], 
+				displayMath: [["$$", "$$"], ["\\[", "\\]"]],
+				processEscapes: true,
+				processEnvironments: true,
+			}
+		};
+	</script>
+	<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-svg.js"></script>
+    
+</article>
+
+    <aside class="related-contents--wrapper">
+    
+    
+</aside>
+
+     
+     
+        
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+            2020 - 
+        
+        2022 sy-blog
+    </section>
+    
+    <section class="powerby">
+        Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
+        Theme <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="2.5.0">Stack</a></b> designed by <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a>
+    </section>
+</footer>
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer="true"
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer="true"
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.css"integrity="sha256-c0uckgykQ9v5k&#43;IqViZOZKc47Jn7KQil4/MP3ySA3F8="crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.css"integrity="sha256-SBLU4vv6CA6lHsZ1XyTdhyjJxCjPif/TRkjnsyGAGnE="crossorigin="anonymous"
+            >
+
+            </main>
+    
+        <aside class="sidebar right-sidebar sticky">
+            <section class="widget archives">
+                <div class="widget-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+                </div>
+                <h2 class="widget-title section-title">目录</h2>
+                
+                <div class="widget--toc">
+                    <nav id="TableOfContents">
+  <ol>
+    <li><a href="#欧几里得算法">欧几里得算法</a></li>
+    <li><a href="#扩展欧几里得">扩展欧几里得</a></li>
+  </ol>
+</nav>
+                </div>
+            </section>
+        </aside>
+    
+
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.5/dist/vibrant.min.js"integrity="sha256-5NovOZc4iwiAWTYIFiIM7DxKUXKWvpVEuMEPLzcm5/g="crossorigin="anonymous"
+                defer="false"
+                >
+            </script><script type="text/javascript" src="/ts/main.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>
