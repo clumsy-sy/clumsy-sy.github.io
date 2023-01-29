@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>sy</title><link>https://example.com/</link><description>Recent content on sy</description><generator>Hugo -- gohugo.io</generator><language>zh-cn</language><lastBuildDate>Tue, 28 Jun 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://example.com/index.xml" rel="self" type="application/rss+xml"/><item><title>Terraria</title><link>https://example.com/p/terraria/</link><pubDate>Tue, 28 Jun 2022 00:00:00 +0000</pubDate><guid>https://example.com/p/terraria/</guid><description>&lt;img src="https://example.com/Photo.png" alt="Featured image of post Terraria" />&lt;h1 id="terraria-linux-服务器搭建支持-mod-">Terraria Linux 服务器搭建（支持 mod ）&lt;/h1>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>sy</title><link>https://example.com/</link><description>Recent content on sy</description><generator>Hugo -- gohugo.io</generator><language>zh-cn</language><lastBuildDate>Tue, 28 Jun 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://example.com/index.xml" rel="self" type="application/rss+xml"/><item><title>Terraria</title><link>https://example.com/p/terraria/</link><pubDate>Tue, 28 Jun 2022 00:00:00 +0000</pubDate><guid>https://example.com/p/terraria/</guid><description>&lt;img src="https://example.com/post/Terraria/Photo.png" alt="Featured image of post Terraria" />&lt;h1 id="terraria-linux-服务器搭建支持-mod-">Terraria Linux 服务器搭建（支持 mod ）&lt;/h1>
 &lt;h2 id="简介">简介&lt;/h2>
 &lt;p>泰拉瑞亚 1.4 Linux 服务器搭建， TmodLoader（后简称 TML） 1.4 服务器搭建（支持mod），面向只有一点点 Linux 基础的小伙伴。&lt;/p>
 &lt;p>如果只是 TML 运行后一直在 &lt;strong>下载&lt;/strong> 或者 &lt;strong>5分钟没反应&lt;/strong> 这个问题（win 和 Linux 通用），可以直接看 TML 安装的最后部分。&lt;/p>
@@ -110,7 +110,7 @@
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>正常情况下你会看到&lt;/p>
-&lt;p>&lt;img src="https://example.com/steam0"
+&lt;p>&lt;img src="https://example.com/../../post/Terraria/steam0"
 loading="lazy"
 alt="Alt"
 >&lt;/p>
@@ -125,7 +125,7 @@ alt="Alt"
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>下载完成后你应该可以在 &lt;code>~/Steam/steamapps/common&lt;/code> 下面看到 Terraria 文件夹&lt;/p>
-&lt;p>&lt;img src="https://example.com/steam1"
+&lt;p>&lt;img src="https://example.com/../../post/Terraria/steam1"
 loading="lazy"
 alt="Alt"
 >&lt;/p>
@@ -147,7 +147,7 @@ alt="Alt"
 &lt;h2 id="tml-搭建">TML 搭建&lt;/h2>
 &lt;p>这个需要在本体完成的基础上进行&lt;/p>
 &lt;p>如何查找游戏在steam中的代码&lt;/p>
-&lt;p>&lt;img src="https://example.com/steam2"
+&lt;p>&lt;img src="https://example.com/../../post/Terraria/steam2"
 loading="lazy"
 alt="Alt"
 >&lt;/p>
@@ -163,7 +163,7 @@ alt="Alt"
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>下载完成后，同样进入 TML 文件夹&lt;/p>
-&lt;p>&lt;img src="https://example.com/steam3"
+&lt;p>&lt;img src="https://example.com/../../post/Terraria/steam3"
 loading="lazy"
 alt="Alt"
 >&lt;/p>
@@ -181,7 +181,7 @@ alt="Alt"
 &lt;/div>
 &lt;/div>&lt;h3 id="最大的问题来了">！！！最大的问题来了&lt;/h3>
 &lt;p>这里演示的是 windows 下的情况，Linux服务端一样，只不过服务器上可以多看到下载信息，在下载 .net 但是国内服务器应该是下载不下来的，所以会等到死。&lt;/p>
-&lt;p>&lt;img src="https://example.com/steam4"
+&lt;p>&lt;img src="https://example.com/../../post/Terraria/steam4"
 loading="lazy"
 alt="Alt"
 >&lt;/p>
@@ -3876,7 +3876,7 @@ $$
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;/div></description></item><item><title>Chinese Test</title><link>https://example.com/p/test-chinese/</link><pubDate>Wed, 09 Sep 2020 00:00:00 +0000</pubDate><guid>https://example.com/p/test-chinese/</guid><description>&lt;img src="https://example.com/p/test-chinese/ICPC.png" alt="Featured image of post Chinese Test" />&lt;h2 id="图片">图片&lt;/h2>
+&lt;/div></description></item><item><title>Chinese Test</title><link>https://example.com/p/test-chinese/</link><pubDate>Wed, 09 Sep 2020 00:00:00 +0000</pubDate><guid>https://example.com/p/test-chinese/</guid><description>&lt;img src="https://example.com/%E4%B8%8B%E8%BD%BD.png" alt="Featured image of post Chinese Test" />&lt;h2 id="图片">图片&lt;/h2>
 &lt;p>&lt;img src="https://example.com/p/test-chinese/ICPC.png"
 width="354"
 height="142"
