@@ -1,0 +1,433 @@
+<!doctype html><html lang=zh-cn dir=ltr><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=description content="极角排序 方法 1 : 直接计算极角 极坐标与直角坐标转换公式有 $\tan \theta = \dfrac{y}{x}$ ，在 &amp;lt;cmath&amp;gt; 中有函数 atan(y, x) ，可以直接计算 (x, y) 的极角，值域是 $(-\pi,\pi]$ ，可以直接使用。
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 #include&amp;lt;bits/stdc++.h&amp;gt; using namespace std; typedef long double ld; const int M = 1e5 + 7; struct Point { ld x, y; Point(const ld &amp;amp;x = 0, const ld &amp;amp;y = 0) : x(x), y(y) {} }p[M]; int main() { int n; scanf(&amp;#34;%d&amp;#34;, &amp;amp;n); for(int i = 1; i &amp;lt;= n; i ++) { int x, y; scanf(&amp;#34;%d%d&amp;#34;, &amp;amp;x, &amp;amp;y); p[i] = Point(x, y); } sort(p + 1, p + n + 1, [&amp;amp;](auto p1, auto p2) { return atan2(p1."><title>PolarAngleSort</title><link rel=canonical href=https://example.com/p/polaranglesort/><link rel=stylesheet href=/scss/style.min.8191399262444ab68b72a18c97392f5349be20a1615d77445be51e974c144cff.css><meta property="og:title" content="PolarAngleSort"><meta property="og:description" content="极角排序 方法 1 : 直接计算极角 极坐标与直角坐标转换公式有 $\tan \theta = \dfrac{y}{x}$ ，在 &amp;lt;cmath&amp;gt; 中有函数 atan(y, x) ，可以直接计算 (x, y) 的极角，值域是 $(-\pi,\pi]$ ，可以直接使用。
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 #include&amp;lt;bits/stdc++.h&amp;gt; using namespace std; typedef long double ld; const int M = 1e5 + 7; struct Point { ld x, y; Point(const ld &amp;amp;x = 0, const ld &amp;amp;y = 0) : x(x), y(y) {} }p[M]; int main() { int n; scanf(&amp;#34;%d&amp;#34;, &amp;amp;n); for(int i = 1; i &amp;lt;= n; i ++) { int x, y; scanf(&amp;#34;%d%d&amp;#34;, &amp;amp;x, &amp;amp;y); p[i] = Point(x, y); } sort(p + 1, p + n + 1, [&amp;amp;](auto p1, auto p2) { return atan2(p1."><meta property="og:url" content="https://example.com/p/polaranglesort/"><meta property="og:site_name" content="sy"><meta property="og:type" content="article"><meta property="article:section" content="Post"><meta property="article:published_time" content="2021-09-30T15:35:31+08:00"><meta property="article:modified_time" content="2021-09-30T15:35:31+08:00"><meta name=twitter:title content="PolarAngleSort"><meta name=twitter:description content="极角排序 方法 1 : 直接计算极角 极坐标与直角坐标转换公式有 $\tan \theta = \dfrac{y}{x}$ ，在 &amp;lt;cmath&amp;gt; 中有函数 atan(y, x) ，可以直接计算 (x, y) 的极角，值域是 $(-\pi,\pi]$ ，可以直接使用。
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 #include&amp;lt;bits/stdc++.h&amp;gt; using namespace std; typedef long double ld; const int M = 1e5 + 7; struct Point { ld x, y; Point(const ld &amp;amp;x = 0, const ld &amp;amp;y = 0) : x(x), y(y) {} }p[M]; int main() { int n; scanf(&amp;#34;%d&amp;#34;, &amp;amp;n); for(int i = 1; i &amp;lt;= n; i ++) { int x, y; scanf(&amp;#34;%d%d&amp;#34;, &amp;amp;x, &amp;amp;y); p[i] = Point(x, y); } sort(p + 1, p + n + 1, [&amp;amp;](auto p1, auto p2) { return atan2(p1."></head><body class=article-page><script>(function(){const e="StackColorScheme";localStorage.getItem(e)||localStorage.setItem(e,"auto")})()</script><script>(function(){const t="StackColorScheme",e=localStorage.getItem(t),n=window.matchMedia("(prefers-color-scheme: dark)").matches===!0;e=="dark"||e==="auto"&&n?document.documentElement.dataset.scheme="dark":document.documentElement.dataset.scheme="light"})()</script><div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky"><button class="hamburger hamburger--spin" type=button id=toggle-menu aria-label=切换菜单>
+<span class=hamburger-box><span class=hamburger-inner></span></span></button><header><figure class=site-avatar><a href=/><img src=/img/head_portrait_hu1368e4ffa06e7513186f849074288e92_335306_300x0_resize_q75_box.jpg width=300 height=300 class=site-logo loading=lazy alt=Avatar></a>
+<span class=emoji>🍥</span></figure><div class=site-meta><h1 class=site-name><a href=/>sy</a></h1><h2 class=site-description>最是人间留不住，朱颜辞镜花辞树。</h2></div></header><ol class=social-menu><li><a href='https://github.com/clumsy-sy?tab=repositories' target=_blank title=GitHub rel=me><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 19c-4.3 1.4-4.3-2.5-6-3m12 5v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6.0 00-1.3-3.2 4.2 4.2.0 00-.1-3.2s-1.1-.3-3.5 1.3a12.3 12.3.0 00-6.2.0C6.5 2.8 5.4 3.1 5.4 3.1a4.2 4.2.0 00-.1 3.2A4.6 4.6.0 004 9.5c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.2-.5 2V21"/></svg></a></li></ol><ol class=menu id=main-menu><li><a href=/><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><polyline points="5 12 3 12 12 3 21 12 19 12"/><path d="M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7"/><path d="M9 21v-6a2 2 0 012-2h2a2 2 0 012 2v6"/></svg><span>主页</span></a></li><li><a href=/%E5%85%B3%E4%BA%8E/><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="7" r="4"/><path d="M6 21v-2a4 4 0 014-4h4a4 4 0 014 4v2"/></svg><span>关于</span></a></li><li><a href=/archives/><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><rect x="3" y="4" width="18" height="4" rx="2"/><path d="M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8"/><line x1="10" y1="12" x2="14" y2="12"/></svg><span>归档</span></a></li><li><a href=/search/><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="10" cy="10" r="7"/><line x1="21" y1="21" x2="15" y2="15"/></svg><span>搜索</span></a></li><li><a href=/%E9%93%BE%E6%8E%A5/><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><path d="M10 14a3.5 3.5.0 005 0l4-4a3.5 3.5.0 00-5-5l-.5.5"/><path d="M14 10a3.5 3.5.0 00-5 0l-4 4a3.5 3.5.0 005 5l.5-.5"/></svg><span>链接</span></a></li><div class=menu-bottom-section><li id=dark-mode-toggle><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="8" cy="12" r="2"/><rect x="2" y="6" width="20" height="12" rx="6"/></svg><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="16" cy="12" r="2"/><rect x="2" y="6" width="20" height="12" rx="6"/></svg><span>暗色模式</span></li></div></ol></aside><aside class="sidebar right-sidebar sticky"><section class="widget archives"><div class=widget-icon><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><line x1="5" y1="9" x2="19" y2="9"/><line x1="5" y1="15" x2="19" y2="15"/><line x1="11" y1="4" x2="7" y2="20"/><line x1="17" y1="4" x2="13" y2="20"/></svg></div><h2 class="widget-title section-title">目录</h2><div class=widget--toc><nav id=TableOfContents><ol><li><a href=#方法-1--直接计算极角>方法 1 : 直接计算极角</a></li><li><a href=#方法二--叉积--所在象限排序>方法二 : 叉积 + 所在象限排序</a></li><li><a href=#例题-1-c-nearest-vectorshttpscodeforcescomcontest598problemc>例题 1 ：<a href=https://codeforces.com/contest/598/problem/C>C. Nearest vectors</a></a></li><li><a href=#例题-2-usaco10opentriangle-counting-g---洛谷httpswwwluogucomcnproblemp2992>例题 2 ：<a href=https://www.luogu.com.cn/problem/P2992>[USACO10OPEN]Triangle Counting G - 洛谷</a></a></li><li><a href=#例题-3--poi2008tro-triangles---洛谷httpswwwluogucomcnproblemp3476sub>例题 3 : <a href=https://www.luogu.com.cn/problem/P3476#sub>[POI2008]TRO-Triangles - 洛谷</a></a></li></ol></nav></div></section></aside><main class="main full-width"><article class=main-article><header class=article-header><div class=article-details><header class=article-category><a href=/categories/algorithm/ style=background-color:#0f0;color:#fff>Algorithm</a></header><div class=article-title-wrapper><h2 class=article-title><a href=/p/polaranglesort/>PolarAngleSort</a></h2></div><footer class=article-time><div><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><path d="M11.795 21H5a2 2 0 01-2-2V7a2 2 0 012-2h12a2 2 0 012 2v4"/><circle cx="18" cy="18" r="4"/><path d="M15 3v4"/><path d="M7 3v4"/><path d="M3 11h16"/><path d="M18 16.496V18l1 1"/></svg><time class=article-time--published>Sep 30, 2021</time></div><div><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 15"/></svg><time class=article-time--reading>阅读时长: 7 分钟</time></div></footer></div></header><section class=article-content><h1 id=极角排序>极角排序</h1><h2 id=方法-1--直接计算极角>方法 1 : 直接计算极角</h2><p>极坐标与直角坐标转换公式有 $\tan \theta = \dfrac{y}{x}$ ，在 <code>&lt;cmath></code> 中有函数 <code>atan(y, x)</code> ，可以直接计算 <code>(x, y)</code> 的极角，值域是 $(-\pi,\pi]$ ，可以直接使用。</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-cpp data-lang=cpp><span class=line><span class=cl><span class=cp>#include</span><span class=cpf>&lt;bits/stdc++.h&gt;</span><span class=cp>
+</span></span></span><span class=line><span class=cl><span class=cp></span><span class=k>using</span> <span class=k>namespace</span> <span class=n>std</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=k>typedef</span> <span class=kt>long</span> <span class=kt>double</span> <span class=n>ld</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=k>const</span> <span class=kt>int</span> <span class=n>M</span> <span class=o>=</span> <span class=mf>1e5</span> <span class=o>+</span> <span class=mi>7</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=k>struct</span> <span class=nc>Point</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=n>ld</span> <span class=n>x</span><span class=p>,</span> <span class=n>y</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=n>Point</span><span class=p>(</span><span class=k>const</span> <span class=n>ld</span> <span class=o>&amp;</span><span class=n>x</span> <span class=o>=</span> <span class=mi>0</span><span class=p>,</span> <span class=k>const</span> <span class=n>ld</span> <span class=o>&amp;</span><span class=n>y</span> <span class=o>=</span> <span class=mi>0</span><span class=p>)</span> <span class=o>:</span> <span class=n>x</span><span class=p>(</span><span class=n>x</span><span class=p>),</span> <span class=n>y</span><span class=p>(</span><span class=n>y</span><span class=p>)</span> <span class=p>{}</span>
+</span></span><span class=line><span class=cl><span class=p>}</span><span class=n>p</span><span class=p>[</span><span class=n>M</span><span class=p>];</span>
+</span></span><span class=line><span class=cl><span class=kt>int</span> <span class=nf>main</span><span class=p>()</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=kt>int</span> <span class=n>n</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=n>scanf</span><span class=p>(</span><span class=s>&#34;%d&#34;</span><span class=p>,</span> <span class=o>&amp;</span><span class=n>n</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=k>for</span><span class=p>(</span><span class=kt>int</span> <span class=n>i</span> <span class=o>=</span> <span class=mi>1</span><span class=p>;</span> <span class=n>i</span> <span class=o>&lt;=</span> <span class=n>n</span><span class=p>;</span> <span class=n>i</span> <span class=o>++</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=kt>int</span> <span class=n>x</span><span class=p>,</span> <span class=n>y</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>        <span class=n>scanf</span><span class=p>(</span><span class=s>&#34;%d%d&#34;</span><span class=p>,</span> <span class=o>&amp;</span><span class=n>x</span><span class=p>,</span> <span class=o>&amp;</span><span class=n>y</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>        <span class=n>p</span><span class=p>[</span><span class=n>i</span><span class=p>]</span> <span class=o>=</span> <span class=n>Point</span><span class=p>(</span><span class=n>x</span><span class=p>,</span> <span class=n>y</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=n>sort</span><span class=p>(</span><span class=n>p</span> <span class=o>+</span> <span class=mi>1</span><span class=p>,</span> <span class=n>p</span> <span class=o>+</span> <span class=n>n</span> <span class=o>+</span> <span class=mi>1</span><span class=p>,</span> <span class=p>[</span><span class=o>&amp;</span><span class=p>](</span><span class=k>auto</span> <span class=n>p1</span><span class=p>,</span> <span class=k>auto</span> <span class=n>p2</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=k>return</span> <span class=n>atan2</span><span class=p>(</span><span class=n>p1</span><span class=p>.</span><span class=n>y</span><span class=p>,</span> <span class=n>p1</span><span class=p>.</span><span class=n>x</span><span class=p>)</span> <span class=o>&lt;</span> <span class=n>atan2</span><span class=p>(</span><span class=n>p2</span><span class=p>.</span><span class=n>y</span><span class=p>,</span> <span class=n>p2</span><span class=p>.</span><span class=n>x</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=p>});</span>
+</span></span><span class=line><span class=cl>    <span class=k>for</span> <span class=p>(</span><span class=kt>int</span> <span class=n>i</span> <span class=o>=</span> <span class=mi>1</span><span class=p>;</span> <span class=n>i</span> <span class=o>&lt;=</span> <span class=n>n</span><span class=p>;</span> <span class=o>++</span><span class=n>i</span><span class=p>)</span><span class=n>cout</span> <span class=o>&lt;&lt;</span> <span class=sc>&#39;(&#39;</span> <span class=o>&lt;&lt;</span> <span class=n>p</span><span class=p>[</span><span class=n>i</span><span class=p>].</span><span class=n>x</span> <span class=o>&lt;&lt;</span> <span class=sc>&#39;,&#39;</span> <span class=o>&lt;&lt;</span> <span class=n>p</span><span class=p>[</span><span class=n>i</span><span class=p>].</span><span class=n>y</span> <span class=o>&lt;&lt;</span> <span class=sc>&#39;,&#39;</span> <span class=o>&lt;&lt;</span> <span class=n>atan2</span><span class=p>(</span><span class=n>p</span><span class=p>[</span><span class=n>i</span><span class=p>].</span><span class=n>y</span><span class=p>,</span> <span class=n>p</span><span class=p>[</span><span class=n>i</span><span class=p>].</span><span class=n>x</span><span class=p>)</span> <span class=o>&lt;&lt;</span><span class=sc>&#39;)&#39;</span> <span class=o>&lt;&lt;</span> <span class=n>endl</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=k>return</span> <span class=mi>0</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></td></tr></table></div></div><p>这种极角排序，有一下几点需要注意：</p><ol><li><p>排序完之后是按照 (三（不含负 $x$ 轴）、四、一、二) 的象限顺序。</p></li><li><p><code>atan(y,x)</code> 是存在精度误差的可能会被卡。</p></li></ol><h2 id=方法二--叉积--所在象限排序>方法二 : 叉积 + 所在象限排序</h2><p>通过两向量象限关系 + 叉积关系来排序</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span><span class=lnt>33
+</span><span class=lnt>34
+</span><span class=lnt>35
+</span><span class=lnt>36
+</span><span class=lnt>37
+</span><span class=lnt>38
+</span><span class=lnt>39
+</span><span class=lnt>40
+</span><span class=lnt>41
+</span><span class=lnt>42
+</span><span class=lnt>43
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-cpp data-lang=cpp><span class=line><span class=cl><span class=cp>#include</span><span class=cpf>&lt;iostream&gt;</span><span class=cp>
+</span></span></span><span class=line><span class=cl><span class=cp>#include</span><span class=cpf>&lt;cmath&gt;</span><span class=cp>
+</span></span></span><span class=line><span class=cl><span class=cp>#include</span><span class=cpf>&lt;algorithm&gt;</span><span class=cp>
+</span></span></span><span class=line><span class=cl><span class=cp></span><span class=k>using</span> <span class=k>namespace</span> <span class=n>std</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=k>typedef</span> <span class=kt>long</span> <span class=kt>double</span> <span class=n>ld</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=k>const</span> <span class=kt>int</span> <span class=n>M</span> <span class=o>=</span> <span class=mf>1e5</span> <span class=o>+</span> <span class=mi>7</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=k>struct</span> <span class=nc>Point</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=n>ld</span> <span class=n>x</span><span class=p>,</span> <span class=n>y</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=kt>int</span> <span class=n>id</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=n>Point</span><span class=p>(</span><span class=k>const</span> <span class=n>ld</span> <span class=o>&amp;</span><span class=n>x</span> <span class=o>=</span> <span class=mi>0</span><span class=p>,</span> <span class=k>const</span> <span class=n>ld</span> <span class=o>&amp;</span><span class=n>y</span> <span class=o>=</span> <span class=mi>0</span><span class=p>)</span> <span class=o>:</span><span class=n>x</span><span class=p>(</span><span class=n>x</span><span class=p>),</span> <span class=n>y</span><span class=p>(</span><span class=n>y</span><span class=p>){}</span>
+</span></span><span class=line><span class=cl>    <span class=n>Point</span> <span class=k>operator</span><span class=o>-</span><span class=p>(</span><span class=k>const</span> <span class=n>Point</span><span class=o>&amp;</span> <span class=n>b</span><span class=p>){</span><span class=k>return</span> <span class=nf>Point</span><span class=p>(</span><span class=n>x</span> <span class=o>-</span> <span class=n>b</span><span class=p>.</span><span class=n>x</span><span class=p>,</span> <span class=n>y</span> <span class=o>-</span> <span class=n>b</span><span class=p>.</span><span class=n>y</span><span class=p>);}</span>
+</span></span><span class=line><span class=cl>    <span class=n>ld</span> <span class=nf>get_length</span><span class=p>()</span> <span class=p>{</span><span class=k>return</span> <span class=n>sqrt</span><span class=p>(</span><span class=n>x</span> <span class=o>*</span> <span class=n>x</span> <span class=o>+</span> <span class=n>y</span> <span class=o>*</span> <span class=n>y</span><span class=p>);}</span>
+</span></span><span class=line><span class=cl><span class=p>}</span><span class=n>p</span><span class=p>[</span><span class=n>M</span><span class=p>];</span>
+</span></span><span class=line><span class=cl><span class=n>ld</span> <span class=nf>cross</span><span class=p>(</span><span class=n>Point</span> <span class=n>a</span><span class=p>,</span> <span class=n>Point</span> <span class=n>b</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=k>return</span> <span class=n>a</span><span class=p>.</span><span class=n>x</span> <span class=o>*</span> <span class=n>b</span><span class=p>.</span><span class=n>y</span> <span class=o>-</span> <span class=n>a</span><span class=p>.</span><span class=n>y</span> <span class=o>*</span> <span class=n>b</span><span class=p>.</span><span class=n>x</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=kt>int</span> <span class=nf>qua</span><span class=p>(</span><span class=n>Point</span> <span class=n>p</span><span class=p>)</span> <span class=p>{</span> <span class=k>return</span> <span class=p>(</span><span class=n>p</span><span class=p>.</span><span class=n>y</span> <span class=o>&lt;</span> <span class=mi>0</span><span class=p>)</span> <span class=o>&lt;&lt;</span> <span class=mi>1</span> <span class=o>|</span> <span class=p>(</span><span class=n>p</span><span class=p>.</span><span class=n>x</span> <span class=o>&lt;</span> <span class=mi>0</span><span class=p>)</span> <span class=o>^</span> <span class=p>(</span><span class=n>p</span><span class=p>.</span><span class=n>y</span> <span class=o>&lt;</span> <span class=mi>0</span><span class=p>);}</span>    <span class=c1>// 求象限(0, 1, 2, 3)
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=kt>bool</span> <span class=nf>cmp</span><span class=p>(</span><span class=n>Point</span> <span class=n>a</span><span class=p>,</span> <span class=n>Point</span> <span class=n>b</span><span class=p>)</span> <span class=p>{</span> <span class=c1>// cmp 写法
+</span></span></span><span class=line><span class=cl><span class=c1></span>    <span class=k>return</span> <span class=n>qua</span><span class=p>(</span><span class=n>a</span><span class=p>)</span> <span class=o>&lt;</span> <span class=n>qua</span><span class=p>(</span><span class=n>b</span><span class=p>)</span> <span class=o>||</span> <span class=n>qua</span><span class=p>(</span><span class=n>a</span><span class=p>)</span> <span class=o>==</span> <span class=n>qua</span><span class=p>(</span><span class=n>b</span><span class=p>)</span> <span class=o>&amp;&amp;</span> <span class=p>(</span><span class=n>cross</span><span class=p>(</span><span class=n>a</span><span class=p>,</span> <span class=n>b</span><span class=p>)</span> <span class=o>&gt;</span> <span class=mf>0.0</span><span class=p>);</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=kt>bool</span> <span class=nf>cmp2</span><span class=p>(</span><span class=k>const</span> <span class=n>Point</span> <span class=o>&amp;</span><span class=n>a</span><span class=p>,</span> <span class=k>const</span> <span class=n>Point</span> <span class=o>&amp;</span><span class=n>b</span><span class=p>)</span><span class=c1>//先按象限排序，再按极角排序，再按远近排序 
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=k>if</span> <span class=p>(</span><span class=n>a</span><span class=p>.</span><span class=n>y</span> <span class=o>==</span> <span class=mi>0</span> <span class=o>&amp;&amp;</span> <span class=n>b</span><span class=p>.</span><span class=n>y</span> <span class=o>==</span> <span class=mi>0</span> <span class=o>&amp;&amp;</span> <span class=n>a</span><span class=p>.</span><span class=n>x</span><span class=o>*</span><span class=n>b</span><span class=p>.</span><span class=n>x</span> <span class=o>&lt;=</span> <span class=mi>0</span><span class=p>)</span><span class=k>return</span> <span class=n>a</span><span class=p>.</span><span class=n>x</span><span class=o>&gt;</span><span class=n>b</span><span class=p>.</span><span class=n>x</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=k>if</span> <span class=p>(</span><span class=n>a</span><span class=p>.</span><span class=n>y</span> <span class=o>==</span> <span class=mi>0</span> <span class=o>&amp;&amp;</span> <span class=n>a</span><span class=p>.</span><span class=n>x</span> <span class=o>&gt;=</span> <span class=mi>0</span> <span class=o>&amp;&amp;</span> <span class=n>b</span><span class=p>.</span><span class=n>y</span> <span class=o>!=</span> <span class=mi>0</span><span class=p>)</span><span class=k>return</span> <span class=nb>true</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=k>if</span> <span class=p>(</span><span class=n>b</span><span class=p>.</span><span class=n>y</span> <span class=o>==</span> <span class=mi>0</span> <span class=o>&amp;&amp;</span> <span class=n>b</span><span class=p>.</span><span class=n>x</span> <span class=o>&gt;=</span> <span class=mi>0</span> <span class=o>&amp;&amp;</span> <span class=n>a</span><span class=p>.</span><span class=n>y</span> <span class=o>!=</span> <span class=mi>0</span><span class=p>)</span><span class=k>return</span> <span class=nb>false</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=k>if</span> <span class=p>(</span><span class=n>b</span><span class=p>.</span><span class=n>y</span><span class=o>*</span><span class=n>a</span><span class=p>.</span><span class=n>y</span> <span class=o>&lt;=</span> <span class=mi>0</span><span class=p>)</span><span class=k>return</span> <span class=n>a</span><span class=p>.</span><span class=n>y</span><span class=o>&gt;</span><span class=n>b</span><span class=p>.</span><span class=n>y</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=k>return</span> <span class=n>cross</span><span class=p>(</span><span class=n>a</span><span class=p>,</span><span class=n>b</span><span class=p>)</span> <span class=o>&gt;</span> <span class=mi>0</span> <span class=o>||</span> <span class=p>(</span><span class=n>cross</span><span class=p>(</span><span class=n>a</span><span class=p>,</span><span class=n>b</span><span class=p>)</span> <span class=o>==</span> <span class=mi>0</span> <span class=o>&amp;&amp;</span> <span class=n>a</span><span class=p>.</span><span class=n>y</span> <span class=o>&gt;</span> <span class=n>b</span><span class=p>.</span><span class=n>y</span><span class=p>);</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=kt>int</span> <span class=nf>main</span><span class=p>()</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=kt>int</span> <span class=n>n</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=n>scanf</span><span class=p>(</span><span class=s>&#34;%d&#34;</span><span class=p>,</span> <span class=o>&amp;</span><span class=n>n</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=k>for</span><span class=p>(</span><span class=kt>int</span> <span class=n>i</span> <span class=o>=</span> <span class=mi>1</span><span class=p>;</span> <span class=n>i</span> <span class=o>&lt;=</span> <span class=n>n</span><span class=p>;</span> <span class=n>i</span> <span class=o>++</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=kt>int</span> <span class=n>x</span><span class=p>,</span> <span class=n>y</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>        <span class=n>scanf</span><span class=p>(</span><span class=s>&#34;%d%d&#34;</span><span class=p>,</span> <span class=o>&amp;</span><span class=n>x</span><span class=p>,</span> <span class=o>&amp;</span><span class=n>y</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>        <span class=n>p</span><span class=p>[</span><span class=n>i</span><span class=p>]</span> <span class=o>=</span> <span class=n>Point</span><span class=p>(</span><span class=n>x</span><span class=p>,</span> <span class=n>y</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl>    <span class=n>Point</span> <span class=n>c</span> <span class=o>=</span> <span class=n>Point</span><span class=p>(</span><span class=mi>0</span><span class=p>,</span> <span class=mi>0</span><span class=p>);</span> <span class=c1>// 原点（可更改）
+</span></span></span><span class=line><span class=cl><span class=c1></span>    <span class=n>sort</span><span class=p>(</span><span class=n>p</span> <span class=o>+</span> <span class=mi>1</span><span class=p>,</span> <span class=n>p</span> <span class=o>+</span> <span class=n>n</span> <span class=o>+</span> <span class=mi>1</span><span class=p>,</span> <span class=p>[</span><span class=o>&amp;</span><span class=p>](</span><span class=k>auto</span> <span class=n>v1</span><span class=p>,</span> <span class=k>auto</span> <span class=n>v2</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=k>return</span> <span class=n>qua</span><span class=p>(</span><span class=n>v1</span> <span class=o>-</span> <span class=n>c</span><span class=p>)</span> <span class=o>&lt;</span> <span class=n>qua</span><span class=p>(</span><span class=n>v2</span> <span class=o>-</span> <span class=n>c</span><span class=p>)</span> <span class=o>||</span> <span class=n>qua</span><span class=p>(</span><span class=n>v1</span> <span class=o>-</span> <span class=n>c</span><span class=p>)</span> <span class=o>==</span> <span class=n>qua</span><span class=p>(</span><span class=n>v2</span> <span class=o>-</span> <span class=n>c</span><span class=p>)</span> <span class=o>&amp;&amp;</span> <span class=p>(</span><span class=n>cross</span><span class=p>(</span><span class=n>v1</span> <span class=o>-</span> <span class=n>c</span><span class=p>,</span> <span class=n>v2</span> <span class=o>-</span> <span class=n>c</span><span class=p>)</span> <span class=o>&gt;</span> <span class=mf>0.0</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=p>});</span>
+</span></span><span class=line><span class=cl>    <span class=k>for</span> <span class=p>(</span><span class=kt>int</span> <span class=n>i</span> <span class=o>=</span> <span class=mi>1</span><span class=p>;</span> <span class=n>i</span> <span class=o>&lt;=</span> <span class=n>n</span><span class=p>;</span> <span class=o>++</span><span class=n>i</span><span class=p>)</span><span class=n>cout</span> <span class=o>&lt;&lt;</span> <span class=sc>&#39;(&#39;</span> <span class=o>&lt;&lt;</span> <span class=n>p</span><span class=p>[</span><span class=n>i</span><span class=p>].</span><span class=n>x</span> <span class=o>&lt;&lt;</span> <span class=sc>&#39;,&#39;</span> <span class=o>&lt;&lt;</span> <span class=n>p</span><span class=p>[</span><span class=n>i</span><span class=p>].</span><span class=n>y</span> <span class=o>&lt;&lt;</span><span class=sc>&#39;)&#39;</span> <span class=o>&lt;&lt;</span> <span class=n>endl</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=k>return</span> <span class=mi>0</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></td></tr></table></div></div><p>注意点：</p><ol><li><p>在点为整数的情况下精度较高，速度可能比上面的方法快。</p></li><li><p>排序后结果是按照（一（含正 $x$ 轴）、二、三、四）坐标轴排列。</p></li></ol><h2 id=例题-1-c-nearest-vectorshttpscodeforcescomcontest598problemc>例题 1 ：<a class=link href=https://codeforces.com/contest/598/problem/C target=_blank rel=noopener>C. Nearest vectors</a></h2><p>模板题，极角排序后求相邻两向量的夹角即可，最后输出最小对的坐标。</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span><span class=lnt>33
+</span><span class=lnt>34
+</span><span class=lnt>35
+</span><span class=lnt>36
+</span><span class=lnt>37
+</span><span class=lnt>38
+</span><span class=lnt>39
+</span><span class=lnt>40
+</span><span class=lnt>41
+</span><span class=lnt>42
+</span><span class=lnt>43
+</span><span class=lnt>44
+</span><span class=lnt>45
+</span><span class=lnt>46
+</span><span class=lnt>47
+</span><span class=lnt>48
+</span><span class=lnt>49
+</span><span class=lnt>50
+</span><span class=lnt>51
+</span><span class=lnt>52
+</span><span class=lnt>53
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-cpp data-lang=cpp><span class=line><span class=cl><span class=cp>#include</span><span class=cpf>&lt;iostream&gt;</span><span class=cp>
+</span></span></span><span class=line><span class=cl><span class=cp>#include</span><span class=cpf>&lt;cmath&gt;</span><span class=cp>
+</span></span></span><span class=line><span class=cl><span class=cp>#include</span><span class=cpf>&lt;algorithm&gt;</span><span class=cp>
+</span></span></span><span class=line><span class=cl><span class=cp></span><span class=k>using</span> <span class=k>namespace</span> <span class=n>std</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=k>typedef</span> <span class=kt>long</span> <span class=kt>double</span> <span class=n>ld</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=k>const</span> <span class=kt>int</span> <span class=n>M</span> <span class=o>=</span> <span class=mf>1e5</span> <span class=o>+</span> <span class=mi>7</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=k>const</span> <span class=n>ld</span> <span class=n>PI</span> <span class=o>=</span> <span class=n>acos</span><span class=p>(</span><span class=o>-</span><span class=mi>1</span><span class=p>);</span>
+</span></span><span class=line><span class=cl><span class=k>struct</span> <span class=nc>Point</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=n>ld</span> <span class=n>x</span><span class=p>,</span> <span class=n>y</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=kt>int</span> <span class=n>id</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=n>Point</span><span class=p>(</span><span class=k>const</span> <span class=n>ld</span> <span class=o>&amp;</span><span class=n>x</span> <span class=o>=</span> <span class=mi>0</span><span class=p>,</span> <span class=k>const</span> <span class=n>ld</span> <span class=o>&amp;</span><span class=n>y</span> <span class=o>=</span> <span class=mi>0</span><span class=p>,</span> <span class=k>const</span> <span class=kt>int</span> <span class=o>&amp;</span><span class=n>id</span> <span class=o>=</span> <span class=mi>0</span><span class=p>)</span> <span class=o>:</span><span class=n>x</span><span class=p>(</span><span class=n>x</span><span class=p>),</span> <span class=n>y</span><span class=p>(</span><span class=n>y</span><span class=p>),</span> <span class=n>id</span><span class=p>(</span><span class=n>id</span><span class=p>)</span> <span class=p>{}</span>
+</span></span><span class=line><span class=cl>    <span class=n>Point</span> <span class=k>operator</span><span class=o>-</span><span class=p>(</span><span class=k>const</span> <span class=n>Point</span><span class=o>&amp;</span> <span class=n>b</span><span class=p>){</span><span class=k>return</span> <span class=nf>Point</span><span class=p>(</span><span class=n>x</span> <span class=o>-</span> <span class=n>b</span><span class=p>.</span><span class=n>x</span><span class=p>,</span> <span class=n>y</span> <span class=o>-</span> <span class=n>b</span><span class=p>.</span><span class=n>y</span><span class=p>);}</span>
+</span></span><span class=line><span class=cl>    <span class=n>ld</span> <span class=nf>get_length</span><span class=p>()</span> <span class=p>{</span><span class=k>return</span> <span class=n>sqrt</span><span class=p>(</span><span class=n>x</span> <span class=o>*</span> <span class=n>x</span> <span class=o>+</span> <span class=n>y</span> <span class=o>*</span> <span class=n>y</span><span class=p>);}</span>
+</span></span><span class=line><span class=cl><span class=p>}</span><span class=n>p</span><span class=p>[</span><span class=n>M</span><span class=p>];</span>
+</span></span><span class=line><span class=cl><span class=n>ld</span> <span class=nf>dot</span><span class=p>(</span><span class=n>Point</span> <span class=n>a</span><span class=p>,</span> <span class=n>Point</span> <span class=n>b</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=k>return</span> <span class=n>a</span><span class=p>.</span><span class=n>x</span> <span class=o>*</span> <span class=n>b</span><span class=p>.</span><span class=n>x</span> <span class=o>+</span> <span class=n>a</span><span class=p>.</span><span class=n>y</span> <span class=o>*</span> <span class=n>b</span><span class=p>.</span><span class=n>y</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=n>ld</span> <span class=nf>cross</span><span class=p>(</span><span class=n>Point</span> <span class=n>a</span><span class=p>,</span> <span class=n>Point</span> <span class=n>b</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=k>return</span> <span class=n>a</span><span class=p>.</span><span class=n>x</span> <span class=o>*</span> <span class=n>b</span><span class=p>.</span><span class=n>y</span> <span class=o>-</span> <span class=n>a</span><span class=p>.</span><span class=n>y</span> <span class=o>*</span> <span class=n>b</span><span class=p>.</span><span class=n>x</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=kt>double</span> <span class=nf>get_angle</span><span class=p>(</span><span class=n>Point</span> <span class=n>a</span><span class=p>,</span> <span class=n>Point</span> <span class=n>b</span><span class=p>)</span> <span class=p>{</span> <span class=c1>// 求两向量夹角
+</span></span></span><span class=line><span class=cl><span class=c1></span>    <span class=k>return</span> <span class=n>acos</span><span class=p>(</span><span class=n>dot</span><span class=p>(</span><span class=n>a</span><span class=p>,</span> <span class=n>b</span><span class=p>)</span> <span class=o>/</span> <span class=n>a</span><span class=p>.</span><span class=n>get_length</span><span class=p>()</span> <span class=o>/</span> <span class=n>b</span><span class=p>.</span><span class=n>get_length</span><span class=p>());</span> <span class=c1>// 弧度 -&gt; (* 180 / PI) 角度
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=n>ld</span> <span class=nf>theta</span><span class=p>(</span><span class=n>Point</span> <span class=n>p</span><span class=p>)</span> <span class=p>{</span> <span class=k>return</span> <span class=n>atan2</span><span class=p>(</span><span class=n>p</span><span class=p>.</span><span class=n>y</span><span class=p>,</span> <span class=n>p</span><span class=p>.</span><span class=n>x</span><span class=p>);}</span> 
+</span></span><span class=line><span class=cl><span class=kt>int</span> <span class=nf>qua</span><span class=p>(</span><span class=n>Point</span> <span class=n>p</span><span class=p>)</span> <span class=p>{</span> <span class=k>return</span> <span class=p>(</span><span class=n>p</span><span class=p>.</span><span class=n>y</span> <span class=o>&lt;</span> <span class=mi>0</span><span class=p>)</span> <span class=o>&lt;&lt;</span> <span class=mi>1</span> <span class=o>|</span> <span class=p>(</span><span class=n>p</span><span class=p>.</span><span class=n>x</span> <span class=o>&lt;</span> <span class=mi>0</span><span class=p>)</span> <span class=o>^</span> <span class=p>(</span><span class=n>p</span><span class=p>.</span><span class=n>y</span> <span class=o>&lt;</span> <span class=mi>0</span><span class=p>);}</span>    <span class=c1>// 求象限
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=kt>bool</span> <span class=nf>cmp</span><span class=p>(</span><span class=n>Point</span> <span class=n>a</span><span class=p>,</span> <span class=n>Point</span> <span class=n>b</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=k>return</span> <span class=n>qua</span><span class=p>(</span><span class=n>a</span><span class=p>)</span> <span class=o>&lt;</span> <span class=n>qua</span><span class=p>(</span><span class=n>b</span><span class=p>)</span> <span class=o>||</span> <span class=n>qua</span><span class=p>(</span><span class=n>a</span><span class=p>)</span> <span class=o>==</span> <span class=n>qua</span><span class=p>(</span><span class=n>b</span><span class=p>)</span> <span class=o>&amp;&amp;</span> <span class=p>(</span><span class=n>cross</span><span class=p>(</span><span class=n>a</span><span class=p>,</span> <span class=n>b</span><span class=p>)</span> <span class=o>&gt;</span> <span class=mf>0.0</span><span class=p>);</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=kt>int</span> <span class=nf>main</span><span class=p>()</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=kt>int</span> <span class=n>n</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=n>scanf</span><span class=p>(</span><span class=s>&#34;%d&#34;</span><span class=p>,</span> <span class=o>&amp;</span><span class=n>n</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=k>for</span><span class=p>(</span><span class=kt>int</span> <span class=n>i</span> <span class=o>=</span> <span class=mi>1</span><span class=p>;</span> <span class=n>i</span> <span class=o>&lt;=</span> <span class=n>n</span><span class=p>;</span> <span class=n>i</span> <span class=o>++</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=kt>int</span> <span class=n>x</span><span class=p>,</span> <span class=n>y</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>        <span class=n>scanf</span><span class=p>(</span><span class=s>&#34;%d%d&#34;</span><span class=p>,</span> <span class=o>&amp;</span><span class=n>x</span><span class=p>,</span> <span class=o>&amp;</span><span class=n>y</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>        <span class=n>p</span><span class=p>[</span><span class=n>i</span><span class=p>]</span> <span class=o>=</span> <span class=n>Point</span><span class=p>(</span><span class=n>x</span><span class=p>,</span> <span class=n>y</span><span class=p>,</span> <span class=n>i</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl>    <span class=n>sort</span><span class=p>(</span><span class=n>p</span> <span class=o>+</span> <span class=mi>1</span><span class=p>,</span> <span class=n>p</span> <span class=o>+</span> <span class=n>n</span> <span class=o>+</span> <span class=mi>1</span><span class=p>,</span> <span class=n>cmp</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=n>p</span><span class=p>[</span><span class=n>n</span> <span class=o>+</span> <span class=mi>1</span><span class=p>]</span> <span class=o>=</span> <span class=n>p</span><span class=p>[</span><span class=mi>1</span><span class=p>];</span>
+</span></span><span class=line><span class=cl>    <span class=n>pair</span><span class=o>&lt;</span><span class=kt>int</span><span class=p>,</span> <span class=kt>int</span><span class=o>&gt;</span> <span class=n>ans</span> <span class=o>=</span> <span class=p>{</span><span class=mi>1</span><span class=p>,</span> <span class=mi>2</span><span class=p>};</span>
+</span></span><span class=line><span class=cl>    <span class=n>ld</span> <span class=n>mmax</span> <span class=o>=</span> <span class=mi>2</span> <span class=o>*</span> <span class=n>PI</span> <span class=o>+</span> <span class=mi>1</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=k>for</span><span class=p>(</span><span class=kt>int</span> <span class=n>i</span> <span class=o>=</span> <span class=mi>1</span><span class=p>;</span> <span class=n>i</span> <span class=o>&lt;=</span> <span class=n>n</span><span class=p>;</span> <span class=n>i</span> <span class=o>++</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=n>ld</span> <span class=n>now</span> <span class=o>=</span> <span class=n>theta</span><span class=p>(</span><span class=n>p</span><span class=p>[</span><span class=n>i</span><span class=o>+</span><span class=mi>1</span><span class=p>])</span> <span class=o>-</span> <span class=n>theta</span><span class=p>(</span><span class=n>p</span><span class=p>[</span><span class=n>i</span><span class=p>]);</span>
+</span></span><span class=line><span class=cl>        <span class=c1>// 其实只是为了处理 两向量一个在第二象限，一个在第三象限的情况
+</span></span></span><span class=line><span class=cl><span class=c1></span>        <span class=c1>// 为了处理 atan 的边界
+</span></span></span><span class=line><span class=cl><span class=c1></span>        <span class=k>if</span><span class=p>(</span><span class=n>now</span> <span class=o>&lt;</span> <span class=mi>0</span><span class=p>)</span> <span class=n>now</span> <span class=o>+=</span> <span class=mi>2</span> <span class=o>*</span> <span class=n>PI</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>        <span class=k>if</span><span class=p>(</span><span class=n>now</span> <span class=o>&lt;</span> <span class=n>mmax</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>            <span class=n>mmax</span> <span class=o>=</span> <span class=n>now</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>            <span class=n>ans</span> <span class=o>=</span> <span class=p>{</span><span class=n>p</span><span class=p>[</span><span class=n>i</span><span class=p>].</span><span class=n>id</span><span class=p>,</span> <span class=n>p</span><span class=p>[</span><span class=n>i</span><span class=o>+</span><span class=mi>1</span><span class=p>].</span><span class=n>id</span><span class=p>};</span> 
+</span></span><span class=line><span class=cl>        <span class=p>}</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl>    <span class=n>printf</span><span class=p>(</span><span class=s>&#34;%d %d</span><span class=se>\n</span><span class=s>&#34;</span><span class=p>,</span> <span class=n>ans</span><span class=p>.</span><span class=n>first</span><span class=p>,</span> <span class=n>ans</span><span class=p>.</span><span class=n>second</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=k>return</span> <span class=mi>0</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></td></tr></table></div></div><h2 id=例题-2-usaco10opentriangle-counting-g---洛谷httpswwwluogucomcnproblemp2992>例题 2 ：<a class=link href=https://www.luogu.com.cn/problem/P2992 target=_blank rel=noopener>[USACO10OPEN]Triangle Counting G - 洛谷</a></h2><p>题意：给出平面上的很多点，求包含原点的三角形的个数。</p><p>思路：先求出一共可以组成多少种三角形，使用组合数 $\binom{n}{3} $，再减去不满足条件的三角形，可以发现，对于任何一个不满足条件的三角形必然存在，其中<strong>两</strong>个顶点与原点组成的直线后其余两个点观点都在同侧。在极角排序后，我们可以遍历每个点（看作以原点为起点向量），求出与这个点夹角小于 $\pi$ 的个数，也就是减去 $\binom{n}{2}$ ，就是答案了，这里可以使用二分或者双指针算法，每次只需要减去一边的不满足条件的即可。</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span><span class=lnt>33
+</span><span class=lnt>34
+</span><span class=lnt>35
+</span><span class=lnt>36
+</span><span class=lnt>37
+</span><span class=lnt>38
+</span><span class=lnt>39
+</span><span class=lnt>40
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-cpp data-lang=cpp><span class=line><span class=cl><span class=cp>#include</span> <span class=cpf>&lt;algorithm&gt;</span><span class=cp>
+</span></span></span><span class=line><span class=cl><span class=cp>#include</span> <span class=cpf>&lt;cmath&gt;</span><span class=cp>
+</span></span></span><span class=line><span class=cl><span class=cp>#include</span> <span class=cpf>&lt;iostream&gt;</span><span class=cp>
+</span></span></span><span class=line><span class=cl><span class=cp></span><span class=k>using</span> <span class=k>namespace</span> <span class=n>std</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=k>typedef</span> <span class=kt>long</span> <span class=kt>double</span> <span class=n>ld</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=k>typedef</span> <span class=kt>long</span> <span class=kt>long</span> <span class=n>ll</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=k>typedef</span> <span class=n>pair</span><span class=o>&lt;</span><span class=n>ld</span><span class=p>,</span> <span class=kt>int</span><span class=o>&gt;</span> <span class=n>PLI</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=k>const</span> <span class=kt>int</span> <span class=n>M</span> <span class=o>=</span> <span class=mf>1e5</span> <span class=o>+</span> <span class=mi>7</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=k>const</span> <span class=n>ld</span> <span class=n>PI</span> <span class=o>=</span> <span class=n>acos</span><span class=p>(</span><span class=o>-</span><span class=mi>1</span><span class=p>);</span>
+</span></span><span class=line><span class=cl><span class=k>struct</span> <span class=nc>Point</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=n>ll</span> <span class=n>x</span><span class=p>,</span> <span class=n>y</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=n>Point</span><span class=p>(</span><span class=n>ll</span> <span class=n>x</span> <span class=o>=</span> <span class=mi>0</span><span class=p>,</span> <span class=n>ll</span> <span class=n>y</span> <span class=o>=</span> <span class=mi>0</span><span class=p>)</span> <span class=o>:</span> <span class=n>x</span><span class=p>(</span><span class=n>x</span><span class=p>),</span> <span class=n>y</span><span class=p>(</span><span class=n>y</span><span class=p>)</span> <span class=p>{}</span>
+</span></span><span class=line><span class=cl><span class=p>}</span> <span class=n>p</span><span class=p>[</span><span class=n>M</span><span class=p>];</span>
+</span></span><span class=line><span class=cl><span class=n>PLI</span> <span class=n>angle</span><span class=p>[</span><span class=n>M</span><span class=p>];</span>
+</span></span><span class=line><span class=cl><span class=kt>bool</span> <span class=nf>check</span><span class=p>(</span><span class=kt>int</span> <span class=n>a</span><span class=p>,</span> <span class=kt>int</span> <span class=n>b</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=k>return</span> <span class=n>p</span><span class=p>[</span><span class=n>a</span><span class=p>].</span><span class=n>x</span> <span class=o>*</span> <span class=n>p</span><span class=p>[</span><span class=n>b</span><span class=p>].</span><span class=n>y</span> <span class=o>&gt;=</span> <span class=n>p</span><span class=p>[</span><span class=n>a</span><span class=p>].</span><span class=n>y</span> <span class=o>*</span> <span class=n>p</span><span class=p>[</span><span class=n>b</span><span class=p>].</span><span class=n>x</span><span class=p>;</span> <span class=c1>//逆时针旋转小于 PI (本质上是叉积)
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=kt>int</span> <span class=nf>main</span><span class=p>()</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=kt>int</span> <span class=n>n</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=n>scanf</span><span class=p>(</span><span class=s>&#34;%d&#34;</span><span class=p>,</span> <span class=o>&amp;</span><span class=n>n</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=k>for</span> <span class=p>(</span><span class=kt>int</span> <span class=n>i</span> <span class=o>=</span> <span class=mi>1</span><span class=p>;</span> <span class=n>i</span> <span class=o>&lt;=</span> <span class=n>n</span><span class=p>;</span> <span class=n>i</span><span class=o>++</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=kt>int</span> <span class=n>x</span><span class=p>,</span> <span class=n>y</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>        <span class=n>scanf</span><span class=p>(</span><span class=s>&#34;%d%d&#34;</span><span class=p>,</span> <span class=o>&amp;</span><span class=n>x</span><span class=p>,</span> <span class=o>&amp;</span><span class=n>y</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>        <span class=n>p</span><span class=p>[</span><span class=n>i</span><span class=p>]</span> <span class=o>=</span> <span class=n>Point</span><span class=p>(</span><span class=n>x</span><span class=p>,</span> <span class=n>y</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>        <span class=n>angle</span><span class=p>[</span><span class=n>i</span><span class=p>]</span> <span class=o>=</span> <span class=p>{</span><span class=n>atan2</span><span class=p>(</span><span class=n>y</span><span class=p>,</span> <span class=n>x</span><span class=p>),</span> <span class=n>i</span><span class=p>};</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl>    <span class=n>sort</span><span class=p>(</span><span class=n>angle</span> <span class=o>+</span> <span class=mi>1</span><span class=p>,</span> <span class=n>angle</span> <span class=o>+</span> <span class=mi>1</span> <span class=o>+</span> <span class=n>n</span><span class=p>);</span>  <span class=c1>// 极角排序
+</span></span></span><span class=line><span class=cl><span class=c1></span>    <span class=n>ll</span> <span class=n>ans</span> <span class=o>=</span> <span class=mi>1LL</span> <span class=o>*</span> <span class=n>n</span> <span class=o>*</span> <span class=p>(</span><span class=n>n</span> <span class=o>-</span> <span class=mi>1</span><span class=p>)</span> <span class=o>*</span> <span class=p>(</span><span class=n>n</span> <span class=o>-</span> <span class=mi>2</span><span class=p>)</span> <span class=o>/</span> <span class=mi>6</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=n>ll</span> <span class=n>now</span> <span class=o>=</span> <span class=mi>0</span><span class=p>;</span> <span class=c1>// 当前满足条件的点的个数
+</span></span></span><span class=line><span class=cl><span class=c1></span>    <span class=k>for</span> <span class=p>(</span><span class=kt>int</span> <span class=n>l</span> <span class=o>=</span> <span class=mi>1</span><span class=p>,</span> <span class=n>r</span> <span class=o>=</span> <span class=mi>2</span><span class=p>;</span> <span class=n>l</span> <span class=o>&lt;=</span> <span class=n>n</span><span class=p>;</span> <span class=n>l</span><span class=o>++</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=k>while</span> <span class=p>(</span><span class=n>check</span><span class=p>(</span><span class=n>angle</span><span class=p>[</span><span class=n>l</span><span class=p>].</span><span class=n>second</span><span class=p>,</span> <span class=n>angle</span><span class=p>[</span><span class=n>r</span><span class=p>].</span><span class=n>second</span><span class=p>))</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>            <span class=n>now</span><span class=o>++</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>            <span class=n>r</span> <span class=o>=</span> <span class=n>r</span> <span class=o>%</span> <span class=n>n</span> <span class=o>+</span> <span class=mi>1</span><span class=p>;</span> <span class=c1>// r ++，外加取模，一举两得
+</span></span></span><span class=line><span class=cl><span class=c1></span>        <span class=p>}</span>
+</span></span><span class=line><span class=cl>        <span class=n>ans</span> <span class=o>-=</span> <span class=n>now</span> <span class=o>*</span> <span class=p>(</span><span class=n>now</span> <span class=o>-</span> <span class=mi>1</span><span class=p>)</span> <span class=o>/</span> <span class=mi>2</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>        <span class=n>now</span><span class=o>--</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl>    <span class=n>printf</span><span class=p>(</span><span class=s>&#34;%lld</span><span class=se>\n</span><span class=s>&#34;</span><span class=p>,</span> <span class=n>ans</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=k>return</span> <span class=mi>0</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></td></tr></table></div></div><h2 id=例题-3--poi2008tro-triangles---洛谷httpswwwluogucomcnproblemp3476sub>例题 3 : <a class=link href=https://www.luogu.com.cn/problem/P3476#sub target=_blank rel=noopener>[POI2008]TRO-Triangles - 洛谷</a></h2><p>题意：给定平面上的一些点，求这些点能组成的所有三角形的面积之和，三点同一直线上面积算作 $0$ 。</p><p>分析：</p><p>题目的数据范围是 $n \le 3000$，由组合数可知，暴力作法的时间复杂度为 $O(n^3)$ 是过不了的，所以我们对这么多的点进行分析。</p><p>已知三点 $A(x_a,y_a),B(x_b,y_b),C(x_c,y_c)$</p><p>则它们所围成的三角形的面积可以这么算 ：</p><p>$$
+\begin{aligned}
+S &= \dfrac{1}{2}\overrightarrow{AB} \times \overrightarrow{AC} \\
+&= \dfrac{1}{2}(x_b - x_a, y_b - y_a) \times (x_c - x_a, y_c - y_a) \\
+&= \dfrac{1}{2}(x_b-x_a)(y_c-y_a) - (y_b - y_a)(x_c - x_a) \\
+&= \dfrac{1}{2}(x_b y_c + x_a y_a - x_a y_c - x_b y_a) - (y_b x_c + y_a x_a - y_b x_a -y_a x_c) \\
+&= \dfrac{1}{2}x_a(y_b - y_c) + y_a(x_c - x_b)
+\end{aligned}
+$$</p><p>所以我们可以先对所有点根据 $x$ ，$y$ （从小到大）双关键字排序，然后确定第一个点，也就算遍历一遍每个点，然后对后面的点极角排序，这样的话叉积结果可以直接是正数，然后遍历两个点的时间复杂度太高，所以我们就遍历其中一个点，另一个点则可以使用后缀和代替。</p><p>$$
+S = \dfrac{1}{2}x_a(y_b - \sum y_c) + y_a(\sum x_c - x_b)
+$$</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span><span class=lnt>33
+</span><span class=lnt>34
+</span><span class=lnt>35
+</span><span class=lnt>36
+</span><span class=lnt>37
+</span><span class=lnt>38
+</span><span class=lnt>39
+</span><span class=lnt>40
+</span><span class=lnt>41
+</span><span class=lnt>42
+</span><span class=lnt>43
+</span><span class=lnt>44
+</span><span class=lnt>45
+</span><span class=lnt>46
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-cpp data-lang=cpp><span class=line><span class=cl><span class=cp>#include</span> <span class=cpf>&lt;algorithm&gt;</span><span class=cp>
+</span></span></span><span class=line><span class=cl><span class=cp>#include</span> <span class=cpf>&lt;cmath&gt;</span><span class=cp>
+</span></span></span><span class=line><span class=cl><span class=cp>#include</span> <span class=cpf>&lt;iostream&gt;</span><span class=cp>
+</span></span></span><span class=line><span class=cl><span class=cp></span><span class=k>using</span> <span class=k>namespace</span> <span class=n>std</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=k>typedef</span> <span class=kt>long</span> <span class=kt>double</span> <span class=n>ld</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=k>typedef</span> <span class=kt>long</span> <span class=kt>long</span> <span class=n>ll</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=k>typedef</span> <span class=n>pair</span><span class=o>&lt;</span><span class=kt>int</span><span class=p>,</span> <span class=kt>int</span><span class=o>&gt;</span> <span class=n>PII</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=k>const</span> <span class=kt>int</span> <span class=n>M</span> <span class=o>=</span> <span class=mf>3e3</span> <span class=o>+</span> <span class=mi>7</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=k>struct</span> <span class=nc>Point</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=kt>int</span> <span class=n>x</span><span class=p>,</span> <span class=n>y</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=n>Point</span><span class=p>(</span><span class=kt>int</span> <span class=n>x</span> <span class=o>=</span> <span class=mi>0</span><span class=p>,</span> <span class=kt>int</span> <span class=n>y</span> <span class=o>=</span> <span class=mi>0</span><span class=p>)</span> <span class=o>:</span> <span class=n>x</span><span class=p>(</span><span class=n>x</span><span class=p>),</span> <span class=n>y</span><span class=p>(</span><span class=n>y</span><span class=p>)</span> <span class=p>{}</span>
+</span></span><span class=line><span class=cl><span class=p>}</span> <span class=n>p</span><span class=p>[</span><span class=n>M</span><span class=p>],</span> <span class=n>add</span><span class=p>[</span><span class=n>M</span><span class=p>];</span>
+</span></span><span class=line><span class=cl><span class=kt>bool</span> <span class=nf>cmp</span><span class=p>(</span><span class=n>Point</span> <span class=n>a</span><span class=p>,</span> <span class=n>Point</span> <span class=n>b</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=k>return</span> <span class=n>a</span><span class=p>.</span><span class=n>x</span> <span class=o>==</span> <span class=n>b</span><span class=p>.</span><span class=n>x</span> <span class=o>?</span> <span class=n>a</span><span class=p>.</span><span class=n>y</span> <span class=o>&lt;</span> <span class=n>b</span><span class=p>.</span><span class=nl>y</span> <span class=p>:</span> <span class=n>a</span><span class=p>.</span><span class=n>x</span> <span class=o>&lt;</span> <span class=n>b</span><span class=p>.</span><span class=n>x</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=kt>bool</span> <span class=nf>cmp_angle</span><span class=p>(</span><span class=n>Point</span> <span class=n>a</span><span class=p>,</span> <span class=n>Point</span> <span class=n>b</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=k>return</span> <span class=mi>1LL</span> <span class=o>*</span> <span class=n>a</span><span class=p>.</span><span class=n>x</span> <span class=o>*</span> <span class=n>b</span><span class=p>.</span><span class=n>y</span> <span class=o>&gt;</span> <span class=mi>1LL</span> <span class=o>*</span> <span class=n>a</span><span class=p>.</span><span class=n>y</span> <span class=o>*</span> <span class=n>b</span><span class=p>.</span><span class=n>x</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=kt>int</span> <span class=nf>main</span><span class=p>()</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=kt>int</span> <span class=n>n</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=n>scanf</span><span class=p>(</span><span class=s>&#34;%d&#34;</span><span class=p>,</span> <span class=o>&amp;</span><span class=n>n</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=k>for</span> <span class=p>(</span><span class=kt>int</span> <span class=n>i</span> <span class=o>=</span> <span class=mi>1</span><span class=p>;</span> <span class=n>i</span> <span class=o>&lt;=</span> <span class=n>n</span><span class=p>;</span> <span class=n>i</span><span class=o>++</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=kt>int</span> <span class=n>x</span><span class=p>,</span> <span class=n>y</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>        <span class=n>scanf</span><span class=p>(</span><span class=s>&#34;%d%d&#34;</span><span class=p>,</span> <span class=o>&amp;</span><span class=n>x</span><span class=p>,</span> <span class=o>&amp;</span><span class=n>y</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>        <span class=n>p</span><span class=p>[</span><span class=n>i</span><span class=p>]</span> <span class=o>=</span> <span class=n>Point</span><span class=p>(</span><span class=n>x</span><span class=p>,</span> <span class=n>y</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl>    <span class=n>ll</span> <span class=n>ans</span> <span class=o>=</span> <span class=mi>0</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=n>sort</span><span class=p>(</span><span class=n>p</span> <span class=o>+</span> <span class=mi>1</span><span class=p>,</span> <span class=n>p</span> <span class=o>+</span> <span class=n>n</span> <span class=o>+</span> <span class=mi>1</span><span class=p>,</span> <span class=n>cmp</span><span class=p>);</span> <span class=c1>// 对各个点按照 x 坐标排序
+</span></span></span><span class=line><span class=cl><span class=c1></span>    <span class=k>for</span><span class=p>(</span><span class=kt>int</span> <span class=n>i</span> <span class=o>=</span> <span class=mi>1</span><span class=p>;</span> <span class=n>i</span> <span class=o>&lt;=</span> <span class=n>n</span><span class=p>;</span> <span class=o>++</span><span class=n>i</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=kt>int</span> <span class=n>cnt</span> <span class=o>=</span> <span class=mi>0</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>        <span class=k>for</span><span class=p>(</span><span class=kt>int</span> <span class=n>j</span> <span class=o>=</span> <span class=n>i</span> <span class=o>+</span> <span class=mi>1</span><span class=p>;</span> <span class=n>j</span> <span class=o>&lt;=</span> <span class=n>n</span><span class=p>;</span> <span class=n>j</span> <span class=o>++</span><span class=p>)</span> <span class=p>{</span> <span class=c1>// 求到当前点的向量
+</span></span></span><span class=line><span class=cl><span class=c1></span>            <span class=n>add</span><span class=p>[</span><span class=n>cnt</span><span class=p>].</span><span class=n>x</span> <span class=o>=</span> <span class=n>p</span><span class=p>[</span><span class=n>j</span><span class=p>].</span><span class=n>x</span> <span class=o>-</span> <span class=n>p</span><span class=p>[</span><span class=n>i</span><span class=p>].</span><span class=n>x</span><span class=p>;</span> 
+</span></span><span class=line><span class=cl>            <span class=n>add</span><span class=p>[</span><span class=n>cnt</span><span class=p>].</span><span class=n>y</span> <span class=o>=</span> <span class=n>p</span><span class=p>[</span><span class=n>j</span><span class=p>].</span><span class=n>y</span> <span class=o>-</span> <span class=n>p</span><span class=p>[</span><span class=n>i</span><span class=p>].</span><span class=n>y</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>            <span class=n>cnt</span> <span class=o>++</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>        <span class=p>}</span>
+</span></span><span class=line><span class=cl>        <span class=n>ll</span> <span class=n>sumx</span> <span class=o>=</span> <span class=mi>0</span><span class=p>,</span> <span class=n>sumy</span> <span class=o>=</span> <span class=mi>0</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>        <span class=n>sort</span><span class=p>(</span><span class=n>add</span><span class=p>,</span> <span class=n>add</span> <span class=o>+</span> <span class=n>cnt</span><span class=p>,</span> <span class=n>cmp_angle</span><span class=p>);</span> <span class=c1>// 对这些项目极角排序（这样面积都为整数）
+</span></span></span><span class=line><span class=cl><span class=c1></span>        <span class=k>for</span><span class=p>(</span><span class=kt>int</span> <span class=n>j</span> <span class=o>=</span> <span class=mi>0</span><span class=p>;</span> <span class=n>j</span> <span class=o>&lt;</span> <span class=n>cnt</span><span class=p>;</span> <span class=n>j</span> <span class=o>++</span><span class=p>)</span> <span class=n>sumx</span> <span class=o>+=</span> <span class=n>add</span><span class=p>[</span><span class=n>j</span><span class=p>].</span><span class=n>x</span> <span class=p>,</span> <span class=n>sumy</span> <span class=o>+=</span> <span class=n>add</span><span class=p>[</span><span class=n>j</span><span class=p>].</span><span class=n>y</span><span class=p>;</span> <span class=c1>// 求后缀和
+</span></span></span><span class=line><span class=cl><span class=c1></span>        <span class=k>for</span><span class=p>(</span><span class=kt>int</span> <span class=n>j</span> <span class=o>=</span> <span class=mi>0</span><span class=p>;</span> <span class=n>j</span> <span class=o>&lt;</span> <span class=n>cnt</span><span class=p>;</span> <span class=n>j</span> <span class=o>++</span><span class=p>)</span> <span class=p>{</span> <span class=c1>// 遍历第二个点
+</span></span></span><span class=line><span class=cl><span class=c1></span>            <span class=n>sumx</span> <span class=o>-=</span> <span class=n>add</span><span class=p>[</span><span class=n>j</span><span class=p>].</span><span class=n>x</span><span class=p>,</span> <span class=n>sumy</span> <span class=o>-=</span> <span class=n>add</span><span class=p>[</span><span class=n>j</span><span class=p>].</span><span class=n>y</span><span class=p>;</span> <span class=c1>// 第三个点的和
+</span></span></span><span class=line><span class=cl><span class=c1></span>            <span class=n>ans</span> <span class=o>+=</span> <span class=n>sumy</span> <span class=o>*</span> <span class=n>add</span><span class=p>[</span><span class=n>j</span><span class=p>].</span><span class=n>x</span> <span class=o>-</span> <span class=n>sumx</span> <span class=o>*</span> <span class=n>add</span><span class=p>[</span><span class=n>j</span><span class=p>].</span><span class=n>y</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>        <span class=p>}</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl>    <span class=n>printf</span><span class=p>(</span><span class=s>&#34;%lld.%lld&#34;</span><span class=p>,</span> <span class=n>ans</span><span class=o>/</span><span class=mi>2</span><span class=p>,</span> <span class=p>(</span><span class=n>ans</span> <span class=o>&amp;</span> <span class=mi>1</span><span class=p>)</span> <span class=o>*</span> <span class=mi>5</span><span class=p>);</span> <span class=c1>// 小数处理
+</span></span></span><span class=line><span class=cl><span class=c1></span>    <span class=k>return</span> <span class=mi>0</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></td></tr></table></div></div></section><footer class=article-footer><section class=article-copyright><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="12" r="9"/><path d="M14.5 9a3.5 4 0 100 6"/></svg><span>Licensed under CC BY-NC-SA 4.0</span></section></footer><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/katex@0.15.6/dist/katex.min.css integrity="sha256-J+iAE0sgH8QSz9hpcDxXIftnj65JEZgNhGcgReTTK9s=" crossorigin=anonymous><script src=https://cdn.jsdelivr.net/npm/katex@0.15.6/dist/katex.min.js integrity="sha256-InsNdER1b2xUewP+pKCUJpkhiqwHgqiPXDlIk7GzBu4=" crossorigin=anonymous defer></script><script src=https://cdn.jsdelivr.net/npm/katex@0.15.6/dist/contrib/auto-render.min.js integrity="sha256-y39Mpg7V3D4lhBX4x6O0bUqTV4pSrfgwEfGKfxkOdgI=" crossorigin=anonymous defer></script><script>window.addEventListener("DOMContentLoaded",()=>{renderMathInElement(document.querySelector(`.article-content`),{delimiters:[{left:"$$",right:"$$",display:!0},{left:"$",right:"$",display:!1},{left:"\\(",right:"\\)",display:!1},{left:"\\[",right:"\\]",display:!0}]})})</script></article><aside class=related-content--wrapper><h2 class=section-title>相关文章</h2><div class=related-content><div class="flex article-list--tile"><article><a href=/p/%E6%95%B0%E8%AE%BA%E5%88%86%E5%9D%97/><div class=article-details><h2 class=article-title>数论分块</h2></div></a></article><article><a href=/p/gcd-exgcd/><div class=article-details><h2 class=article-title>GCD & EXGCD</h2></div></a></article><article><a href=/p/%E6%9C%80%E5%B0%8F%E8%A1%A8%E7%A4%BA%E6%B3%95/><div class=article-details><h2 class=article-title>最小表示法</h2></div></a></article><article><a href=/p/%E5%AD%97%E7%AC%A6%E4%B8%B2hash/><div class=article-details><h2 class=article-title>字符串Hash</h2></div></a></article></div></div></aside><div class=disqus-container><div id=disqus_thread></div><script type=application/javascript>window.disqus_config=function(){},function(){if(["localhost","127.0.0.1"].indexOf(window.location.hostname)!=-1){document.getElementById("disqus_thread").innerHTML="Disqus comments not available by default when the website is previewed locally.";return}var t=document,e=t.createElement("script");e.async=!0,e.src="//hugo-theme-stack.disqus.com/embed.js",e.setAttribute("data-timestamp",+new Date),(t.head||t.body).appendChild(e)}()</script><noscript>Please enable JavaScript to view the <a href=https://disqus.com/?ref_noscript>comments powered by Disqus.</a></noscript><a href=https://disqus.com class=dsq-brlink>comments powered by <span class=logo-disqus>Disqus</span></a></div><style>.disqus-container{background-color:var(--card-background);border-radius:var(--card-border-radius);box-shadow:var(--shadow-l1);padding:var(--card-padding)}</style><script>window.addEventListener("onColorSchemeChange",e=>{typeof DISQUS=="object"&&DISQUS.reset({reload:!0})})</script><footer class=site-footer><section class=copyright>&copy;
+2020 -
+2023 sy</section><section class=powerby>Built with <a href=https://gohugo.io/ target=_blank rel=noopener>Hugo</a><br>主题 <b><a href=https://github.com/CaiJimmy/hugo-theme-stack target=_blank rel=noopener data-version=3.16.0>Stack</a></b> 由 <a href=https://jimmycai.com target=_blank rel=noopener>Jimmy</a> 设计</section></footer><div class=pswp tabindex=-1 role=dialog aria-hidden=true><div class=pswp__bg></div><div class=pswp__scroll-wrap><div class=pswp__container><div class=pswp__item></div><div class=pswp__item></div><div class=pswp__item></div></div><div class="pswp__ui pswp__ui--hidden"><div class=pswp__top-bar><div class=pswp__counter></div><button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+<button class="pswp__button pswp__button--share" title=Share></button>
+<button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+<button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button><div class=pswp__preloader><div class=pswp__preloader__icn><div class=pswp__preloader__cut><div class=pswp__preloader__donut></div></div></div></div></div><div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap"><div class=pswp__share-tooltip></div></div><button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)"></button>
+<button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)"></button><div class=pswp__caption><div class=pswp__caption__center></div></div></div></div></div><script src=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo=" crossorigin=anonymous defer></script><script src=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU=" crossorigin=anonymous defer></script><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css crossorigin=anonymous><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css crossorigin=anonymous></main></div><script src=https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z+KMkF24hUW8WePSA9HM=" crossorigin=anonymous></script><script type=text/javascript src=/ts/main.js defer></script>
+<script>(function(){const e=document.createElement("link");e.href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap",e.type="text/css",e.rel="stylesheet",document.head.appendChild(e)})()</script></body></html>
