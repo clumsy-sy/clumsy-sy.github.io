@@ -118,27 +118,6 @@ $$&lt;/p>
 c_k = \sum_{i+j=k}f_ig_j
 $$&lt;/p>
 &lt;p>因此朴素的计算多项式的卷积需要 $n^2$ 次系数乘法，我们需要优化。&lt;/p>
-&lt;h3 id="点值表示法">点值表示法&lt;/h3>
-&lt;p>$n$ 次多项式 $f(x)$ 可以由 $n+1$ 个系数决定，也可以由 $n+1$ 个座标（点值）决定。即 $n$ 次多项式可以看作 $n+1$ 维的向量。&lt;/p>
-&lt;p>考虑选取 $2n+1$ 个座标来确定 $f(x)$ 和 $g(x)$。则 $F(x)$ 可以简单的通过做 $2n+1$ 次乘法得到&lt;/p>
-&lt;p>$$
-(x_k,F(x_k)) = \left(x_k, f(x_k)g(x_k)\right)
-$$&lt;/p>
-&lt;p>现在我们有了新的思路：先从系数表示法转换为点值表示法，做完乘法后再变回去。&lt;/p>
-&lt;h3 id="dft">DFT&lt;/h3>
-&lt;p>怎么把多项式转换成点值呢？我们有离散 Fourier 变换。&lt;/p>
-&lt;p>称方程 $x^n = 1$ 的 $n$ 个解为单位根 $\zeta_n$。对于给定的多项式 $f(x) = \sum\limits_{k=0}^{n-1} f_kx^k$ 和一个单位根 $\zeta_n$，称向量&lt;/p>
-&lt;p>$$
-\operatorname{DFT}_{\zeta_n}(f) =( f(1), f(\zeta_n^1), \cdots, f(\zeta_n^{n-1}) )
-$$&lt;/p>
-&lt;p>为 $f$ 的离散 Fourier 变换（Discrete Fourier Transform）。&lt;/p>
-&lt;p>DFT 存在逆变换（IDFT），即从点值重新变回系数，仍是从向量到向量的变换。&lt;/p>
-&lt;p>IDFT 具有一个关键性质&lt;/p>
-&lt;p>$$
-(\operatorname{DFT}_{\zeta})^{-1} = \frac{1}{n} (\operatorname{DFT}_{{\zeta}^{-1}}) \tag{1}
-$$&lt;/p>
-&lt;p>我们将在后文证明它。现在我们可以统一的处理 DFT 和 IDFT。&lt;/p>
-&lt;p>为了方便描述，接下来我们将把 $\operatorname{DFT}_{\zeta_n}$ 简单的记作 $\mathcal{F}_n$。&lt;/p>
 &lt;h3 id="单位原根">单位原根&lt;/h3>
 &lt;p>至此，我们计算 DFT 的复杂度仍然是 $O(n^2)$，FFT 所迈出的关键一步是选取特殊的点加速计算。&lt;/p>
 &lt;p>单位根中特殊的一个记作 $\zeta_n = e^{\frac{2 \pi i}{n}}$，它叫做单位原根。依 Euler 公式，有&lt;/p>
@@ -504,179 +483,6 @@ $$&lt;/p>
 V(\zeta_n) V(\zeta_n^{-1}) = (n[i = j]) = n I_n
 $$&lt;/p>
 &lt;p>即 IDFT 所对应的矩阵为 $V^{-1}(\zeta_n) = \frac{1}{n} V(\zeta_n^{-1})$，我们便证明了 $(1)$ 式。&lt;/p>
-&lt;h3 id="干掉-rev">干掉 REV&lt;/h3>
-&lt;p>其实上文所实现的 FFT 和 IFFT 并不对偶，只是卷积定理使得 IFFT 恰是 FFT 的逆运算。具体的说，我们实现了两个 DIT，因此需要在计算之前进行蝴蝶变换。&lt;/p>
-&lt;p>&lt;img src="https://upload.wikimedia.org/wikipedia/commons/f/f2/DIF_DIT.jpg"
-loading="lazy"
-alt="Wikipedia"
->&lt;/p>
-&lt;p>我们运算的核心内容在于 $(2)$ 式，它可以被写做矩阵形式。&lt;/p>
-&lt;p>$$
-\begin{bmatrix}
-O_1 \ O_2
-\end{bmatrix} =
-\begin{bmatrix}
-1 &amp;amp; \zeta_n^{-j} \
-1 &amp;amp; -\zeta_n^{-j}
-\end{bmatrix}
-\begin{bmatrix}
-I_1 \ I_2
-\end{bmatrix}
-$$&lt;/p>
-&lt;p>对矩阵求逆&lt;/p>
-&lt;p>$$
-\begin{bmatrix}
-I_1 \ I_2
-\end{bmatrix} = \frac{1}{2}
-\begin{bmatrix}
-1 &amp;amp; 1 \
-\zeta_n^{j} &amp;amp; -\zeta_n^{j}
-\end{bmatrix}
-\begin{bmatrix}
-O_1 \ O_2
-\end{bmatrix} \tag{4}
-$$&lt;/p>
-&lt;p>我们便得到了 DIF。类似的，我们可以实现两个 DIF 作为 FFT，此时蝴蝶变换在计算之后。&lt;/p>
-&lt;div class="highlight">&lt;div class="chroma">
-&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
-&lt;/span>&lt;span class="lnt"> 2
-&lt;/span>&lt;span class="lnt"> 3
-&lt;/span>&lt;span class="lnt"> 4
-&lt;/span>&lt;span class="lnt"> 5
-&lt;/span>&lt;span class="lnt"> 6
-&lt;/span>&lt;span class="lnt"> 7
-&lt;/span>&lt;span class="lnt"> 8
-&lt;/span>&lt;span class="lnt"> 9
-&lt;/span>&lt;span class="lnt">10
-&lt;/span>&lt;span class="lnt">11
-&lt;/span>&lt;span class="lnt">12
-&lt;/span>&lt;span class="lnt">13
-&lt;/span>&lt;span class="lnt">14
-&lt;/span>&lt;span class="lnt">15
-&lt;/span>&lt;span class="lnt">16
-&lt;/span>&lt;span class="lnt">17
-&lt;/span>&lt;span class="lnt">18
-&lt;/span>&lt;span class="lnt">19
-&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
-&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-cpp" data-lang="cpp">&lt;span class="line">&lt;span class="cl">&lt;span class="kt">void&lt;/span> &lt;span class="nf">fft&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">img&lt;/span> &lt;span class="o">*&lt;/span>&lt;span class="n">f&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="kt">int&lt;/span> &lt;span class="n">n&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="kt">int&lt;/span> &lt;span class="n">op&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span> &lt;span class="c1">// DIF
-&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span> &lt;span class="k">for&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="kt">int&lt;/span> &lt;span class="n">l&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">n&lt;/span> &lt;span class="o">/&lt;/span> &lt;span class="mi">2&lt;/span>&lt;span class="p">;&lt;/span> &lt;span class="n">l&lt;/span> &lt;span class="o">&amp;gt;=&lt;/span> &lt;span class="mi">1&lt;/span>&lt;span class="p">;&lt;/span> &lt;span class="n">l&lt;/span> &lt;span class="o">&amp;gt;&amp;gt;=&lt;/span> &lt;span class="mi">1&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">img&lt;/span> &lt;span class="n">w0&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="p">{&lt;/span>&lt;span class="n">cos&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">PI&lt;/span> &lt;span class="o">/&lt;/span> &lt;span class="n">l&lt;/span>&lt;span class="p">),&lt;/span> &lt;span class="n">sin&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">PI&lt;/span> &lt;span class="o">*&lt;/span> &lt;span class="n">op&lt;/span> &lt;span class="o">/&lt;/span> &lt;span class="n">l&lt;/span>&lt;span class="p">)};&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">for&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="kt">int&lt;/span> &lt;span class="n">i&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="mi">0&lt;/span>&lt;span class="p">;&lt;/span> &lt;span class="n">i&lt;/span> &lt;span class="o">&amp;lt;&lt;/span> &lt;span class="n">n&lt;/span>&lt;span class="p">;&lt;/span> &lt;span class="n">i&lt;/span> &lt;span class="o">+=&lt;/span> &lt;span class="n">l&lt;/span> &lt;span class="o">*&lt;/span> &lt;span class="mi">2&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">img&lt;/span> &lt;span class="n">w&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="p">{&lt;/span>&lt;span class="mi">1&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="mi">0&lt;/span>&lt;span class="p">};&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">for&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="kt">int&lt;/span> &lt;span class="n">j&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="mi">0&lt;/span>&lt;span class="p">;&lt;/span> &lt;span class="n">j&lt;/span> &lt;span class="o">&amp;lt;&lt;/span> &lt;span class="n">l&lt;/span>&lt;span class="p">;&lt;/span> &lt;span class="n">j&lt;/span>&lt;span class="o">++&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">img&lt;/span> &lt;span class="n">x&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">f&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="n">i&lt;/span> &lt;span class="o">+&lt;/span> &lt;span class="n">j&lt;/span>&lt;span class="p">],&lt;/span> &lt;span class="n">y&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">f&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="n">i&lt;/span> &lt;span class="o">+&lt;/span> &lt;span class="n">j&lt;/span> &lt;span class="o">+&lt;/span> &lt;span class="n">l&lt;/span>&lt;span class="p">];&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">f&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="n">i&lt;/span> &lt;span class="o">+&lt;/span> &lt;span class="n">j&lt;/span>&lt;span class="p">]&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">x&lt;/span> &lt;span class="o">+&lt;/span> &lt;span class="n">y&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">f&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="n">i&lt;/span> &lt;span class="o">+&lt;/span> &lt;span class="n">j&lt;/span> &lt;span class="o">+&lt;/span> &lt;span class="n">l&lt;/span>&lt;span class="p">]&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">w&lt;/span> &lt;span class="o">*&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="n">x&lt;/span> &lt;span class="o">-&lt;/span> &lt;span class="n">y&lt;/span>&lt;span class="p">);&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">w&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">w&lt;/span> &lt;span class="o">*&lt;/span> &lt;span class="n">w0&lt;/span>&lt;span class="p">;&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">for&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="kt">int&lt;/span> &lt;span class="n">i&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="mi">0&lt;/span>&lt;span class="p">;&lt;/span> &lt;span class="n">i&lt;/span> &lt;span class="o">&amp;lt;&lt;/span> &lt;span class="n">n&lt;/span>&lt;span class="p">;&lt;/span> &lt;span class="o">++&lt;/span>&lt;span class="n">i&lt;/span>&lt;span class="p">)&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">if&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="n">i&lt;/span> &lt;span class="o">&amp;lt;&lt;/span> &lt;span class="n">rev&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="n">i&lt;/span>&lt;span class="p">])&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">swap&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">f&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="n">i&lt;/span>&lt;span class="p">],&lt;/span> &lt;span class="n">f&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="n">rev&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="n">i&lt;/span>&lt;span class="p">]]);&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">if&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="n">op&lt;/span> &lt;span class="o">==&lt;/span> &lt;span class="o">-&lt;/span>&lt;span class="mi">1&lt;/span>&lt;span class="p">)&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">for&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="kt">int&lt;/span> &lt;span class="n">i&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="mi">0&lt;/span>&lt;span class="p">;&lt;/span> &lt;span class="n">i&lt;/span> &lt;span class="o">&amp;lt;&lt;/span> &lt;span class="n">n&lt;/span>&lt;span class="p">;&lt;/span> &lt;span class="n">i&lt;/span>&lt;span class="o">++&lt;/span>&lt;span class="p">)&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">f&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="n">i&lt;/span>&lt;span class="p">]&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">f&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="n">i&lt;/span>&lt;span class="p">]&lt;/span> &lt;span class="o">/&lt;/span> &lt;span class="n">n&lt;/span>&lt;span class="p">;&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
-&lt;/div>
-&lt;/div>&lt;p>容易发现，若我们以 DIF 作为 FFT，DIT 作为 IFFT，是不需要蝴蝶变换的。&lt;/p>
-&lt;div class="highlight">&lt;div class="chroma">
-&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
-&lt;/span>&lt;span class="lnt"> 2
-&lt;/span>&lt;span class="lnt"> 3
-&lt;/span>&lt;span class="lnt"> 4
-&lt;/span>&lt;span class="lnt"> 5
-&lt;/span>&lt;span class="lnt"> 6
-&lt;/span>&lt;span class="lnt"> 7
-&lt;/span>&lt;span class="lnt"> 8
-&lt;/span>&lt;span class="lnt"> 9
-&lt;/span>&lt;span class="lnt">10
-&lt;/span>&lt;span class="lnt">11
-&lt;/span>&lt;span class="lnt">12
-&lt;/span>&lt;span class="lnt">13
-&lt;/span>&lt;span class="lnt">14
-&lt;/span>&lt;span class="lnt">15
-&lt;/span>&lt;span class="lnt">16
-&lt;/span>&lt;span class="lnt">17
-&lt;/span>&lt;span class="lnt">18
-&lt;/span>&lt;span class="lnt">19
-&lt;/span>&lt;span class="lnt">20
-&lt;/span>&lt;span class="lnt">21
-&lt;/span>&lt;span class="lnt">22
-&lt;/span>&lt;span class="lnt">23
-&lt;/span>&lt;span class="lnt">24
-&lt;/span>&lt;span class="lnt">25
-&lt;/span>&lt;span class="lnt">26
-&lt;/span>&lt;span class="lnt">27
-&lt;/span>&lt;span class="lnt">28
-&lt;/span>&lt;span class="lnt">29
-&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
-&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-cpp" data-lang="cpp">&lt;span class="line">&lt;span class="cl">&lt;span class="kt">void&lt;/span> &lt;span class="nf">fft&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">img&lt;/span> &lt;span class="o">*&lt;/span>&lt;span class="n">f&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="kt">int&lt;/span> &lt;span class="n">n&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">for&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="kt">int&lt;/span> &lt;span class="n">l&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">n&lt;/span> &lt;span class="o">/&lt;/span> &lt;span class="mi">2&lt;/span>&lt;span class="p">;&lt;/span> &lt;span class="n">l&lt;/span> &lt;span class="o">&amp;gt;=&lt;/span> &lt;span class="mi">1&lt;/span>&lt;span class="p">;&lt;/span> &lt;span class="n">l&lt;/span> &lt;span class="o">&amp;gt;&amp;gt;=&lt;/span> &lt;span class="mi">1&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">img&lt;/span> &lt;span class="n">w0&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="p">{&lt;/span>&lt;span class="n">cos&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">PI&lt;/span> &lt;span class="o">/&lt;/span> &lt;span class="n">l&lt;/span>&lt;span class="p">),&lt;/span> &lt;span class="n">sin&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">PI&lt;/span> &lt;span class="o">/&lt;/span> &lt;span class="n">l&lt;/span>&lt;span class="p">)};&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">for&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="kt">int&lt;/span> &lt;span class="n">i&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="mi">0&lt;/span>&lt;span class="p">;&lt;/span> &lt;span class="n">i&lt;/span> &lt;span class="o">&amp;lt;&lt;/span> &lt;span class="n">n&lt;/span>&lt;span class="p">;&lt;/span> &lt;span class="n">i&lt;/span> &lt;span class="o">+=&lt;/span> &lt;span class="n">l&lt;/span> &lt;span class="o">*&lt;/span> &lt;span class="mi">2&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">img&lt;/span> &lt;span class="n">w&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="p">{&lt;/span>&lt;span class="mi">1&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="mi">0&lt;/span>&lt;span class="p">};&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">for&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="kt">int&lt;/span> &lt;span class="n">j&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="mi">0&lt;/span>&lt;span class="p">;&lt;/span> &lt;span class="n">j&lt;/span> &lt;span class="o">&amp;lt;&lt;/span> &lt;span class="n">l&lt;/span>&lt;span class="p">;&lt;/span> &lt;span class="n">j&lt;/span>&lt;span class="o">++&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">img&lt;/span> &lt;span class="n">x&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">f&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="n">i&lt;/span> &lt;span class="o">+&lt;/span> &lt;span class="n">j&lt;/span>&lt;span class="p">],&lt;/span> &lt;span class="n">y&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">f&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="n">i&lt;/span> &lt;span class="o">+&lt;/span> &lt;span class="n">j&lt;/span> &lt;span class="o">+&lt;/span> &lt;span class="n">l&lt;/span>&lt;span class="p">];&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">f&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="n">i&lt;/span> &lt;span class="o">+&lt;/span> &lt;span class="n">j&lt;/span>&lt;span class="p">]&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">x&lt;/span> &lt;span class="o">+&lt;/span> &lt;span class="n">y&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">f&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="n">i&lt;/span> &lt;span class="o">+&lt;/span> &lt;span class="n">j&lt;/span> &lt;span class="o">+&lt;/span> &lt;span class="n">l&lt;/span>&lt;span class="p">]&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">w&lt;/span> &lt;span class="o">*&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="n">x&lt;/span> &lt;span class="o">-&lt;/span> &lt;span class="n">y&lt;/span>&lt;span class="p">);&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">w&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">w&lt;/span> &lt;span class="o">*&lt;/span> &lt;span class="n">w0&lt;/span>&lt;span class="p">;&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="kt">void&lt;/span> &lt;span class="nf">ifft&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">img&lt;/span> &lt;span class="o">*&lt;/span>&lt;span class="n">f&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="kt">int&lt;/span> &lt;span class="n">n&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">for&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="kt">int&lt;/span> &lt;span class="n">l&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="mi">1&lt;/span>&lt;span class="p">;&lt;/span> &lt;span class="n">l&lt;/span> &lt;span class="o">&amp;lt;=&lt;/span> &lt;span class="n">n&lt;/span> &lt;span class="o">/&lt;/span> &lt;span class="mi">2&lt;/span>&lt;span class="p">;&lt;/span> &lt;span class="n">l&lt;/span> &lt;span class="o">&amp;lt;&amp;lt;=&lt;/span> &lt;span class="mi">1&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">img&lt;/span> &lt;span class="n">w0&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">img&lt;/span>&lt;span class="p">{&lt;/span>&lt;span class="n">cos&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">PI&lt;/span> &lt;span class="o">/&lt;/span> &lt;span class="n">l&lt;/span>&lt;span class="p">),&lt;/span> &lt;span class="n">sin&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">PI&lt;/span> &lt;span class="o">/&lt;/span> &lt;span class="n">l&lt;/span>&lt;span class="p">)}.&lt;/span>&lt;span class="n">conj&lt;/span>&lt;span class="p">();&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">for&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="kt">int&lt;/span> &lt;span class="n">i&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="mi">0&lt;/span>&lt;span class="p">;&lt;/span> &lt;span class="n">i&lt;/span> &lt;span class="o">&amp;lt;&lt;/span> &lt;span class="n">n&lt;/span>&lt;span class="p">;&lt;/span> &lt;span class="n">i&lt;/span> &lt;span class="o">+=&lt;/span> &lt;span class="n">l&lt;/span> &lt;span class="o">*&lt;/span> &lt;span class="mi">2&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">img&lt;/span> &lt;span class="n">w&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="p">{&lt;/span>&lt;span class="mi">1&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="mi">0&lt;/span>&lt;span class="p">};&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">for&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="kt">int&lt;/span> &lt;span class="n">j&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="mi">0&lt;/span>&lt;span class="p">;&lt;/span> &lt;span class="n">j&lt;/span> &lt;span class="o">&amp;lt;&lt;/span> &lt;span class="n">l&lt;/span>&lt;span class="p">;&lt;/span> &lt;span class="n">j&lt;/span>&lt;span class="o">++&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">img&lt;/span> &lt;span class="n">x&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">f&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="n">i&lt;/span> &lt;span class="o">+&lt;/span> &lt;span class="n">j&lt;/span>&lt;span class="p">],&lt;/span> &lt;span class="n">y&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">w&lt;/span> &lt;span class="o">*&lt;/span> &lt;span class="n">f&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="n">i&lt;/span> &lt;span class="o">+&lt;/span> &lt;span class="n">j&lt;/span> &lt;span class="o">+&lt;/span> &lt;span class="n">l&lt;/span>&lt;span class="p">];&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">f&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="n">i&lt;/span> &lt;span class="o">+&lt;/span> &lt;span class="n">j&lt;/span>&lt;span class="p">]&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">x&lt;/span> &lt;span class="o">+&lt;/span> &lt;span class="n">y&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">f&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="n">i&lt;/span> &lt;span class="o">+&lt;/span> &lt;span class="n">j&lt;/span> &lt;span class="o">+&lt;/span> &lt;span class="n">l&lt;/span>&lt;span class="p">]&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">x&lt;/span> &lt;span class="o">-&lt;/span> &lt;span class="n">y&lt;/span>&lt;span class="p">;&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">w&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">w&lt;/span> &lt;span class="o">*&lt;/span> &lt;span class="n">w0&lt;/span>&lt;span class="p">;&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">for&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="kt">int&lt;/span> &lt;span class="n">i&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="mi">0&lt;/span>&lt;span class="p">;&lt;/span> &lt;span class="n">i&lt;/span> &lt;span class="o">&amp;lt;&lt;/span> &lt;span class="n">n&lt;/span>&lt;span class="p">;&lt;/span> &lt;span class="n">i&lt;/span>&lt;span class="o">++&lt;/span>&lt;span class="p">)&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">f&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="n">i&lt;/span>&lt;span class="p">]&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">f&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="n">i&lt;/span>&lt;span class="p">]&lt;/span> &lt;span class="o">/&lt;/span> &lt;span class="n">n&lt;/span>&lt;span class="p">;&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
-&lt;/div>
-&lt;/div>&lt;p>以上，便是 Twisted FFT。&lt;/p>
-&lt;h3 id="另一种理解">另一种理解&lt;/h3>
-&lt;p>注意到&lt;/p>
-&lt;p>$$
-f(x_0) = f \bmod (x - x_0)
-$$&lt;/p>
-&lt;p>我们可以从这方面着手，从取模角度重新审视上述算法。假设 $f$ 可以被分解为&lt;/p>
-&lt;p>$$
-f = (x^n - r)(x^n + r)f_{0} + (x^n - r)f_{1} + (x^n + r)f_{2} + f_3
-$$&lt;/p>
-&lt;p>令&lt;/p>
-&lt;p>$$
-\begin{aligned}
-O_1 &amp;amp;= f \bmod (x^n + r) = -2r f_1 + f_3\
-O_2 &amp;amp;= f \bmod (x^n - r) = 2r f_2 + f_3
-\end{aligned}
-$$&lt;/p>
-&lt;p>故&lt;/p>
-&lt;p>$$
-f \bmod (x^{2n} - r^2) = \frac{O_2-O_1}{2r}x^n + \frac{O_2 + O_1}{2} = I_1 x^n + I_2
-$$&lt;/p>
-&lt;p>注意到代码中我们并没有直接求 $O_1$，而是对第 $j$ 位乘上了 $\zeta_{2n}^j$，即求的是 $f(\zeta_{2n}x)$。&lt;/p>
-&lt;p>可以发现&lt;/p>
-&lt;p>$$
-f(\zeta_{2n}x) \bmod (x^n-1) = f(\zeta_{2n}x) \bmod ((\zeta_{2n} x)^n - 1) = f(x) \bmod (x^n + 1)
-$$&lt;/p>
-&lt;p>这个图并不好理解，下面那张 Original FFT 更容易理解，但是现在广为流传的算法是 Twisted FFT。&lt;/p>
-&lt;p>通过图可以看出，FFT 的过程即是先把多项式从根推到叶子，即求得所有单位根处的值，做完操作后，再从叶子推回根。&lt;/p>
-&lt;h3 id="original-fft">Original FFT&lt;/h3>
-&lt;p>当然，我们可以直接分治，便是 Original FFT。&lt;/p>
-&lt;p>由于篇幅有限，本文不展开。&lt;/p>
 &lt;h3 id="预处理单位根">预处理单位根&lt;/h3>
 &lt;p>每次计算都重新计算一遍单位根太浪费了，我们可以预处理它，从而在计算中调用。&lt;/p>
 &lt;div class="highlight">&lt;div class="chroma">
@@ -738,14 +544,14 @@ $$&lt;/p>
 c_k = \sum_{i+j=k}f_ig_j
 $$&lt;/p>
 &lt;p>因此朴素的计算多项式的卷积需要 $n^2$ 次系数乘法，我们需要优化。&lt;/p>
-&lt;h3 id="点值表示法-1">点值表示法&lt;/h3>
+&lt;h3 id="点值表示法">点值表示法&lt;/h3>
 &lt;p>$n$ 次多项式 $f(x)$ 可以由 $n+1$ 个系数决定，也可以由 $n+1$ 个座标（点值）决定。即 $n$ 次多项式可以看作 $n+1$ 维的向量。&lt;/p>
 &lt;p>考虑选取 $2n+1$ 个座标来确定 $f(x)$ 和 $g(x)$。则 $F(x)$ 可以简单的通过做 $2n+1$ 次乘法得到&lt;/p>
 &lt;p>$$
 (x_k,F(x_k)) = \left(x_k, f(x_k)g(x_k)\right)
 $$&lt;/p>
 &lt;p>现在我们有了新的思路：先从系数表示法转换为点值表示法，做完乘法后再变回去。&lt;/p>
-&lt;h3 id="dft-1">DFT&lt;/h3>
+&lt;h3 id="dft">DFT&lt;/h3>
 &lt;p>怎么把多项式转换成点值呢？我们有离散 Fourier 变换。&lt;/p>
 &lt;p>称方程 $x^n = 1$ 的 $n$ 个解为单位根 $\zeta_n$。对于给定的多项式 $f(x) = \sum\limits_{k=0}^{n-1} f_kx^k$ 和一个单位根 $\zeta_n$，称向量&lt;/p>
 &lt;p>$$
@@ -1124,7 +930,7 @@ $$&lt;/p>
 V(\zeta_n) V(\zeta_n^{-1}) = (n[i = j]) = n I_n
 $$&lt;/p>
 &lt;p>即 IDFT 所对应的矩阵为 $V^{-1}(\zeta_n) = \frac{1}{n} V(\zeta_n^{-1})$，我们便证明了 $(1)$ 式。&lt;/p>
-&lt;h3 id="干掉-rev-1">干掉 REV&lt;/h3>
+&lt;h3 id="干掉-rev">干掉 REV&lt;/h3>
 &lt;p>其实上文所实现的 FFT 和 IFFT 并不对偶，只是卷积定理使得 IFFT 恰是 FFT 的逆运算。具体的说，我们实现了两个 DIT，因此需要在计算之前进行蝴蝶变换。&lt;/p>
 &lt;p>&lt;img src="https://upload.wikimedia.org/wikipedia/commons/f/f2/DIF_DIT.jpg"
 loading="lazy"
@@ -1265,7 +1071,7 @@ $$&lt;/p>
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>以上，便是 Twisted FFT。&lt;/p>
-&lt;h3 id="另一种理解-1">另一种理解&lt;/h3>
+&lt;h3 id="另一种理解">另一种理解&lt;/h3>
 &lt;p>注意到&lt;/p>
 &lt;p>$$
 f(x_0) = f \bmod (x - x_0)
@@ -1292,7 +1098,7 @@ f(\zeta_{2n}x) \bmod (x^n-1) = f(\zeta_{2n}x) \bmod ((\zeta_{2n} x)^n - 1) = f(x
 $$&lt;/p>
 &lt;p>这个图并不好理解，下面那张 Original FFT 更容易理解，但是现在广为流传的算法是 Twisted FFT。&lt;/p>
 &lt;p>通过图可以看出，FFT 的过程即是先把多项式从根推到叶子，即求得所有单位根处的值，做完操作后，再从叶子推回根。&lt;/p>
-&lt;h3 id="original-fft-1">Original FFT&lt;/h3>
+&lt;h3 id="original-fft">Original FFT&lt;/h3>
 &lt;p>当然，我们可以直接分治，便是 Original FFT。&lt;/p>
 &lt;p>由于篇幅有限，本文不展开。&lt;/p>
 &lt;h3 id="预处理单位根-1">预处理单位根&lt;/h3>
