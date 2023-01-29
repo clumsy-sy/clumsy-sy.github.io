@@ -3,7 +3,7 @@ title: Chinese Test
 description: 这是一个副标题
 date: 2020-09-09
 slug: test-chinese
-image: ICPC.png
+image: 下载.png
 math: true
 categories:
     - Test
