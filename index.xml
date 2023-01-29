@@ -4013,7 +4013,7 @@ $$&lt;/p>
 &lt;p>DFT 存在逆变换（IDFT），即从点值重新变回系数，仍是从向量到向量的变换。&lt;/p>
 &lt;p>IDFT 具有一个关键性质&lt;/p>
 &lt;p>$$
-(\operatorname{DFT}&lt;em>{\zeta})^{-1} = \frac{1}{n} (\operatorname{DFT}&lt;/em>{{\zeta}^{-1}}) \tag{1}
+(\operatorname{DFT}_{\zeta})^{-1} = \frac{1}{n} (\operatorname{DFT}_{{\zeta}^{-1}}) \tag{1}
 $$&lt;/p>
 &lt;p>我们将在后文证明它。现在我们可以统一的处理 DFT 和 IDFT。&lt;/p>
 &lt;p>为了方便描述，接下来我们将把 $\operatorname{DFT}_{\zeta_n}$ 简单的记作 $\mathcal{F}_n$。&lt;/p>
@@ -4551,15 +4551,9 @@ $$&lt;/p>
 f(\zeta_{2n}x) \bmod (x^n-1) = f(\zeta_{2n}x) \bmod ((\zeta_{2n} x)^n - 1) = f(x) \bmod (x^n + 1)
 $$&lt;/p>
 &lt;p>这个图并不好理解，下面那张 Original FFT 更容易理解，但是现在广为流传的算法是 Twisted FFT。&lt;/p>
-&lt;p>&lt;img src="https://example.com/../img/fft-twisted.png"
-loading="lazy"
->&lt;/p>
 &lt;p>通过图可以看出，FFT 的过程即是先把多项式从根推到叶子，即求得所有单位根处的值，做完操作后，再从叶子推回根。&lt;/p>
 &lt;h3 id="original-fft">Original FFT&lt;/h3>
 &lt;p>当然，我们可以直接分治，便是 Original FFT。&lt;/p>
-&lt;p>&lt;img src="https://example.com/../img/fft-original.png"
-loading="lazy"
->&lt;/p>
 &lt;p>由于篇幅有限，本文不展开。&lt;/p>
 &lt;h3 id="预处理单位根">预处理单位根&lt;/h3>
 &lt;p>每次计算都重新计算一遍单位根太浪费了，我们可以预处理它，从而在计算中调用。&lt;/p>
@@ -5175,15 +5169,9 @@ $$&lt;/p>
 f(\zeta_{2n}x) \bmod (x^n-1) = f(\zeta_{2n}x) \bmod ((\zeta_{2n} x)^n - 1) = f(x) \bmod (x^n + 1)
 $$&lt;/p>
 &lt;p>这个图并不好理解，下面那张 Original FFT 更容易理解，但是现在广为流传的算法是 Twisted FFT。&lt;/p>
-&lt;p>&lt;img src="https://example.com/../img/fft-twisted.png"
-loading="lazy"
->&lt;/p>
 &lt;p>通过图可以看出，FFT 的过程即是先把多项式从根推到叶子，即求得所有单位根处的值，做完操作后，再从叶子推回根。&lt;/p>
 &lt;h3 id="original-fft-1">Original FFT&lt;/h3>
 &lt;p>当然，我们可以直接分治，便是 Original FFT。&lt;/p>
-&lt;p>&lt;img src="https://example.com/../img/fft-original.png"
-loading="lazy"
->&lt;/p>
 &lt;p>由于篇幅有限，本文不展开。&lt;/p>
 &lt;h3 id="预处理单位根-1">预处理单位根&lt;/h3>
 &lt;p>每次计算都重新计算一遍单位根太浪费了，我们可以预处理它，从而在计算中调用。&lt;/p>

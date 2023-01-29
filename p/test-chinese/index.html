@@ -36,7 +36,7 @@ $$</p><p>因此朴素的计算多项式的卷积需要 $n^2$ 次系数乘法，�
 $$</p><p>现在我们有了新的思路：先从系数表示法转换为点值表示法，做完乘法后再变回去。</p><h3 id=dft>DFT</h3><p>怎么把多项式转换成点值呢？我们有离散 Fourier 变换。</p><p>称方程 $x^n = 1$ 的 $n$ 个解为单位根 $\zeta_n$。对于给定的多项式 $f(x) = \sum\limits_{k=0}^{n-1} f_kx^k$ 和一个单位根 $\zeta_n$，称向量</p><p>$$
 \operatorname{DFT}_{\zeta_n}(f) =( f(1), f(\zeta_n^1), \cdots, f(\zeta_n^{n-1}) )
 $$</p><p>为 $f$ 的离散 Fourier 变换（Discrete Fourier Transform）。</p><p>DFT 存在逆变换（IDFT），即从点值重新变回系数，仍是从向量到向量的变换。</p><p>IDFT 具有一个关键性质</p><p>$$
-(\operatorname{DFT}<em>{\zeta})^{-1} = \frac{1}{n} (\operatorname{DFT}</em>{{\zeta}^{-1}}) \tag{1}
+(\operatorname{DFT}_{\zeta})^{-1} = \frac{1}{n} (\operatorname{DFT}_{{\zeta}^{-1}}) \tag{1}
 $$</p><p>我们将在后文证明它。现在我们可以统一的处理 DFT 和 IDFT。</p><p>为了方便描述，接下来我们将把 $\operatorname{DFT}_{\zeta_n}$ 简单的记作 $\mathcal{F}_n$。</p><h3 id=单位原根>单位原根</h3><p>至此，我们计算 DFT 的复杂度仍然是 $O(n^2)$，FFT 所迈出的关键一步是选取特殊的点加速计算。</p><p>单位根中特殊的一个记作 $\zeta_n = e^{\frac{2 \pi i}{n}}$，它叫做单位原根。依 Euler 公式，有</p><p>$$
 \zeta_n = e^{\tfrac{2 \pi i}{n}} = \cos \left(\frac{2\pi}{n}\right) + i \sin \left(\frac{2\pi}{n}\right)
 $$</p><p>即 $\zeta_n$ 是单位圆上的一个点，全部的 $n$ 个单位根</p><p>$$
@@ -381,7 +381,7 @@ $$</p><p>故</p><p>$$
 f \bmod (x^{2n} - r^2) = \frac{O_2-O_1}{2r}x^n + \frac{O_2 + O_1}{2} = I_1 x^n + I_2
 $$</p><p>注意到代码中我们并没有直接求 $O_1$，而是对第 $j$ 位乘上了 $\zeta_{2n}^j$，即求的是 $f(\zeta_{2n}x)$。</p><p>可以发现</p><p>$$
 f(\zeta_{2n}x) \bmod (x^n-1) = f(\zeta_{2n}x) \bmod ((\zeta_{2n} x)^n - 1) = f(x) \bmod (x^n + 1)
-$$</p><p>这个图并不好理解，下面那张 Original FFT 更容易理解，但是现在广为流传的算法是 Twisted FFT。</p><p><img src=/../img/fft-twisted.png loading=lazy></p><p>通过图可以看出，FFT 的过程即是先把多项式从根推到叶子，即求得所有单位根处的值，做完操作后，再从叶子推回根。</p><h3 id=original-fft>Original FFT</h3><p>当然，我们可以直接分治，便是 Original FFT。</p><p><img src=/../img/fft-original.png loading=lazy></p><p>由于篇幅有限，本文不展开。</p><h3 id=预处理单位根>预处理单位根</h3><p>每次计算都重新计算一遍单位根太浪费了，我们可以预处理它，从而在计算中调用。</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+$$</p><p>这个图并不好理解，下面那张 Original FFT 更容易理解，但是现在广为流传的算法是 Twisted FFT。</p><p>通过图可以看出，FFT 的过程即是先把多项式从根推到叶子，即求得所有单位根处的值，做完操作后，再从叶子推回根。</p><h3 id=original-fft>Original FFT</h3><p>当然，我们可以直接分治，便是 Original FFT。</p><p>由于篇幅有限，本文不展开。</p><h3 id=预处理单位根>预处理单位根</h3><p>每次计算都重新计算一遍单位根太浪费了，我们可以预处理它，从而在计算中调用。</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
 </span><span class=lnt> 2
 </span><span class=lnt> 3
 </span><span class=lnt> 4
@@ -770,7 +770,7 @@ $$</p><p>故</p><p>$$
 f \bmod (x^{2n} - r^2) = \frac{O_2-O_1}{2r}x^n + \frac{O_2 + O_1}{2} = I_1 x^n + I_2
 $$</p><p>注意到代码中我们并没有直接求 $O_1$，而是对第 $j$ 位乘上了 $\zeta_{2n}^j$，即求的是 $f(\zeta_{2n}x)$。</p><p>可以发现</p><p>$$
 f(\zeta_{2n}x) \bmod (x^n-1) = f(\zeta_{2n}x) \bmod ((\zeta_{2n} x)^n - 1) = f(x) \bmod (x^n + 1)
-$$</p><p>这个图并不好理解，下面那张 Original FFT 更容易理解，但是现在广为流传的算法是 Twisted FFT。</p><p><img src=/../img/fft-twisted.png loading=lazy></p><p>通过图可以看出，FFT 的过程即是先把多项式从根推到叶子，即求得所有单位根处的值，做完操作后，再从叶子推回根。</p><h3 id=original-fft-1>Original FFT</h3><p>当然，我们可以直接分治，便是 Original FFT。</p><p><img src=/../img/fft-original.png loading=lazy></p><p>由于篇幅有限，本文不展开。</p><h3 id=预处理单位根-1>预处理单位根</h3><p>每次计算都重新计算一遍单位根太浪费了，我们可以预处理它，从而在计算中调用。</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+$$</p><p>这个图并不好理解，下面那张 Original FFT 更容易理解，但是现在广为流传的算法是 Twisted FFT。</p><p>通过图可以看出，FFT 的过程即是先把多项式从根推到叶子，即求得所有单位根处的值，做完操作后，再从叶子推回根。</p><h3 id=original-fft-1>Original FFT</h3><p>当然，我们可以直接分治，便是 Original FFT。</p><p>由于篇幅有限，本文不展开。</p><h3 id=预处理单位根-1>预处理单位根</h3><p>每次计算都重新计算一遍单位根太浪费了，我们可以预处理它，从而在计算中调用。</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
 </span><span class=lnt> 2
 </span><span class=lnt> 3
 </span><span class=lnt> 4
