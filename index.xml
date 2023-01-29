@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>sy</title><link>https://example.com/</link><description>Recent content on sy</description><generator>Hugo -- gohugo.io</generator><language>zh-cn</language><lastBuildDate>Tue, 28 Jun 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://example.com/index.xml" rel="self" type="application/rss+xml"/><item><title>Terraria</title><link>https://example.com/p/terraria/</link><pubDate>Tue, 28 Jun 2022 00:00:00 +0000</pubDate><guid>https://example.com/p/terraria/</guid><description>&lt;img src="https://example.com/post/Terraria/Photo.png" alt="Featured image of post Terraria" />&lt;h1 id="terraria-linux-服务器搭建支持-mod-">Terraria Linux 服务器搭建（支持 mod ）&lt;/h1>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>sy ^_^</title><link>https://example.com/</link><description>Recent content on sy ^_^</description><generator>Hugo -- gohugo.io</generator><language>zh-cn</language><lastBuildDate>Tue, 28 Jun 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://example.com/index.xml" rel="self" type="application/rss+xml"/><item><title>Terraria</title><link>https://example.com/p/terraria/</link><pubDate>Tue, 28 Jun 2022 00:00:00 +0000</pubDate><guid>https://example.com/p/terraria/</guid><description>&lt;img src="https://example.com/post/Terraria/Photo.png" alt="Featured image of post Terraria" />&lt;h1 id="terraria-linux-服务器搭建支持-mod-">Terraria Linux 服务器搭建（支持 mod ）&lt;/h1>
 &lt;h2 id="简介">简介&lt;/h2>
 &lt;p>泰拉瑞亚 1.4 Linux 服务器搭建， TmodLoader（后简称 TML） 1.4 服务器搭建（支持mod），面向只有一点点 Linux 基础的小伙伴。&lt;/p>
 &lt;p>如果只是 TML 运行后一直在 &lt;strong>下载&lt;/strong> 或者 &lt;strong>5分钟没反应&lt;/strong> 这个问题（win 和 Linux 通用），可以直接看 TML 安装的最后部分。&lt;/p>
@@ -225,63 +225,63 @@ steam 的最大优势是 TML 内的mod就是 改登录的steam账号内 TML 订�
 &lt;a class="link" href="https://zerol.me/2020/02/08/Terraria-Server-With-Mods/" target="_blank" rel="noopener"
 >泰拉瑞亚服务器搭建教程（带 MOD）&lt;/a>&lt;/p>
 &lt;p>&lt;a class="link" href="https://zhuanlan.zhihu.com/p/94570876" target="_blank" rel="noopener"
->使用Linux搭建Terraria服务器，详细步骤&lt;/a>&lt;/p></description></item><item><title>Kswapd0挖矿病毒记录</title><link>https://example.com/p/kswapd0%E6%8C%96%E7%9F%BF%E7%97%85%E6%AF%92%E8%AE%B0%E5%BD%95/</link><pubDate>Mon, 07 Mar 2022 00:00:00 +0000</pubDate><guid>https://example.com/p/kswapd0%E6%8C%96%E7%9F%BF%E7%97%85%E6%AF%92%E8%AE%B0%E5%BD%95/</guid><description>&lt;h1 id="kswapd0-挖矿病毒调查">kswapd0 挖矿病毒调查&lt;/h1>
+>使用Linux搭建Terraria服务器，详细步骤&lt;/a>&lt;/p></description></item><item><title>Kswapd0挖矿病毒记录</title><link>https://example.com/p/kswapd0%E6%8C%96%E7%9F%BF%E7%97%85%E6%AF%92%E8%AE%B0%E5%BD%95/</link><pubDate>Mon, 07 Mar 2022 00:00:00 +0000</pubDate><guid>https://example.com/p/kswapd0%E6%8C%96%E7%9F%BF%E7%97%85%E6%AF%92%E8%AE%B0%E5%BD%95/</guid><description>&lt;img src="https://example.com/post/%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%97%85%E6%AF%92/qq_pic_merged_1646629112550.jpg" alt="Featured image of post Kswapd0挖矿病毒记录" />&lt;h1 id="kswapd0-挖矿病毒调查">kswapd0 挖矿病毒调查&lt;/h1>
 &lt;h2 id="背景">背景&lt;/h2>
-&lt;p>&lt;img src="https://example.com/qq_pic_merged_1646629081866.jpg"
+&lt;p>&lt;img src="https://example.com/../../post/%e6%9c%8d%e5%8a%a1%e5%99%a8%e7%97%85%e6%af%92/qq_pic_merged_1646629081866.jpg"
 loading="lazy"
 alt="Alt"
 >&lt;/p>
 &lt;p>3 月 6 日收到了腾讯云的异地异常登入报告，马上又收到了检测出木马的报告&lt;/p>
-&lt;p>&lt;img src="https://example.com/qq_pic_merged_1646629112550.jpg"
+&lt;p>&lt;img src="https://example.com/../../post/%e6%9c%8d%e5%8a%a1%e5%99%a8%e7%97%85%e6%af%92/qq_pic_merged_1646629112550.jpg"
 loading="lazy"
 alt="Alt"
 >&lt;/p>
 &lt;p>马上怀疑是服务器被植入了木马程序，但是时间比较晚了，先把服务器关机了然后睡觉&lt;/p>
 &lt;p>我也没有急着重装系统，有点贪心，想看看木马长什么样，也顺便学习一下怎么清理木马程序，怎么分析受损情况，毕竟我现在是一个个人的服务器还没有对外提供服务，可以随便重装系统，但是如果是一个网站的服务器那么肯定是不能随便重装的。&lt;/p>
 &lt;p>但是这个木马非常狡猾，我 3 月 6 日一天也没有找出来，也请了网安的同学来帮忙，外加腾讯给我的报错文件，我什么没有找到，一切看起来都非常正常，各种日志都没有一点痕迹连操作记录都没有，然后我就又把服务器开着等了一天。&lt;/p>
-&lt;p>&lt;img src="https://example.com/qq_pic_merged_1646629166670.jpg"
+&lt;p>&lt;img src="https://example.com/../../post/%e6%9c%8d%e5%8a%a1%e5%99%a8%e7%97%85%e6%af%92/qq_pic_merged_1646629166670.jpg"
 loading="lazy"
 alt="Alt"
 >&lt;/p>
 &lt;h2 id="出现异常">出现异常&lt;/h2>
 &lt;p>很快，第二天凌晨又被警告异地登入了，但是我当时还在睡觉没处理，早上起来一开服务器发现问题大了。&lt;/p>
-&lt;p>&lt;img src="https://example.com/QQ%e5%9b%be%e7%89%8720220307131114.jpg"
+&lt;p>&lt;img src="https://example.com/../../post/%e6%9c%8d%e5%8a%a1%e5%99%a8%e7%97%85%e6%af%92/QQ%e5%9b%be%e7%89%8720220307131114.jpg"
 loading="lazy"
 alt="Alt"
 >&lt;/p>
-&lt;p>&lt;img src="https://example.com/QQ%e5%9b%be%e7%89%8720220307131210.png"
+&lt;p>&lt;img src="https://example.com/../../post/%e6%9c%8d%e5%8a%a1%e5%99%a8%e7%97%85%e6%af%92/QQ%e5%9b%be%e7%89%8720220307131210.png"
 loading="lazy"
 alt="Alt"
 >&lt;/p>
 &lt;h2 id="开始调查">开始调查&lt;/h2>
 &lt;p>有个程序把我的cpu直接占满了，我知道它出现了，我直接 kill 了这个程序，然后在通过查看系统的定期任务找到了它的文件，应该是只有部分了，它的很多安装步骤应该是被自己清理掉了。&lt;/p>
-&lt;p>&lt;img src="https://example.com/Snipaste_2022-03-07_10-40-46.png"
+&lt;p>&lt;img src="https://example.com/../../post/%e6%9c%8d%e5%8a%a1%e5%99%a8%e7%97%85%e6%af%92/Snipaste_2022-03-07_10-40-46.png"
 loading="lazy"
 alt="Alt"
 >&lt;/p>
 &lt;p>很明显它有一些定时任务，而且我每一次开机都会更新一些木马的程序，非常难找，而且输出全部重定向到了空，所以没有运行日志，当然也它没有很过分的写 shell 反弹，否在我恐怕也不能直接发现这些定期运行的脚本了。&lt;/p>
 &lt;p>然后根据上面运行的脚本目录，我找到了它的一些文件&lt;/p>
-&lt;p>&lt;img src="https://example.com/Snipaste_2022-03-07_10-42-11.png"
+&lt;p>&lt;img src="https://example.com/../../post/%e6%9c%8d%e5%8a%a1%e5%99%a8%e7%97%85%e6%af%92/Snipaste_2022-03-07_10-42-11.png"
 loading="lazy"
 alt="Alt"
 >&lt;/p>
-&lt;p>&lt;img src="https://example.com/Snipaste_2022-03-07_10-42-35.png"
+&lt;p>&lt;img src="https://example.com/../../post/%e6%9c%8d%e5%8a%a1%e5%99%a8%e7%97%85%e6%af%92/Snipaste_2022-03-07_10-42-35.png"
 loading="lazy"
 alt="ALt"
 >&lt;/p>
-&lt;p>&lt;img src="https://example.com/Snipaste_2022-03-07_10-42-55.png"
+&lt;p>&lt;img src="https://example.com/../../post/%e6%9c%8d%e5%8a%a1%e5%99%a8%e7%97%85%e6%af%92/Snipaste_2022-03-07_10-42-55.png"
 loading="lazy"
 alt="Alt"
 >&lt;/p>
-&lt;p>&lt;img src="https://example.com/Snipaste_2022-03-07_10-44-39.png"
+&lt;p>&lt;img src="https://example.com/../../post/%e6%9c%8d%e5%8a%a1%e5%99%a8%e7%97%85%e6%af%92/Snipaste_2022-03-07_10-44-39.png"
 loading="lazy"
 alt="Alt"
 >&lt;/p>
-&lt;p>&lt;img src="https://example.com/Snipaste_2022-03-07_10-46-04.png"
+&lt;p>&lt;img src="https://example.com/../../post/%e6%9c%8d%e5%8a%a1%e5%99%a8%e7%97%85%e6%af%92/Snipaste_2022-03-07_10-46-04.png"
 loading="lazy"
 alt="Alt"
 >&lt;/p>
-&lt;p>&lt;img src="https://example.com/Snipaste_2022-03-07_10-51-52.png"
+&lt;p>&lt;img src="https://example.com/../../post/%e6%9c%8d%e5%8a%a1%e5%99%a8%e7%97%85%e6%af%92/Snipaste_2022-03-07_10-51-52.png"
 loading="lazy"
 alt="Alt"
 >&lt;/p>
@@ -462,7 +462,7 @@ alt="Alt"
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>其中有一个很明显的 ip 地址 &lt;code>45.9.148.99&lt;/code> 通过 &lt;code>IP&lt;/code> 地址定位，发现是在荷兰，臭名昭著~&lt;/p>
-&lt;p>&lt;img src="https://example.com/Snipaste_2022-03-07_12-41-06.png"
+&lt;p>&lt;img src="https://example.com/../../post/%e6%9c%8d%e5%8a%a1%e5%99%a8%e7%97%85%e6%af%92/Snipaste_2022-03-07_12-41-06.png"
 loading="lazy"
 alt="Alt"
 >&lt;/p>
@@ -514,21 +514,21 @@ $$
 &lt;p>​ 参加 ACM 训练给我带来了很多，代码基本功、思维力、算法灵活运用，但是我觉得最重要的是一种追求更好（代码简洁），更快（复杂度低、运行更快）、更全面（不漏过一个细节）的精神，每当我解出一题，我总是会问自己存不存在更优的解法，我也习惯性的将这种最求极致的精神带入生活中，虽然这会拖慢我的脚步，但是也带给了我很多。正如 Fibonacci 数列是永无尽头的一样，我的学习之路也会是永无尽头的，我会一直追求下去。&lt;/p>
 &lt;p>​ 我相信人的每个时间段都有更重要的事情，ACM 对我来说已经结束了，我也该进入新的阶段了，无论是学习技术还是考研，我都还有很长的路要走，但我也不会放弃算法的学习，有机会我还会继续学习算法。&lt;/p>
 &lt;p>很多图片算是我曾经努力过的见证吧。&lt;/p>
-&lt;p>&lt;img src="https://example.com/codeforce1.png"
+&lt;p>&lt;img src="https://example.com/../../post/%e9%80%80%e5%bd%b9/codeforce1.png"
 loading="lazy"
 alt="Alt"
 >&lt;/p>
 &lt;p>每一个小点都是我的一次熬夜比赛，曾经的我几乎不愿意拉下任何一场比赛。&lt;/p>
-&lt;p>&lt;img src="https://example.com/codeforce2.png"
+&lt;p>&lt;img src="https://example.com/../../post/%e9%80%80%e5%bd%b9/codeforce2.png"
 loading="lazy"
 alt="Alt"
 >&lt;/p>
-&lt;p>&lt;img src="https://example.com/codeforce3.png"
+&lt;p>&lt;img src="https://example.com/../../post/%e9%80%80%e5%bd%b9/codeforce3.png"
 loading="lazy"
 alt="Alt"
 >&lt;/p>
 &lt;p>在实验室的一个大位置，实验室的环境非常好，学习氛围更好。&lt;/p>
-&lt;p>&lt;img src="https://example.com/index.jpg"
+&lt;p>&lt;img src="https://example.com/../../post/%e9%80%80%e5%bd%b9/index.jpg"
 loading="lazy"
 alt="Alt"
 >&lt;/p>
@@ -3876,7 +3876,7 @@ $$
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;/div></description></item><item><title>Chinese Test</title><link>https://example.com/p/test-chinese/</link><pubDate>Wed, 09 Sep 2020 00:00:00 +0000</pubDate><guid>https://example.com/p/test-chinese/</guid><description>&lt;img src="https://example.com/%E4%B8%8B%E8%BD%BD.png" alt="Featured image of post Chinese Test" />&lt;h2 id="图片">图片&lt;/h2>
+&lt;/div></description></item><item><title>Chinese Test</title><link>https://example.com/p/test-chinese/</link><pubDate>Wed, 09 Sep 2020 00:00:00 +0000</pubDate><guid>https://example.com/p/test-chinese/</guid><description>&lt;img src="https://example.com/p/test-chinese/ICPC.png" alt="Featured image of post Chinese Test" />&lt;h2 id="图片">图片&lt;/h2>
 &lt;p>&lt;img src="https://example.com/p/test-chinese/ICPC.png"
 width="354"
 height="142"
