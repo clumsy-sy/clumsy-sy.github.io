@@ -3,6 +3,7 @@ title: "ACM 退役记"
 date: 2021-12-04
 draft: false
 math: true
+image: "../../post/退役/index.jpg"
 ---
 
 # ACM 退役总结

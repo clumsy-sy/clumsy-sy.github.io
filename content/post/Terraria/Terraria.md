@@ -3,7 +3,7 @@ title: "Terraria"
 description: Terraria Linux 服务器搭建
 date: 2022-06-28
 slug: terraria
-image: ../../post/Terraria/Photo.png
+image: "../../post/Terraria/Photo.png"
 ---
 
 # Terraria Linux 服务器搭建（支持 mod ）
