@@ -176,7 +176,7 @@ DFT 存在逆变换（IDFT），即从点值重新变回系数，仍是从向量
 IDFT 具有一个关键性质
 
 $$
-(\operatorname{DFT}_{\zeta})^{-1} = \frac{1}{n} (\operatorname{DFT}_{{\zeta}^{-1}}) \tag{1}
+(\operatorname{DFT}\_{\zeta})^{-1} = \frac{1}{n} (\operatorname{DFT}\_{{\zeta}^{-1}}) \tag{1}
 $$
 
 我们将在后文证明它。现在我们可以统一的处理 DFT 和 IDFT。
@@ -613,7 +613,6 @@ $$
 
 这个图并不好理解，下面那张 Original FFT 更容易理解，但是现在广为流传的算法是 Twisted FFT。
 
-![](../img/fft-twisted.png)
 
 通过图可以看出，FFT 的过程即是先把多项式从根推到叶子，即求得所有单位根处的值，做完操作后，再从叶子推回根。
 
@@ -621,7 +620,7 @@ $$
 
 当然，我们可以直接分治，便是 Original FFT。
 
-![](../img/fft-original.png)
+
 
 由于篇幅有限，本文不展开。
 
@@ -1147,7 +1146,6 @@ $$
 
 这个图并不好理解，下面那张 Original FFT 更容易理解，但是现在广为流传的算法是 Twisted FFT。
 
-![](../img/fft-twisted.png)
 
 通过图可以看出，FFT 的过程即是先把多项式从根推到叶子，即求得所有单位根处的值，做完操作后，再从叶子推回根。
 
@@ -1155,7 +1153,7 @@ $$
 
 当然，我们可以直接分治，便是 Original FFT。
 
-![](../img/fft-original.png)
+
 
 由于篇幅有限，本文不展开。
 
