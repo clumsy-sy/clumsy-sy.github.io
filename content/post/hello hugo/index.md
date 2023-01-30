@@ -1,7 +1,7 @@
 +++
 author = "sy"
 title = "Hello Hugo"
-date = "2021-07-19T09:55:02+08:00"
+date = "2020-07-19T09:55:02+08:00"
 description = "test hugo."
 tags = [
     "markdown",

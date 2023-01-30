@@ -90,7 +90,7 @@ steamcmd
 
 正常情况下你会看到
 
-![Alt](../../post/Terraria/steam0)
+![Alt](../../post/Terraria/steam0.png)
 
 输入`login + 你的用户名` 然后按提示登录即可（第一次登录会需要令牌）
 
@@ -102,7 +102,7 @@ app_update 105600 # 安装 Terraria(它在steam中的代码是 105600，不会�
 
 下载完成后你应该可以在 `~/Steam/steamapps/common` 下面看到 Terraria 文件夹
 
-![Alt](../../post/Terraria/steam1)
+![Alt](../../post/Terraria/steam1.png)
 
 里面的 `TerrariaServer.bin.x86_64` 就是服务器运行文件了
 
@@ -120,7 +120,7 @@ screen -S Tr
 
 如何查找游戏在steam中的代码
 
-![Alt](../../post/Terraria/steam2)
+![Alt](../../post/Terraria/steam2.png)
 
 我们可以看到 TML 的代码是 1281930 版本是 8980144， 所以
 
@@ -131,7 +131,7 @@ app_update 1281930 8980144 validate # 如果发现安装有问题请加 validate
 
 下载完成后，同样进入 TML 文件夹
 
-![Alt](../../post/Terraria/steam3)
+![Alt](../../post/Terraria/steam3.png)
 
 ```shell
 # 新建会话
@@ -142,7 +142,7 @@ screen -S Tr
 ### ！！！最大的问题来了
 这里演示的是 windows 下的情况，Linux服务端一样，只不过服务器上可以多看到下载信息，在下载 .net 但是国内服务器应该是下载不下来的，所以会等到死。
 
-![Alt](../../post/Terraria/steam4)
+![Alt](../../post/Terraria/steam4.png)
 
 windows 和 Linux 解决方法一样，[下载 .net](https://dotnet.microsoft.com/zh-cn/download)
 
