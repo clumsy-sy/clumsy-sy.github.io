@@ -110,7 +110,7 @@
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>正常情况下你会看到&lt;/p>
-&lt;p>&lt;img src="https://example.com/../../post/Terraria/steam0"
+&lt;p>&lt;img src="https://example.com/../../post/Terraria/steam0.png"
 loading="lazy"
 alt="Alt"
 >&lt;/p>
@@ -125,7 +125,7 @@ alt="Alt"
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>下载完成后你应该可以在 &lt;code>~/Steam/steamapps/common&lt;/code> 下面看到 Terraria 文件夹&lt;/p>
-&lt;p>&lt;img src="https://example.com/../../post/Terraria/steam1"
+&lt;p>&lt;img src="https://example.com/../../post/Terraria/steam1.png"
 loading="lazy"
 alt="Alt"
 >&lt;/p>
@@ -147,7 +147,7 @@ alt="Alt"
 &lt;h2 id="tml-搭建">TML 搭建&lt;/h2>
 &lt;p>这个需要在本体完成的基础上进行&lt;/p>
 &lt;p>如何查找游戏在steam中的代码&lt;/p>
-&lt;p>&lt;img src="https://example.com/../../post/Terraria/steam2"
+&lt;p>&lt;img src="https://example.com/../../post/Terraria/steam2.png"
 loading="lazy"
 alt="Alt"
 >&lt;/p>
@@ -163,7 +163,7 @@ alt="Alt"
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>下载完成后，同样进入 TML 文件夹&lt;/p>
-&lt;p>&lt;img src="https://example.com/../../post/Terraria/steam3"
+&lt;p>&lt;img src="https://example.com/../../post/Terraria/steam3.png"
 loading="lazy"
 alt="Alt"
 >&lt;/p>
@@ -181,7 +181,7 @@ alt="Alt"
 &lt;/div>
 &lt;/div>&lt;h3 id="最大的问题来了">！！！最大的问题来了&lt;/h3>
 &lt;p>这里演示的是 windows 下的情况，Linux服务端一样，只不过服务器上可以多看到下载信息，在下载 .net 但是国内服务器应该是下载不下来的，所以会等到死。&lt;/p>
-&lt;p>&lt;img src="https://example.com/../../post/Terraria/steam4"
+&lt;p>&lt;img src="https://example.com/../../post/Terraria/steam4.png"
 loading="lazy"
 alt="Alt"
 >&lt;/p>
