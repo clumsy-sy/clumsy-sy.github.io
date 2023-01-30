@@ -4,6 +4,9 @@ description: Terraria Linux 服务器搭建
 date: 2022-06-28
 slug: terraria
 image: "../../post/Terraria/Photo.png"
+tags: 
+    - 服务器
+    - 游戏
 ---
 
 # Terraria Linux 服务器搭建（支持 mod ）

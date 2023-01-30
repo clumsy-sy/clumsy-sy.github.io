@@ -3,6 +3,9 @@ title: "Kswapd0挖矿病毒记录"
 date: 2022-03-07
 draft: false
 image: "../../post/服务器病毒/qq_pic_merged_1646629112550.jpg"
+tags: 
+    - 服务器
+    - 游戏
 ---
 
 # kswapd0 挖矿病毒调查
